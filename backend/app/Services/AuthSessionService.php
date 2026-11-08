@@ -62,7 +62,7 @@ class AuthSessionService
             $request->session()->regenerate(true);
         }
 
-        $sessionId = $hasSession ? $request->session()->getId() : null;
+        $sessionId = $hasSession ? $request->session()->getId() : (string) \Illuminate\Support\Str::uuid();
 
         if ($oldSessionId && $oldSessionId !== $sessionId && config('session.driver') === 'file') {
             $oldSessionFile = storage_path("framework/sessions/{$oldSessionId}");
@@ -191,7 +191,7 @@ class AuthSessionService
     public function terminateCurrentSession(Request $request): void
     {
         $hasSession = $request->hasSession();
-        $sessionId = $hasSession ? $request->session()->getId() : null;
+        $sessionId = $hasSession ? $request->session()->getId() : (string) \Illuminate\Support\Str::uuid();
 
         if ($sessionId) {
             UserDevice::where('session_id', $sessionId)->delete();

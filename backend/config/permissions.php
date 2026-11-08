@@ -3,15 +3,11 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Client-Customizable Roles & Permissions Matrix
+    | Client-Customizable Roles & Permissions Matrix (Single Admin Role Architecture)
     |--------------------------------------------------------------------------
     |
-    | Definisikan pemetaan peran (roles) dan hak akses (permissions) di sini.
-    | Klien dapat menambahkan peran kustom atau mengubah matriks izin tanpa
-    | perlu melakukan migrasi database.
-    |
-    | Struktur:
-    | 'role_name' => ['permission.one', 'permission.two', ...]
+    | Portal Manajemen Proyek ini dikonfigurasi dengan peran tunggal: 'admin'.
+    | Seluruh hak akses dan kendali sistem dipegang secara penuh oleh Administrator.
     |
     */
     'roles' => [
@@ -28,28 +24,6 @@ return [
             'settings.manage',
             'reports.view',
             'reports.export',
-        ],
-        'manager' => [
-            'users.view',
-            'users.create',
-            'users.edit',
-            'sessions.view',
-            'reports.view',
-            'reports.export',
-        ],
-        'staff' => [
-            'users.view',
-            'reports.view',
-        ],
-        'auditor' => [
-            'users.view',
-            'sessions.view',
-            'reports.view',
-            'reports.export',
-        ],
-        'user' => [
-            'profile.view',
-            'profile.edit',
         ],
     ],
 ];

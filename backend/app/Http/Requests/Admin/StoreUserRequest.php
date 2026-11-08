@@ -67,11 +67,11 @@ class StoreUserRequest extends FormRequest
      */
     public function getValidatedRoles(): array
     {
-        $roles = $this->input('role', ['user']);
+        $roles = $this->input('role', ['admin']);
         if (is_string($roles)) {
             $roles = array_map('trim', explode(',', $roles));
         }
-        $roles = is_array($roles) ? array_values(array_unique(array_filter($roles))) : ['user'];
-        return empty($roles) ? ['user'] : $roles;
+        $roles = is_array($roles) ? array_values(array_unique(array_filter($roles))) : ['admin'];
+        return empty($roles) ? ['admin'] : $roles;
     }
 }

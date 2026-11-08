@@ -48,19 +48,19 @@ class User extends Authenticatable
     public static function parseRoles(mixed $value): array
     {
         if (is_null($value) || $value === '') {
-            return ['user'];
+            return ['admin'];
         }
         if (is_array($value)) {
             $cleaned = array_values(array_unique(array_filter(array_map('trim', $value))));
-            return empty($cleaned) ? ['user'] : $cleaned;
+            return empty($cleaned) ? ['admin'] : $cleaned;
         }
         $decoded = json_decode((string) $value, true);
         if (is_array($decoded)) {
             $cleaned = array_values(array_unique(array_filter(array_map('trim', $decoded))));
-            return empty($cleaned) ? ['user'] : $cleaned;
+            return empty($cleaned) ? ['admin'] : $cleaned;
         }
         $cleaned = array_values(array_unique(array_filter(array_map('trim', explode(',', (string) $value)))));
-        return empty($cleaned) ? ['user'] : $cleaned;
+        return empty($cleaned) ? ['admin'] : $cleaned;
     }
 
     /**

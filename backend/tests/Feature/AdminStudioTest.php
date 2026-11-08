@@ -16,7 +16,7 @@ class AdminStudioTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Config::set('sanctum.stateful', ['hyperion-vault.test', 'template.org', 'localhost']);
+        Config::set('sanctum.stateful', ['valora-vault.test', 'hyperion-vault.test', 'template.org', 'localhost']);
         Config::set('session.driver', 'file');
     }
 

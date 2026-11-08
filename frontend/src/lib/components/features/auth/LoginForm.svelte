@@ -33,15 +33,14 @@
     if (ctx) ctx.revert();
   });
 
-  let email = $state('admin@hyperion-vault.test');
+  let email = $state('admin@valora-vault.test');
   let password = $state('password123');
   let showPassword = $state(false);
   let errors = $state({});
   let loading = $state(false);
 
   const testAccounts = [
-    { role: 'Super Admin', email: 'admin@hyperion-vault.test', badge: 'Admin' },
-    { role: 'Pengguna', email: 'user@hyperion-vault.test', badge: 'User' },
+    { role: 'Administrator Proyek', email: 'admin@valora-vault.test', badge: 'Admin' },
   ];
 
   function selectAccount(acc) {
@@ -98,8 +97,8 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
         </svg>
       </div>
-      <h2 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight">Login Portal Sistem</h2>
-      <p class="text-xs text-slate-500 dark:text-slate-400">Autentikasi Multi-Role Sanctum & Signed JWT</p>
+      <h2 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight">Login Portal Manajemen Proyek</h2>
+      <p class="text-xs text-slate-500 dark:text-slate-400">Autentikasi Administrator Sanctum & Signed JWT</p>
     </div>
 
     <!-- 1-Click Role Quick Switcher -->
@@ -108,7 +107,7 @@
         <span>Akun Demo Cepat (1-Klik)</span>
         <span class="text-slate-400 dark:text-slate-500 font-normal">pass: password123</span>
       </div>
-      <div class="grid grid-cols-2 gap-2">
+      <div class="grid grid-cols-1 gap-2">
         {#each testAccounts as acc}
           <button
             type="button"
@@ -141,7 +140,7 @@
         id="email"
         type="text"
         bind:value={email}
-        placeholder="admin@hyperion-vault.test"
+        placeholder="admin@valora-vault.test"
         class="w-full px-3.5 py-2.5 min-h-[44px] bg-slate-50 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 focus:border-indigo-500 rounded-xl text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition shadow-xs dark:shadow-inner"
       />
       {#if errors.email}

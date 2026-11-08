@@ -16,7 +16,7 @@ class AdminUserManagementTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Config::set('sanctum.stateful', ['hyperion-vault.test', 'template.org', 'localhost']);
+        Config::set('sanctum.stateful', ['valora-vault.test', 'hyperion-vault.test', 'template.org', 'localhost']);
         Config::set('session.driver', 'file');
     }
 
@@ -94,30 +94,30 @@ class AdminUserManagementTest extends TestCase
 
         // 1. Create (Store)
         $createRes = $this->actingAs($admin)->postJson('/api/v1/admin/users', [
-            'name' => 'Karyawan Baru',
-            'email' => 'karyawan@hyperion-vault.test',
+            'name' => 'Admin Baru',
+            'email' => 'admin_baru@valora-vault.test',
             'password' => 'secret12345',
-            'role' => ['manager', 'staff'],
+            'role' => ['admin'],
             'is_active' => true,
-        ], ['Referer' => 'http://hyperion-vault.test']);
+        ], ['Referer' => 'http://valora-vault.test']);
 
         $createRes->assertStatus(201);
-        $createRes->assertJsonPath('user.email', 'karyawan@hyperion-vault.test');
-        $this->assertDatabaseHas('users', ['email' => 'karyawan@hyperion-vault.test']);
-        $newUser = User::where('email', 'karyawan@hyperion-vault.test')->first();
-        $this->assertEquals(['manager', 'staff'], $newUser->role);
+        $createRes->assertJsonPath('user.email', 'admin_baru@valora-vault.test');
+        $this->assertDatabaseHas('users', ['email' => 'admin_baru@valora-vault.test']);
+        $newUser = User::where('email', 'admin_baru@valora-vault.test')->first();
+        $this->assertEquals(['admin'], $newUser->role);
 
         // 2. Update
         $updateRes = $this->actingAs($admin)->putJson("/api/v1/admin/users/{$newUser->id}", [
-            'name' => 'Karyawan Senior',
-            'email' => 'karyawan_senior@hyperion-vault.test',
-            'role' => ['manager', 'auditor'],
+            'name' => 'Admin Senior',
+            'email' => 'admin_senior@valora-vault.test',
+            'role' => ['admin'],
             'is_active' => true,
-        ], ['Referer' => 'http://hyperion-vault.test']);
+        ], ['Referer' => 'http://valora-vault.test']);
 
         $updateRes->assertStatus(200);
-        $this->assertDatabaseHas('users', ['email' => 'karyawan_senior@hyperion-vault.test']);
-        $this->assertEquals('Karyawan Senior', $newUser->fresh()->name);
+        $this->assertDatabaseHas('users', ['email' => 'admin_senior@valora-vault.test']);
+        $this->assertEquals('Admin Senior', $newUser->fresh()->name);
 
         // 3. Delete Self (Forbidden)
         $deleteSelfRes = $this->actingAs($admin)->deleteJson("/api/v1/admin/users/{$admin->id}", [], [
@@ -143,8 +143,8 @@ class AdminUserManagementTest extends TestCase
             'token_version' => 1
         ]);
 
-        $user1 = User::factory()->create(['name' => 'User One', 'role' => ['user'], 'token_version' => 1]);
-        $user2 = User::factory()->create(['name' => 'User Two', 'role' => ['user'], 'token_version' => 1]);
+        $user1 = User::factory()->create(['name' => 'User One', 'role' => ['admin'], 'token_version' => 1]);
+        $user2 = User::factory()->create(['name' => 'User Two', 'role' => ['admin'], 'token_version' => 1]);
 
         // Register active device sessions
         $deviceAdmin = \App\Models\UserDevice::create([

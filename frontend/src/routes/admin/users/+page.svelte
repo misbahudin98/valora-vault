@@ -47,7 +47,7 @@
   let formEmail = $state('');
   let formPassword = $state('');
   let showFormPassword = $state(false);
-  let formRoles = $state(['user']);
+  let formRoles = $state(['admin']);
   let formIsActive = $state(true);
   let formErrors = $state({});
   let formSubmitting = $state(false);
@@ -89,7 +89,7 @@
     formEmail = '';
     formPassword = '';
     showFormPassword = false;
-    formRoles = ['user'];
+    formRoles = ['admin'];
     formIsActive = true;
     formErrors = {};
     showModal = true;
@@ -102,7 +102,7 @@
     formEmail = user.email;
     formPassword = '';
     showFormPassword = false;
-    formRoles = Array.isArray(user.role) ? [...user.role] : [user.role || 'user'];
+    formRoles = Array.isArray(user.role) ? [...user.role] : [user.role || 'admin'];
     formIsActive = Boolean(user.is_active);
     formErrors = {};
     showModal = true;
@@ -630,9 +630,9 @@
 
     <!-- Multiple Roles Selection -->
     <div>
-      <span class="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">Kewenangan / Roles (Pilihan Multi Peran)</span>
+      <span class="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">Kewenangan / Role (Arsitektur Admin Tunggal)</span>
       <div class="flex items-center gap-3">
-        {#each ['admin', 'manager', 'user'] as r}
+        {#each ['admin'] as r}
           <label class="flex items-center gap-2 text-xs font-medium text-slate-700 dark:text-slate-300 cursor-pointer bg-slate-100 dark:bg-slate-950 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-600 transition min-h-[38px]">
             <input
               type="checkbox"

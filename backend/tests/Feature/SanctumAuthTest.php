@@ -15,7 +15,7 @@ class SanctumAuthTest extends TestCase {
 
     protected function setUp(): void {
         parent::setUp();
-        Config::set('sanctum.stateful', ['hyperion-vault.test', 'template.org', 'localhost']);
+        Config::set('sanctum.stateful', ['valora-vault.test', 'hyperion-vault.test', 'template.org', 'localhost']);
         Config::set('session.driver', 'file');
     }
 
@@ -25,25 +25,23 @@ class SanctumAuthTest extends TestCase {
     }
 
     public function test_complete_sanctum_lifecycle_multiple_roles_and_signed_jwt_cookie(): void {
-        // 1. User dengan Multiple Roles dalam satu record database
+        // 1. User dengan role admin dalam database
         $user = User::factory()->create([
             'name' => 'Super Admin',
-            'email' => 'admin@hyperion-vault.test',
-            'password' => bcrypt('password123'),
-            'role' => ['admin', 'manager']
+            'email' => 'admin@valora-vault.test',
+            'password' => 'password123',
+            'role' => ['admin']
         ]);
 
         // Verifikasi model helpers
         $this->assertTrue($user->isAdmin());
         $this->assertTrue($user->hasRole('admin'));
-        $this->assertTrue($user->hasRole('manager'));
-        $this->assertTrue($user->hasRole('manager', 'guest'));
         $this->assertFalse($user->hasRole('guest'));
-        $this->assertTrue($user->hasAllRoles('admin', 'manager'));
+        $this->assertTrue($user->hasAllRoles('admin'));
         $this->assertFalse($user->hasAllRoles('admin', 'guest'));
 
         // 2. Ambil Cookie CSRF (Wajib Return HTTP 204)
-        $csrfRes = $this->get('/sanctum/csrf-cookie', ['Referer' => 'http://hyperion-vault.test']);
+        $csrfRes = $this->get('/sanctum/csrf-cookie', ['Referer' => 'http://valora-vault.test']);
         $csrfRes->assertStatus(204);
         $csrfRes->assertCookie('XSRF-TOKEN');
         $csrfRes->assertCookie(config('session.cookie'));
@@ -55,22 +53,22 @@ class SanctumAuthTest extends TestCase {
         $noCsrfRes = $this->withCookies([
             config('session.cookie') => $sessionCookie
         ])->postJson('/api/v1/auth/login', [
-            'email' => 'admin@hyperion-vault.test',
+            'email' => 'admin@valora-vault.test',
             'password' => 'password123'
         ], [
-            'Referer' => 'http://hyperion-vault.test',
+            'Referer' => 'http://valora-vault.test',
         ]);
         $noCsrfRes->assertStatus(419);
 
-        // 4. Login Sukses dengan Multiple Roles & Signed JWT Cookie
+        // 4. Login Sukses dengan Role Admin & Signed JWT Cookie
         DB::enableQueryLog();
         $loginRes = $this->withCookies([
             config('session.cookie') => $sessionCookie
         ])->withSession(['_token' => $xsrfToken])->postJson('/api/v1/auth/login', [
-            'email' => 'admin@hyperion-vault.test',
+            'email' => 'admin@valora-vault.test',
             'password' => 'password123'
         ], [
-            'Referer' => 'http://hyperion-vault.test',
+            'Referer' => 'http://valora-vault.test',
             'X-XSRF-TOKEN' => $xsrfToken,
         ]);
 
@@ -86,7 +84,7 @@ class SanctumAuthTest extends TestCase {
         $jwtValue = $rawJwt->getValue();
         $verifiedClaims = JwtService::verifyToken($jwtValue);
         $this->assertNotNull($verifiedClaims, 'JWT Cookie gagal diverifikasi dengan signature APP_KEY.');
-        $this->assertEquals(['admin', 'manager'], $verifiedClaims['roles']);
+        $this->assertEquals(['admin'], $verifiedClaims['roles']);
         $this->assertEquals('Super Admin', $verifiedClaims['name']);
         $this->assertGreaterThan(time(), $verifiedClaims['exp']);
 
@@ -103,21 +101,21 @@ class SanctumAuthTest extends TestCase {
         // 6. Akses Protected Endpoint & Role Authorization
         $meRes = $this->withCookies([
             config('session.cookie') => $sessionCookie
-        ])->withSession(['_token' => $xsrfToken])->getJson('/api/v1/auth/me', ['Referer' => 'http://hyperion-vault.test']);
+        ])->withSession(['_token' => $xsrfToken])->getJson('/api/v1/auth/me', ['Referer' => 'http://valora-vault.test']);
         $meRes->assertStatus(200);
-        $meRes->assertJsonPath('data.email', 'admin@hyperion-vault.test');
-        $meRes->assertJsonPath('data.role', ['admin', 'manager']);
+        $meRes->assertJsonPath('data.email', 'admin@valora-vault.test');
+        $meRes->assertJsonPath('data.role', ['admin']);
 
         $adminRes = $this->withCookies([
             config('session.cookie') => $sessionCookie
-        ])->withSession(['_token' => $xsrfToken])->getJson('/api/v1/admin/stats', ['Referer' => 'http://hyperion-vault.test']);
+        ])->withSession(['_token' => $xsrfToken])->getJson('/api/v1/admin/stats', ['Referer' => 'http://valora-vault.test']);
         $adminRes->assertStatus(200);
 
         // 7. Logout & Cookie Cleanup
         $logoutRes = $this->withCookies([
             config('session.cookie') => $sessionCookie
         ])->withSession(['_token' => $xsrfToken])->postJson('/api/v1/auth/logout', [], [
-            'Referer' => 'http://hyperion-vault.test',
+            'Referer' => 'http://valora-vault.test',
             'X-XSRF-TOKEN' => $xsrfToken,
         ]);
         $logoutRes->assertStatus(204);
@@ -138,46 +136,27 @@ class SanctumAuthTest extends TestCase {
 
     public function test_customizable_rbac_permission_matrix_and_version_endpoint(): void {
         $admin = User::factory()->create([
-            'email' => 'admin_rbac@hyperion-vault.test',
+            'email' => 'admin_rbac@valora-vault.test',
             'role' => ['admin'],
             'is_active' => true,
         ]);
 
-        $manager = User::factory()->create([
-            'email' => 'manager_rbac@hyperion-vault.test',
-            'role' => ['manager'],
-            'is_active' => true,
-        ]);
-
-        $staff = User::factory()->create([
-            'email' => 'staff_rbac@hyperion-vault.test',
-            'role' => ['staff'],
-            'is_active' => true,
-        ]);
-
-        $user = User::factory()->create([
-            'email' => 'user_rbac@hyperion-vault.test',
-            'role' => ['user'],
-            'is_active' => true,
-        ]);
-
-        // Verifikasi permissions inheritance
+        // Verifikasi permissions inheritance untuk admin (wildcard)
         $this->assertTrue($admin->hasPermission('users.delete'));
         $this->assertTrue($admin->hasPermission('reports.export'));
         $this->assertEquals(['*'], $admin->getPermissions());
 
-        $this->assertTrue($manager->hasPermission('users.create'));
-        $this->assertTrue($manager->hasPermission('reports.export'));
-        $this->assertFalse($manager->hasPermission('users.delete'));
-
-        $this->assertTrue($staff->hasPermission('users.view'));
-        $this->assertFalse($staff->hasPermission('users.create'));
-
-        $this->assertTrue($user->hasPermission('profile.view'));
-        $this->assertFalse($user->hasPermission('users.view'));
+        // Verifikasi unconfigured roles yield empty permissions
+        $guest = User::factory()->create([
+            'email' => 'guest_rbac@valora-vault.test',
+            'role' => ['guest'],
+            'is_active' => true,
+        ]);
+        $this->assertFalse($guest->hasPermission('users.create'));
+        $this->assertEmpty($guest->getPermissions());
 
         // Verifikasi endpoint /api/v1/admin/version
-        $versionRes = $this->actingAs($admin)->getJson('/api/v1/admin/version', ['Referer' => 'http://hyperion-vault.test']);
+        $versionRes = $this->actingAs($admin)->getJson('/api/v1/admin/version', ['Referer' => 'http://valora-vault.test']);
         $versionRes->assertStatus(200);
         $versionRes->assertJsonStructure([
             'codebase_version',
@@ -192,7 +171,7 @@ class SanctumAuthTest extends TestCase {
     public function test_auto_remove_revoked_session_and_cookie_purge(): void {
         $user = User::factory()->create([
             'email' => 'revoked@hyperion-vault.test',
-            'password' => bcrypt('password123'),
+            'password' => 'password123',
             'role' => ['admin'],
             'token_version' => 1,
             'is_active' => true,
@@ -301,7 +280,7 @@ class SanctumAuthTest extends TestCase {
 
         $user = User::factory()->create([
             'email' => 'zerodup@hyperion-vault.test',
-            'password' => bcrypt('password123'),
+            'password' => 'password123',
             'role' => ['admin'],
             'is_active' => true,
             'token_version' => 1,
@@ -486,7 +465,7 @@ class SanctumAuthTest extends TestCase {
         // 3. Suspended account login returns 422 with suspension notice
         $suspendedUser = User::factory()->create([
             'email' => 'suspended_user@hyperion-vault.test',
-            'password' => bcrypt('password123'),
+            'password' => 'password123',
             'role' => ['user'],
             'is_active' => false,
         ]);
@@ -506,7 +485,7 @@ class SanctumAuthTest extends TestCase {
         // 4. Invalid unconfigured role returns 422
         $invalidRoleUser = User::factory()->create([
             'email' => 'invalid_role_user@hyperion-vault.test',
-            'password' => bcrypt('password123'),
+            'password' => 'password123',
             'role' => ['fictional_role_xyz'],
             'is_active' => true,
         ]);
@@ -526,14 +505,14 @@ class SanctumAuthTest extends TestCase {
 
     public function test_logout_other_devices_invalidates_remote_sessions(): void {
         $user = User::factory()->create([
-            'email' => 'multidevice@hyperion-vault.test',
-            'password' => bcrypt('password123'),
-            'role' => ['user'],
+            'email' => 'multidevice@valora-vault.test',
+            'password' => 'password123',
+            'role' => ['admin'],
             'token_version' => 1,
             'is_active' => true,
         ]);
 
-        $csrfRes = $this->get('/sanctum/csrf-cookie', ['Referer' => 'http://hyperion-vault.test']);
+        $csrfRes = $this->get('/sanctum/csrf-cookie', ['Referer' => 'http://valora-vault.test']);
         $sessionCookie = $csrfRes->getCookie(config('session.cookie'))->getValue();
         $xsrfToken = $csrfRes->getCookie('XSRF-TOKEN')->getValue();
 
@@ -541,10 +520,10 @@ class SanctumAuthTest extends TestCase {
         $loginRes = $this->withCredentials()->withCookies([
             config('session.cookie') => $sessionCookie
         ])->withSession(['_token' => $xsrfToken])->postJson('/api/v1/auth/login', [
-            'email' => 'multidevice@hyperion-vault.test',
+            'email' => 'multidevice@valora-vault.test',
             'password' => 'password123',
         ], [
-            'Referer' => 'http://hyperion-vault.test',
+            'Referer' => 'http://valora-vault.test',
             'X-XSRF-TOKEN' => $xsrfToken,
         ]);
         $loginRes->assertStatus(200);
@@ -569,7 +548,7 @@ class SanctumAuthTest extends TestCase {
         // 3. Current device requests logout of all other devices
         $res = $this->withCredentials()->withCookies([config('session.cookie') => $authSessionCookie])
             ->postJson('/api/v1/auth/logout-other-devices', [], [
-                'Referer' => 'http://hyperion-vault.test',
+                'Referer' => 'http://valora-vault.test',
                 'X-XSRF-TOKEN' => $newXsrfToken,
             ]);
 
