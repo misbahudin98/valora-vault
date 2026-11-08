@@ -1,0 +1,38 @@
+User-agent: *
+Allow: /
+Allow: /login
+Allow: /llms.txt
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+
+# AI Search & AEO Crawlers (Perplexity, ChatGPT Search, Claude, Google Gemini)
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+Allow: /llms.txt
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+
+Sitemap: http://hyperion-vault.test/sitemap.xml

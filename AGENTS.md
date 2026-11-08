@@ -1,0 +1,49 @@
+# Universal Agent Invariants & System Contract (AGENTS.md)
+> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Target:** Autonomous Coding Agents (Antigravity, Gemini, Claude, Cursor, Copilot)
+
+Rujuk berkas berikut sebagai Single Source of Truth (SSoT):
+
+### A. Inti Sistem & Protokol Otonom (Core Governance):
+1. [`.agents/rules/universal_invariants.md`](.agents/rules/universal_invariants.md) — Aturan sistem mutlak dan kebijakan Anti-Slop.
+2. [`GEMINI.md`](GEMINI.md) — Instruksi eksekusi root workspace.
+3. [`llms.txt`](llms.txt) — Peta Golden Invariants dan AI Fast Task Router.
+4. [`doc/feature.md`](doc/feature.md) — Master Feature Index & Peta Spesifikasi Modular [`doc/features/`](doc/features/).
+5. [`.agents/rules/execution_protocol.md`](.agents/rules/execution_protocol.md) — Protokol eksekusi modular Single Feature Turn & Review Gate.
+6. [`.agents/rules/execution_and_token_tracking.md`](.agents/rules/execution_and_token_tracking.md) — Kebijakan eksekusi otonom alat & pelaporan metrik token.
+7. [`doc/architecture.md`](doc/architecture.md) — Blueprint arsitektur backend, database, dan security model.
+8. [`doc/prompt.feature.md`](doc/prompt.feature.md) — Orchestrator kompilasi fitur Specification-Driven Development (SDD).
+9. [`doc/project_documentation_standards.md`](doc/project_documentation_standards.md) — Standar Arsitektur Dokumentasi Proyek Universal (Multi-Persona & Diátaxis).
+10. [`doc/testing_standards.md`](doc/testing_standards.md) — Standar Rekayasa Pengujian Perangkat Lunak Korporasi (Vladimir Khorikov 4 Pillars, Test Pyramid, AAA Pattern).
+
+### B. Peta 5+2 Engine Arsitektur Rekayasa (Invariants ➔ Skill ➔ Whitepaper):
+1. **Product Discovery:** [`.agents/rules/product_discovery_invariants.md`](.agents/rules/product_discovery_invariants.md) ➔ [`.agents/skills/discovery-architect/SKILL.md`](.agents/skills/discovery-architect/SKILL.md) ➔ [`doc/software_design_standards.md`](doc/software_design_standards.md)
+2. **Blueprint Studio:** [`.agents/rules/blueprint_studio_invariants.md`](.agents/rules/blueprint_studio_invariants.md) ➔ [`/admin/studio`](frontend/src/routes/admin/studio/+page.svelte) ➔ [`doc/features/05_blueprint_studio.md`](doc/features/05_blueprint_studio.md)
+3. **Temporal Dashboard:** [`.agents/rules/temporal_dashboard_invariants.md`](.agents/rules/temporal_dashboard_invariants.md) ➔ [`.agents/skills/dashboard-architect/SKILL.md`](.agents/skills/dashboard-architect/SKILL.md) ➔ [`doc/data_analysis_standard.md`](doc/data_analysis_standard.md)
+4. **Clean Code & Refactor:** [`.agents/rules/clean_architecture_invariants.md`](.agents/rules/clean_architecture_invariants.md) ➔ [`.agents/skills/clean-code-refactor/SKILL.md`](.agents/skills/clean-code-refactor/SKILL.md) ➔ [`doc/architecture.md`](doc/architecture.md) & [`doc/testing_standards.md`](doc/testing_standards.md)
+5. **Security & Hardening:** [`.agents/rules/security_invariants.md`](.agents/rules/security_invariants.md) ➔ [`.agents/skills/security-hardening/SKILL.md`](.agents/skills/security-hardening/SKILL.md) ➔ [`doc/security_standards.md`](doc/security_standards.md)
++1. **Landing & Growth:** [`.agents/rules/landing_page_invariants.md`](.agents/rules/landing_page_invariants.md) ➔ [`.agents/skills/landing-architect/SKILL.md`](.agents/skills/landing-architect/SKILL.md) ➔ [`doc/landing_page_standards.md`](doc/landing_page_standards.md)
++2. **Prompt Architect:** [`.agents/rules/prompt_architect_trigger.md`](.agents/rules/prompt_architect_trigger.md) ➔ [`.agents/skills/prompt-architect/SKILL.md`](.agents/skills/prompt-architect/SKILL.md) ➔ [`doc/prompt.feature.md`](doc/prompt.feature.md)
+
+### Kebijakan Anti-Slop & Protokol Kerja Ringkas:
+- **NO_PLACEHOLDER:** 100% kode utuh, tuntas, production-ready.
+- **NO_ALIAS:** Dilarang keras membuat alias nama, wrapper alias, synonym mapping, atau re-export alias untuk role, permission, route, method, tabel, kolom, atau komponen. Gunakan penamaan kanonikal eksplisit (Single Source of Truth).
+- **NO_UNAUTHORIZED_CONSOLIDATION:** Dilarang keras melakukan konsolidasi sepihak (menggabungkan beberapa role menjadi satu, menggabungkan tabel 3NF, menyatukan controller/komponen terpisah menjadi modul monolitik raksasa) tanpa instruksi tertulis eksplisit dari pengguna. Setiap entitas wajib menjaga Single Responsibility Principle (SRP) dan Bounded Context aslinya.
+- **ZERO_REGRESSION_EXECUTION:** Setiap eksekusi prompt WAJIB menjamin 0 bug/masalah baru. Wajib mempertahankan kompatibilitas penuh, kontrak API, dan relasi database; serta wajib memvalidasi kelulusan 100% pengujian (`php artisan test` dan `npm run build`) sebelum mengakhiri setiap giliran kerja.
+- **FULL_STATE_UI:** Svelte 5 runes wajib menangani 4 state visual (Loading, Empty, Error, Success).
+- **YAGNI_KISS:** Thin Controller, Form Request, API Resource. Hindari over-abstraction.
+- **SECURITY:** Wajib Policy authorization, PDO parameter binding, `SESSION_DRIVER=file`, RFC 7807 problem details.
+- **PRO_GRADE_COMPACT_UI:** Desain kompak anti-bloat/anti-sesak (hairline 1px border, shadow-2xs, padding p-2.5, tipografi data-density, menu accordion default tertutup, dan Floating Thumb Dock di mobile).
+- **CARD_TABLE_AND_PAGE_SIZE:** Seluruh tabel data WAJIB menerapkan mekanisme tampilan Card View (otomatis di mobile dan opsi di desktop) serta WAJIB menyediakan kontrol interaktif jumlah data yang ditampilkan per halaman (10, 25, 50, 100 entri).
+- **CLIENT_SIDE_CSV_EXPORT:** Seluruh tabel data yang dibuat WAJIB menyediakan fitur ekspor CSV langsung dari sisi front-end (*in-memory client-side export* tanpa round-trip backend, UTF-8 BOM `\uFEFF`, sanitasi kutip dua ganda, proteksi formula injection CWE-1236, dan tombol aksi "Ekspor CSV" yang mudah diakses).
+- **SPACIOUS_BREATHING_ROOM:** Tampilan antarmuka DILARANG terlihat sesak, padat berhimpitan, atau penuh sesak, baik di layar HP maupun laptop. Terapkan ruang bernapas (*whitespace* terukur, padding proporsional, pembatas tipis 1px).
+- **TAB_PANE_VISIBILITY:** Seluruh tab pane WAJIB mempertimbangkan keterbacaan tinggi dan DILARANG terpotong atau tersembunyi di balik scroll horizontal untuk tab dengan jumlah moderat (≤ 6 tab). Wajib menerapkan pembungkusan baris responsif (*responsive wrap*) agar seluruh menu tab langsung terlihat jelas tanpa perlu digeser.
+- **ELEGANT_MINIMALISM_AND_ACCESSIBILITY:** Desain wajib mematuhi filosofi minimalis elegan Dieter Rams (*Weniger, aber besser*), rasio data-ke-tinta tinggi Edward Tufte (minim border/visual noise), ritme tipografi Robert Bringhurst (panjang baris 45–75 CPL, modular scale, monospace untuk data tabular), batas kontainer terkontrol (`max-w-6xl`/`7xl`, tidak membentang liar memenuhi layar), dan aksesibilitas universal WCAG 2.2 AAA (kontras $\ge 4.5:1$, touch target $\ge 44\text{px}$, keyboard focus visible ring).
+- **COLOR_CONTRAST_AND_MOTION_CHOREOGRAPHY:** Desain wajib mematuhi proporsi warna 60-30-10 (OKLCH standard), batas kontras persepsi APCA $L_c \ge 75$ (body) & $L_c \ge 60$ (heading) / WCAG 2.2 AAA (7:1), disiplin nesting animasi GSAP (kontainer makro $\le 30\text{px}$ vs tipografi mikro $\le 14\text{px}$ dengan stagger 0.04-0.08s, plafon durasi $\le 600\text{ms}$, GPU properties only), pencegahan memory leak via `gsap.context()` & `ctx.revert()`, dan kepatuhan mutlak `prefers-reduced-motion`.
+- **SPATIAL_PROPORTION_AND_BALANCE:** Desain wajib mematuhi sains jarak Gestalt (rasio kedekatan mikro:meso:makro 1:3:6), skala Bringhurst (panjang baris optimal 45–75 CPL via `max-w-3xl`/`4xl`), inverse leading (display rapat vs body lega), ruang negatif aktif Edward Tufte (eliminasi '1+1=3 Noise' & nested container bloat), dan keseimbangan dinamis asimetris (Visual Weight Equilibrium).
+- **UNIVERSAL_DOCUMENTATION_ARCHITECTURE:** Dokumentasi proyek wajib mematuhi standar multi-persona (User Operasional, User Awam, Profesional, dan Baby Boomer/Lansia dengan kontras tajam, font nyaman, instruksi linier bebas istilah gaul, peredam kecemasan), kerangka Diátaxis 4-kuadran, gaya penulisan Plain Language (ISO 24495-1, active voice, 15–20 kata/kalimat, Flesch-Kincaid Grade 7–8), pemodelan bisnis BPMN 2.0, dan diagram arsitektur C4 Model.
+- **FILTER_AND_SORT_ENGINE:** Seluruh tabel data operasional WAJIB menyediakan mesin filter instan in-memory debounced 120ms multi-field, kolom sorting deterministik multi-tipe (tanggal, numerik, teks alfabetis, dan urutan status kanonik), serta larangan menumpuk lebih dari 1 tabel data independen dalam 1 halaman (wajib dipisahkan ke dalam sub-halaman/tree menu sidebar mandiri).
+- **SURFACE_CONTRAST_AND_ELEVATION:** Seluruh antarmuka WAJIB mematuhi arsitektur elevasi 3-Tier (L0 Kanvas teduh `bg-slate-100/70` / `dark:bg-[#070b12]`, L1 Kartu Makro solid `bg-white` / `dark:bg-slate-900/90` ber-border 1px presisi & shadow-2xs, L2 Elemen Mikro tersemat dengan kontras diferensiasi jelas). DILARANG KERAS ilusi pseudo-glassmorphism transparan rendah (`bg-white/40`, `dark:bg-white/[0.02]`) di atas kanvas flat yang memicu efek bunglon visual (*visual camouflage*) dan ketidakjelasan batas antar-elemen.
+- **MASTERPIECE_ANTI_AI_SLOP:** Desain visual wajib memiliki keaslian rasa buatan manusia (*human-crafted authenticity*), keanggunan berkarakter (*quiet luxury*), dan eliminasi penuh klise visual AI (dilarang gradient ungu-pink/sian neon murahan, blob blur mengambang tanpa fungsi, glassmorphism berlebihan yang mengorbankan kontras, atau layout melayang tanpa hierarki fungsional).
+- **AUTONOMOUS_WITHIN_TURN:** Dalam lingkup 1 unit kerja, jalankan seluruh aksi alat (baca, tulis, migrasi, tes, build) secara otonom tanpa meminta izin per baris perintah.
+- **SINGLE_FEATURE_TURN & REVIEW_GATE:** Batasi eksekusi HANYA 1 Fitur untuk 1 Role per putaran; sajikan formulir Review Gate dan tunggu persetujuan manusia sebelum melangkah ke fitur berikutnya.

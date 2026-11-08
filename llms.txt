@@ -1,0 +1,259 @@
+# Hyperion Vault - AI Fast Index & Token Optimizer (v6.31.0)
+> Target: Laravel 13 Sanctum + SQLite/MySQL + Svelte 5 Runes on Windows Laragon / Hostinger Shared Hosting. Synchronized with PQTM enterprise production standard.
+
+```yaml
+version: "6.31.0" # SemVer 2.0.0 (MAJOR.MINOR.PATCH)
+system_type: "SPA + RESTful API"
+backend: "Laravel 13 (PHP 8.3/8.4), Sanctum Session Auth, SQLite WAL / MySQL"
+frontend: "Svelte 5 (Pure JS Runes: $state, $derived, $props), Tailwind CSS v4"
+web_server: "Nginx Laragon (Zero-Config Universal Gateway: index.php + .htaccess Brotli/Gzip delivery)"
+installer_updater: "install.php (Web / CLI wizard, smart git ship 'php install.php ship', skill synchronizer 'php install.php sync-skills', project spawner 'php install.php spawn <target>', safe in-place updater 'php install.php update', .installed lock & history log)"
+domain: "http://hyperion-vault.test (aliases: localhost, 127.0.0.1)"
+scale_profile: "Indexed for 9000+ records (B-Tree composite indexes + 1000 item safe limit ceiling)"
+workers: "FastCGI 127.0.0.1:9003 & 9004 (PHP_FCGI_MAX_REQUESTS=0)"
+session_driver: "file (NVMe SSD I/O, ZERO MySQL connection overhead + physical unlink GC)"
+device_registry: "user_devices (Real-time active device tracking & granular revocation)"
+rbac_engine: "Dynamic Role-Permission Matrix (backend/config/permissions.php + EnsurePermission)"
+css_engine: "Tailwind CSS v4 (@tailwindcss/vite: Rust LightningCSS engine, sub-ms build, 0 runtime)"
+slo: "99.0% Uptime, Latency P99 < 150ms (Actual: ~65ms), MySQL conns <= 0.16 / 25"
+security_profile: "Sanctum CSRF + HMAC-SHA256 JWT + Security Headers + POIN Defense + .installed Lock"
+test_status: "PHPUnit: 29 passed (376 assertions, 100% green) | Static Build: 0 warning a11y (100% Green)"
+design_spec: "doc/design.md (Universal Dual-Theme: Daylight & Dark Obsidian, 2-Font Plus Jakarta/Inter, WCAG AAA)"
+feature_engine: "doc/prompt.feature.md (Track A Feature Synthesis, Track B Landing/Style, Track C Zero-Regression Refactoring)"
+```
+
+---
+
+## 1. PETA KESINAMBUNGAN DOKUMEN & URUTAN BACA (DOCUMENT CONTINUITY MAP)
+*Urutan logis membaca dokumentasi repositori untuk AI Agent & Rekayasawan:*
+
+| Urutan | Berkas | Peruntukan & Tujuan Utama | Kapan AI Wajib Membaca? |
+|---|---|---|---|
+| **#1** | [`llms.txt`](llms.txt) | **Router Tugas AI & Token Saver:** Index cepat, 22 Golden Invariants, SOP pasca-clone & safe update. | **Selalu dibaca pertama** oleh model AI untuk menentukan rute file. |
+| **#2** | [`README.md`](README.md) | **Pintu Masuk Utama:** Gambaran umum arsitektur, quickstart 1-klik, panduan update, ringkasan fitur. | Saat orientasi repositori atau panduan evaluasi developer manusia. |
+| **#3** | [`doc/architecture.md`](doc/architecture.md) | **Master Technical Blueprint:** SOP detail backend, auth, database, routing, FastCGI, pengujian. | Saat merancang perubahan arsitektural, schema DB, auth, atau audit. |
+| **#4** | [`doc/design.md`](doc/design.md) | **Standar UI/UX, Warna, Kontras, Spasial & Motion:** SSoT visual (Daylight & Dark Obsidian), kaidah 60-30-10, APCA/WCAG AAA, Gestalt 1:3:6, koreografi GSAP & Svelte 5. | Saat merancang antarmuka, token warna, kontras, ritme spasial, animasi GSAP, tipografi, dan kustomisasi tampilan. |
+| **#5** | [`doc/prompt.feature.md`](doc/prompt.feature.md) | **Autonomous Feature Engine:** Mesin prompt Track A (Fitur Baru) & Track B (Landing Page & White-Label). | Saat menerima permintaan fitur fungsional baru atau penyesuaian landing page. |
+| **#6** | [`doc/feature.md`](doc/feature.md) | **Master Feature Index:** Ringkasan seluruh domain fitur + folder spesifikasi modular [`doc/features/`](doc/features/). | Saat mengimplementasikan atau mereferensikan spesifikasi fitur. |
+| **#7** | [`doc/local.inisiasi.md`](doc/local.inisiasi.md) | **Runbook Deterministik Lokal:** Panduan instalasi langkah demi langkah dari nol untuk Laragon. | Saat melakukan inisiasi lokal lingkungan kerja atau provisioning ulang. |
+| **#8** | [`doc/changes.md`](doc/changes.md) | **Log Audit & Jejak Perubahan:** Histori akar masalah, audit teknis, dan evolusi dari v1.0.0 ke v6.30.0. | Saat menganalisis alasan historis atau audit kepatuhan ISO/RFC. |
+| **#9** | [`doc/version_sync.php`](doc/version_sync.php) | **Automated SemVer Synchronizer:** Alat CLI sinkronisasi versi semantik dan update dokumentasi serentak. | Saat menaikkan versi rilis atau memeriksa keselarasan versi repositori. |
+| **#10** | [`doc/data_analysis_standard.md`](doc/data_analysis_standard.md) | **Standar Analitika & BI:** SSoT CRISP-DM, DAMA-DMBOK, Kimball Rollup, kognisi Few/Tufte, dan Hubbard. | Saat merancang modul pelaporan, analitik temporal, atau metriks KPI. |
+| **#11** | [`doc/software_design_standards.md`](doc/software_design_standards.md) | **Standar Rekayasa 3-Pilar:** SSoT DDD/FSM, Normalisasi 3NF, B-Tree Indexing, dan Heuristik Usabilitas NN/g. | Saat merancang arsitektur bisnis baru, skema ERD, atau audit UX. |
+| **#12** | [`doc/security_standards.md`](doc/security_standards.md) | **Standar Keamanan & Hardening:** SSoT RFC (7807/8725/6265bis/8446/9116), OWASP ASVS L2, NIST SP 800-63B, CIS v8. | Saat mengaudit kerentanan, hardening server, konfigurasi CSP, dan insiden sekuriti. |
+| **#13** | [`doc/landing_page_standards.md`](doc/landing_page_standards.md) | **Standar Rekayasa Landing Page & Web3:** SSoT Kuartet Penemuan (SEO, AEO, GEO, AIO), StoryBrand SB7, Apple Spatial Materials & Vibrancy, Damped Spring Motion, Tactile Web Audio, & Web3 Trust Architecture. | Saat merancang landing page publik, halaman penawaran, Web3/dApp, audit SEO/GEO, atau optimasi konversi. |
+| **#14** | [`doc/project_documentation_standards.md`](doc/project_documentation_standards.md) | **Standar Dokumentasi Universal:** SSoT multi-persona (Awam, Operator, Profesional, Baby Boomer), Diátaxis, Plain Language ISO 24495-1, BPMN 2.0, C4 Model. | Saat merancang struktur buku panduan, dokumentasi alur bisnis, spesifikasi teknis, atau panduan klien. |
+| **#15** | [`doc/testing_standards.md`](doc/testing_standards.md) | **Standar Pengujian Korporasi:** SSoT testing backend & frontend, 4 pilar Khorikov, piramida Fowler, trophy Dodds, pola AAA, zero-flaky test. | Saat merancang, menulis, atau memvalidasi unit test backend (PHPUnit) dan frontend (Svelte 5). |
+| **#16** | [`doc/developer_quickstart_guide.md`](doc/developer_quickstart_guide.md) | **Panduan Cepat Pengembang (Diátaxis Quickstart):** Setup 3-menit, kloning repositori, arsitektur Spawner 5-detik, Single Feature Turn SDD, dan cheat-sheet `install.php`. | Saat orientasi pengembang baru atau onboarding tim rekayasa. |
+
+---
+
+## 2. AI FAST TASK ROUTER & SKILL ORCHESTRATION (ANTI-HALLUCINATION & TOKEN SAVER)
+*AI Coding Assistants: Baca HANYA berkas target berikut untuk menghemat kuota token konteks:*
+
+### 2.A. Peta Terpadu 5+2 Engine Arsitektur (Tag-Driven Router)
+| Tag Pemicu / Domain | Aturan Invarian | Playbook Skill | SSoT Whitepaper | Berkas WAJIB Dibaca | DILARANG Membaca |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **1. Product Discovery (`@discovery`, `@feature`)** | `.agents/rules/product_discovery_invariants.md` | `.agents/skills/discovery-architect/SKILL.md` | `doc/software_design_standards.md` | Rules, Skill, SSoT, `doc/feature.md` | Seluruh file di luar scope discovery |
+| **2. Blueprint Studio (`@studio`)** | `.agents/rules/blueprint_studio_invariants.md` | GUI `/admin/studio` | `doc/features/05_blueprint_studio.md` | Rules, Studio Svelte page, `doc/features/` | tests, `install.php` |
+| **3. Temporal Dashboard (`@dashboard`, `@analytics`)** | `.agents/rules/temporal_dashboard_invariants.md` | `.agents/skills/dashboard-architect/SKILL.md` | `doc/data_analysis_standard.md` | Rules, Skill, SSoT, Dashboard Svelte | Seluruh file di luar scope analitik |
+| **4. Clean Code & Refactor (`@clean-code`, `@refactor`, `#tidy`)** | `.agents/rules/clean_architecture_invariants.md` | `.agents/skills/clean-code-refactor/SKILL.md` | `doc/architecture.md`<br>`doc/testing_standards.md` | Rules, Skill, Target file to refactor | Seluruh file di luar scope refaktor |
+| **5. Security Hardening (`@security`, `@hardening`, `#owasp`)** | `.agents/rules/security_invariants.md` | `.agents/skills/security-hardening/SKILL.md` | `doc/security_standards.md` | Rules, Skill, SSoT, Target security route | Seluruh file di luar scope security |
+| **+1. Landing & Growth (`@landing`, `@landing-page`, `@seo`, `@geo`, `@cro`, `@aio`, `@web3`)** | `.agents/rules/landing_page_invariants.md` | `.agents/skills/landing-architect/SKILL.md` | `doc/landing_page_standards.md` | Rules, Skill, SSoT, `frontend/src/routes/+page.svelte` | `backend/`, `install.php`, `database/` |
+| **+2. Prompt Architect (`@prompt`, `@pa`)** | `.agents/rules/prompt_architect_trigger.md` | `.agents/skills/prompt-architect/SKILL.md` | `doc/prompt.feature.md` | Rules, Skill, SSoT, Target feature spec | Seluruh file di luar scope prompt |
+
+### 2.B. Router Tugas Teknis Kode & Operasional (Component-Driven Router)
+| Target Tugas / Permintaan | Baca HANYA Berkas Ini | DILARANG Membaca Berkas Ini |
+|---|---|---|
+| **Fitur Baru / PRD / ERD** | `doc/prompt.feature.md`<br>`doc/design.md`<br>`doc/feature.md`<br>`doc/features/` | `backend/app/`, `frontend/src/routes/`, tests |
+| **Kustomisasi Tampilan Installer Wizard** | `doc/design.md` (Seksi 4.A)<br>`install.php` (baris 396-455) | `frontend/`, `backend/routes/` |
+| **Custom Roles & Permissions (RBAC)** | `backend/config/permissions.php`<br>`backend/app/Models/User.php`<br>`frontend/src/lib/state/auth.svelte.js` | `frontend/src/routes/admin/`, `backend/database/factories/` |
+| **Design Tokens & UI Branding** | `doc/design.md`<br>`frontend/src/app.html`<br>`frontend/src/routes/layout.css` | `backend/`, `install.php`, `index.php` |
+| **Desain, Warna, Kontras, Spasial & Animasi (GSAP)** | `doc/design.md`<br>`.agents/skills/landing-architect/references/ui_ux_motion_matrix.md`<br>`.agents/skills/discovery-architect/references/ui_ux_component_decision_matrix.md` | `backend/` |
+| **Dokumentasi Proyek & Panduan Multi-Persona** | `doc/project_documentation_standards.md` | `backend/tests/` |
+| **API Route / Controller** | `backend/routes/api.php`<br>`backend/app/Http/Controllers/Api/V1/` | `frontend/`, `install.php`, `index.php` |
+| **Mode Maintenance & Log Viewer** | `backend/app/Http/Controllers/Api/V1/Admin/AdminSystemController.php`<br>`frontend/src/routes/admin/system/`<br>`backend/app/Http/Controllers/Api/V1/TelemetryController.php` | `backend/database/factories/`, `install.php` |
+| **Auth, Sesi & Token** | `backend/app/Http/Controllers/Api/V1/Auth/AuthController.php`<br>`backend/app/Http/Middleware/CheckUserActive.php`<br>`frontend/src/lib/state/auth.svelte.js` | `frontend/src/routes/admin/`, `backend/database/factories/` |
+| **Frontend UI Page** | Target page under `frontend/src/routes/`<br>`frontend/src/lib/components/ui/` | `backend/`, `install.php`, `index.php` |
+| **Installer & Safe Updater** | `install.php`<br>`index.php`<br>`.installed` | `frontend/src/`, `backend/app/` |
+| **Database Schema / Migration** | `backend/database/migrations/`<br>`backend/app/Models/` | `frontend/`, `index.php` |
+| **Deployment Produksi (FTP / SSH)** | `deploy_ftp.php`<br>`deploy_ssh.php`<br>`deploy_ssh.sh`<br>`.env.deploy.example`<br>`README.md` | `backend/database/factories/`, `frontend/src/` |
+| **Sinkronisasi Versi SemVer** | `doc/version_sync.php`<br>`backend/routes/console.php` | `frontend/`, `database/` |
+| **Run / Fix / Design Tests** | `doc/testing_standards.md`<br>`backend/tests/Feature/`<br>`backend/tests/TestCase.php`<br>`frontend/tests/auth.uat.spec.js` | `frontend/src/lib/components/` |
+
+### 2.C. Peta Alur Orkestrasi Lintas-Skill (Lifecycle Chaining Pipeline)
+Setiap perancangan sistem besar mengalir melalui urutan spesialisasi berikut:
+1. **Fase 1 (Konsep & Problem Discovery):** Panggil `@discovery` untuk memetakan Aktor, Pain Points, JTBD, dan EventStorming.
+2. **Fase 2 (Visual Model & Schema):** Buka GUI `/admin/studio` (`@studio`) untuk merancang kanvas ERD interaktif dan mengunduh berkas migrasi.
+3. **Fase 3 (Halaman Penawaran & Pertumbuhan):** Panggil `@landing` untuk merancang landing page publik (StoryBrand SB7, Apple Spatial Materials, 60-30-10 OKLCH, Dark Luxury, AEO, GEO, AIO/llms.txt, dan Web Audio taktil).
+4. **Fase 4 (Dasbor & Pelaporan Analitik):** Panggil `@dashboard` untuk KPI multi-temporal (Kimball rollup, Stephen Few bullet graphs, Tufte sparklines, Apple Spatial Materials, dan selective translucency mobile).
+5. **Fase 5 (Kompilasi Kode Siap Produksi):** Panggil `@prompt` untuk mengompilasi prompt koding berstandar emas (XML-isolated, anti-slop, test-driven).
+6. **Fase 6 (Pembersihan & Refaktorisasi):** Panggil `@clean-code` atau `@refactor` untuk eliminasi dead-code, collapse hierarchy, dan zero-regression audit.
+7. **Fase 7 (Sertifikasi Keamanan & Hardening):** Panggil `@security` untuk audit OWASP ASVS L2, BOLA Policy check, sanitasi RFC 7807, dan header hardening.
+
+---
+
+## 3. KONDISI PRASYARAT PASCA CLONE (PREREQUISITES CHECKLIST)
+Sebelum instalasi dijalankan pada mesin baru, pastikan kondisi berikut terpenuhi:
+1. **Git**: Terpasang di sistem (`git --version`).
+2. **PHP 8.3 / 8.4 CLI & Ekstensi Aktif**:
+   - `pdo_sqlite` & `sqlite3` aktif di `php.ini` (atau `pdo_mysql` jika menggunakan MySQL).
+   - `curl`, `mbstring`, `openssl`, `fileinfo`, `json` aktif.
+3. **Package Managers**:
+   - Composer 2.x (`composer --version`).
+   - Node.js versi 18+ (disarankan Node 20+) & npm (didukung universal lintas versi via `frontend/.npmrc`).
+4. **Web Server & Hosts**:
+   - Laragon Nginx berjalan pada port `80`.
+   - Host mapping (`C:\Windows\System32\drivers\etc\hosts`): `127.0.0.1 hyperion-vault.test`.
+   - Direktori root repositori: `D:\laragon\www\hyperion-vault`.
+5. **Port Jaringan Aktif**:
+   - `80`: Nginx reverse-proxy universal gateway (`index.php`).
+   - `9003` & `9004`: Dual worker FastCGI persisten (`$env:PHP_FCGI_MAX_REQUESTS="0"`).
+   - `5173`: Vite frontend dev server (internal).
+
+---
+
+## 4. PROSES INSTALASI DETERMINISTIK PASCA CLONE (POST-CLONE SETUP)
+
+### Jalur 1: CLI Otomatis (1-Langkah Mandiri - Rekomendasi AI & CI/CD)
+```powershell
+cd D:\laragon\www\hyperion-vault
+
+# 1. Jalankan installer otomatis (otomatis menginstal Composer & npm jika belum ada)
+php install.php install
+
+# 2. Jalankan FastCGI ganda persisten & Vite dev server
+$env:PHP_FCGI_MAX_REQUESTS = "0"
+Start-Process -FilePath "D:\laragon\bin\php\8.3\php-cgi.exe" -ArgumentList "-b 127.0.0.1:9003" -WindowStyle Hidden
+Start-Process -FilePath "D:\laragon\bin\php\8.3\php-cgi.exe" -ArgumentList "-b 127.0.0.1:9004" -WindowStyle Hidden
+cd frontend && Start-Process -FilePath "cmd.exe" -ArgumentList "/c npm run dev -- --host 127.0.0.1 --port 5173" -WindowStyle Hidden && cd ..
+```
+
+### Jalur 2: Wizard Peramban Web (Auto-Detect 1-Klik)
+1. Buka peramban di `http://hyperion-vault.test/`.
+2. Gateway `index.php` mendeteksi ketiadaan berkas `.installed` dan otomatis me-redirect ke `http://hyperion-vault.test/install.php`.
+3. Klik **"Jalankan Instalasi Otomatis Sekarang"** (atau akses langsung `http://hyperion-vault.test/install.php?auto=1`).
+4. Sistem otomatis mengonfigurasi `.env`, membangkitkan `APP_KEY`, inisialisasi basis data SQLite WAL, migrasi & seeding, serta membuat berkas lock `.installed`.
+
+### Jalur 3: Golden Archetype Spawner (Duplikasi Proyek Baru Instan ~5 Detik)
+Melahirkan proyek aplikasi baru secara instan dari engine induk tanpa unduh ulang Composer maupun npm:
+```powershell
+php install.php spawn portal-santri --name="Portal Santri" --domain="portal-santri.test" --desc="Sistem Santri Terpadu"
+```
+*(Atau gunakan Web GUI di `http://hyperion-vault.test/install.php` pada kartu 'Spawner Proyek Baru')*.
+
+### Kredensial Default Sistem:
+- **URL Aplikasi**: `http://hyperion-vault.test`
+- **Administrator**: `admin@hyperion-vault.test` / `password123` (Roles: `['admin', 'manager']`)
+- **Regular User**: `user@hyperion-vault.test` / `password123` (Role: `['user']`)
+
+---
+
+## 5. MEKANISME PEMBARUAN SISTEM (SAFE IN-PLACE UPDATER)
+Jika terdapat pembaruan arsitektur atau kode dari GitHub (`git pull`):
+```powershell
+# Jalankan safe update in-place (Non-destructive: tidak menghapus data pengguna!)
+php install.php update
+```
+- **Tindakan Otomatis:**
+  1. Membersihkan cache aplikasi (`artisan optimize:clear`).
+  2. Menjalankan migrasi pending secara aman (`artisan migrate --force` - **DILARANG** `migrate:fresh`).
+  3. Mengompilasi ulang bundel SPA (`npm run build`).
+  4. Mencatat riwayat versi & timestamp pada berkas `.installed`.
+- **Akses Web Updater:** Akses `http://hyperion-vault.test/install.php` -> Klik tombol **"Perbarui Sistem Sekarang (Safe Update)"**.
+- **Audit Endpoint API:** `GET /api/v1/admin/version` menampilkan status versi kode vs versi instalasi.
+
+---
+
+## 6. HAK AKSES & MATRIKS IZIN KUSTOM (CLIENT RBAC)
+- Konfigurasi: [backend/config/permissions.php](backend/config/permissions.php).
+- Model Helper: `$user->hasPermission('users.create')` / `$user->getPermissions()`. Role `admin` otomatis memiliki wildcard `['*']`.
+- Backend Protection: `Route::middleware('permission:reports.export')->...` atau `Route::middleware('role:admin,manager')->...`
+- Frontend Protection: Svelte 5 `$derived(authState.hasPermission('reports.export'))`.
+- Menambah Role Klien: Cukup daftarkan di `backend/config/permissions.php` tanpa perlu migrasi tabel!
+- **Strictly Explicit Roles & Zero Consolidation:**
+  - Seluruh peran disimpan dan diuji persis sesuai penugasan nyata. Multi-role assignment didukung secara native via array storage.
+  - Zero role consolidation, zero aliases, zero runtime mutating conversion. Dilarang keras membuat `consolidation_map` atau `aliases`.
+- **Universal Zero-Alias & Zero-Consolidation Governance:**
+  - Larangan alias dan konsolidasi berlaku universal di seluruh sistem: tidak hanya untuk peran/roles, namun juga untuk hak izin (*permissions*), rute (*routes*), tabel, kolom database, method controller, dan file komponen antarmuka.
+  - Setiap penamaan wajib eksplisit kanonikal (SSoT) dan dilarang menggabungkan berkas/komponen/tabel terpisah tanpa izin tertulis pengguna.
+
+---
+
+## 7. AI AGENT GOLDEN INVARIANTS (NEVER BREAK THESE)
+1. **DO NOT change `SESSION_DRIVER` to `database`**: Hostinger Shared MySQL limits max simultaneous connections to 25. `SESSION_DRIVER=file` uses NVMe SSD disk I/O with 0 database connections. The `user_devices` table is an audit registry only.
+2. **DO NOT use TypeScript in frontend**: Pure ES2024 JavaScript with Svelte 5 Runes (`$state`, `$derived`, `$props`).
+3. **DO NOT alter Laragon Nginx vhost files**: Root `index.php` acts as zero-config universal gateway routing API, storage, and Vite dev server.
+4. **DO NOT run Windows PHP-CGI without `PHP_FCGI_MAX_REQUESTS=0`**: Without it, php-cgi worker exits after request limit, causing 502 Bad Gateway.
+5. **DO NOT scan physical session files on disk**: Stale/revoked sessions are purged atomically via `UserDevice::purgeStaleSessions()` using indexed `expires_at`.
+6. **DO NOT remove `.installed` lockfile in production**: Prevents unauthorized reinstallation and database wiping.
+7. **DO NOT run unbounded queries (`Model::all()`)**: Enforce safe limit ceilings (`limit(1000)`, max 5000) and composite index filters to protect against memory exhaustion DoS (>18MB) on 9000+ records.
+8. **DO NOT run destructive `migrate:fresh` during updates**: Always use `php install.php update` which executes safe `migrate --force`.
+9. **ALWAYS maintain SemVer 2.0.0 format (`MAJOR.MINOR.PATCH`)**: In `composer.json`, `package.json`, `install.php`, and all docs.
+10. **BROWSER-ONLY INSTANT SEARCH**: `DataTable.svelte` and `MultiItemPicker.svelte` use `$derived.by()` to filter items in browser memory (< 0.1ms). Never send keystrokes to database API.
+11. **SVELTE 5 REACTIVITY & NO REDUNDANT EFFECTS**: Use `$derived` for calculated state. Avoid `$effect` mutating the same state it reads to prevent circular reactivity loops.
+12. **AUTO-REJECT SHIELD**: Guard unauthorized routes synchronously in `+layout.svelte` to prevent DOM paint leaks before redirection.
+13. **SPA STATIC DEPLOYMENT (ZERO NODE ON HOSTINGER)**: Always build with `@sveltejs/adapter-static` (`fallback: 'index.html'`, `ssr = false`). On Hostinger Shared Hosting, Nginx/PHP serves `frontend/build/index.html` with zero Node.js server overhead.
+14. **PASSWORD VISIBILITY TOGGLE (EYE ICON)**: All password inputs (`LoginForm.svelte`, user modals) must provide SVG eye toggle buttons with Svelte 5 `$state` and `aria-label`.
+15. **STICK TO DESIGN TOKENS**: All UI additions must adopt palette `#090d16` / `#0f172a`, primary indigo `#4f46e5`, accent cyan `#06b6d4`, and 44px min touch targets as defined in `desain.md`.
+16. **ZERO SILENT FAILURE & ERGONOMIC DENSITY**: Every interactive button must trigger reactive visual feedback (loading state, floating toast notification, or form feedback). For dense multi-assignment lists, maintain 12-14px crisp readability with WCAG AAA contrast, avoiding oversized UI elements that exceed standard 768p laptop viewports.
+17. **ZERO ROLE CONSOLIDATION & STRICT RBAC MATRIX**: DILARANG KERAS membuat konsolidasi peran (`consolidation_map`, `aliases`, `normalizeRoles`, dan `expandRoleAliases`) di model `User`, `backend/config/permissions.php`, route guard, atau frontend auth state. Seluruh peran wajib diakui dan disimpan secara mandiri dan presisi tanpa mutasi nama atau aliasing tersembunyi.
+18. **STRICT ROLE CONFIGURATION & ZERO SESSION LEAKAGE (OWASP ASVS)**: Pengguna yang memuat peran yang tidak terdaftar di `backend/config/permissions.php` DILARANG KERAS diberikan sesi, token JWT, ataupun akses login. Jika terdeteksi saat login (`AuthController`), request wajib ditolak seketika (HTTP 422), session di-invalidate, dan kuki dibersihkan. Jika terdeteksi pada sesi aktif (`CheckUserActive`), sesi wajib langsung diputus (HTTP 403), record di `user_devices` dihapus, dan berkas fisik sesi di disk NVMe di-unlink.
+19. **ZERO ROLE ENUMERATION / ZERO INFORMATION DISCLOSURE**: Seluruh pesan kesalahan otentikasi, validasi, otorisasi controller, dan middleware DILARANG MEMBOCORKAN daftar nama peran kanonikal sistem (OWASP Top 10 A01:2021 Information Disclosure prevention). Gunakan pesan umum/generik yang santun dan aman (contoh: *"Akun Anda tidak memiliki peran yang valid. Silakan hubungi pengelola sistem."* atau *"Akses ditolak: Anda tidak memiliki wewenang untuk tindakan ini."*).
+20. **CONTROLLED MODAL LIFECYCLE (SVELTE 5 RUNES)**: `Modal.svelte` must default to `show = true` to guarantee instant rendering inside conditional blocks `{#if showModal}<Modal>`.
+21. **STICKY HEADER TABS MODAL CONTRACT**: Every multi-step/subtab modal dialog must place its tab navigation bar inside the sticky modal header (`headerTabs` snippet in `Modal.svelte`), preventing tab navigation from scrolling away when viewing long forms.
+22. **HIGH AFFORDANCE & UNIVERSAL ACCESSIBILITY (ERGONOMICS)**: Form controls and modal views must maintain high visual affordance for all users (including seniors and non-tech users): crisp 1px hairline borders with clear contrast (`border border-slate-300 dark:border-slate-700`), 44px min touch height (`min-h-[44px] text-base sm:text-sm px-3.5 py-2.5`), clear guidance callouts per step, explicit pill badges (`* Wajib Diisi` and `(Boleh Kosong)`), keyboard focus rings (`focus-visible:ring-2 focus-visible:ring-emerald-500`), and reassuring bottom action buttons (`[✕ Batal / Tutup]`, `[← Kembali]`, `[Lanjut 👉]`, `[💾 Simpan Data]`).
+23. **PHYSICAL SESSION UNLINK ON LOGOUT**: Logout and session revocation execute real-time physical unlink `@unlink(storage_path('framework/sessions/' . $sessionId))` on NVMe disk, purging orphaned session files to prevent session replay and PHP Object Injection risks.
+24. **MANDATORY SYNCHRONOUS DOCUMENTATION UPDATE RULE (ZERO SILENT DRIFT)**: Every code modification (bugfix, refactor, schema change, UI style adjustment, or new feature) MUST atomically update corresponding documentation files (`doc/architecture.md`, `doc/prompt.feature.md`, `doc/features/`, `doc/design.md`, `GEMINI.md`, and `doc/changes.md`) within the exact same turn before reporting completion. Silent code drift is strictly forbidden.
+25. **FASTCGI DUAL WORKER RESILIENCY (PORT 9003/9004)**: Windows Laragon FastCGI runs dual persistent workers on ports 9003 and 9004 with `$env:PHP_FCGI_MAX_REQUESTS="0"`. Nginx round-robin upstream prevents 502 Bad Gateway during worker process restarts.
+26. **PURE CSR & SPA ARCHITECTURE**: Root layout enforces `ssr = false`, `csr = true`, `prerender = false`, `trailingSlash = 'never'`. All UI transitions operate in-memory with zero full-page reload.
+27. **CORE WEB VITALS TARGET 2026**: INP < 100ms via Svelte 5 runes, LCP < 1.2s via build-time Brotli/Gzip precompression, and CLS < 0.05 via defined layouts and skeleton loaders.
+28. **[INV-SEC-01] LARANGAN AKSES TANPA POLICY**: Seluruh pembacaan dan penulisan data privat wajib diproteksi oleh Laravel Policy (`$this->authorize(...)` atau `Gate::authorize(...)`). Dilarang operasi tanpa pengecekan BOLA (Broken Object Level Authorization).
+29. **[INV-SEC-02] LARANGAN QUERY MENTAH TANPA BINDING**: Seluruh interaksi database wajib menggunakan parameter binding PDO atau Eloquent query builder. Nol kueri mentah (*0 raw SQL string concatenation*).
+30. **[INV-SEC-03] SESI HANYA PADA FILE NVMe**: `SESSION_DRIVER=file` mutlak; dilarang keras `SESSION_DRIVER=database` demi mencegah database connection exhaustion.
+31. **[INV-SEC-04] WAJIB FORM REQUEST VALIDATION**: Seluruh payload mutasi HTTP wajib divalidasi ketat melalui FormRequest dengan aturan tipe data terdefinisi dan sanitasi eksplisit.
+32. **[INV-SEC-05] RESPONS ERROR BERFORMAT RFC 7807**: Respons kesalahan HTTP 4xx dan 5xx wajib mematuhi standar RFC 7807 tanpa membocorkan struktur query SQL, file paths, atau credential environment ke klien.
+33. **[INV-HITL-01] AUTONOMOUS TOOL EXECUTION WITHIN SINGLE FEATURE TURN**: Dalam satu giliran kerja (1 Fitur untuk 1 Role), eksekusi seluruh perintah terminal, manipulasi berkas, migrasi, dan pengujian secara mandiri tanpa meminta izin manual per baris perintah. Sajikan formulir Review Gate resmi dan tunggu persetujuan manusia SEBELUM beralih ke fitur atau peran berikutnya.
+34. **[INV-SYS-01] ZERO ALIASING POLICY (EXPLICIT SSoT NAMING)**: DILARANG KERAS membuat nama alias, mapping alias (`aliases`, `alias_map`), wrapper alias, shorthand re-export, atau sinonim buatan untuk peran pengguna (*roles*), hak izin (*permissions*), rute (*routes*), method controller, model, tabel, kolom basis data, variabel state, maupun komponen antarmuka. Seluruh entitas wajib dipanggil dan direferensikan menggunakan nama kanonikal aslinya secara eksplisit guna mencegah ambiguitas dan celah keamanan.
+35. **[INV-SYS-02] ZERO UNAUTHORIZED CONSOLIDATION (SRP & BOUNDED CONTEXT)**: DILARANG KERAS mengonsolidasi atau menggabungkan (*merging/collapsing*) beberapa berkas terpisah, modul terpisah, controller, skrip, atau komponen menjadi file monolitik multi-tujuan tanpa instruksi eksplisit tertulis dari pengguna. Dilarang mengonsolidasi peran pengguna (*roles*) atau mengubah tabel relasional 3NF menjadi kolom array/JSON bebas. Bounded Context dan Single Responsibility Principle (SRP) harus selalu dipertahankan.
+36. **[INV-SYS-03] ZERO REGRESSION & NO NEW BUGS GUARANTEE**: Setiap eksekusi prompt (penambahan fitur baru, perbaikan bug, atau refaktorisasi) WAJIB menjamin 100% bebas dari regresi dan TIDAK menimbulkan masalah atau bug baru pada fitur yang telah ada. Seluruh kontrak API, relasi basis data, dan integritas frontend wajib terjaga serta lulus 100% pada `php artisan test tests/Feature` dan `npm run build` sebelum turn dinyatakan selesai.
+37. **[INV-UI-01] CARD_TABLE_AND_PAGE_SIZE**: Seluruh tabel data WAJIB mengimplementasikan mekanisme kartu (tampilan mobile auto-card stack + desktop table/card view) dan menyediakan kontrol interaktif jumlah data yang ditampilkan per halaman (`perPage`: 10, 25, 50, 100 entri). Pengguna wajib memiliki kendali penuh terhadap kepadatan data di layar mereka.
+38. **[INV-UI-02] SPACIOUS_BREATHING_ROOM**: Seluruh antarmuka pengguna DILARANG KERAS terlihat sesak, padat, berdesakan (*cramped/congested*), atau penuh secara visual, baik pada layar HP/ponsel maupun layar laptop/desktop. Wajib menggunakan hierarki visual lapang (*spacious breathing room*), spasi vertikal/horizontal seimbang, container max-width terukur, penanganan data wrapping yang rapi, dan eliminasi penumpukan elemen (*UI bloat*) yang membuat mata lelah.
+39. **[INV-UI-03] TAB_PANE_VISIBILITY_AND_WRAP**: Setiap bilah tab/tab pane WAJIB memprioritaskan keterbacaan tinggi dan mencegah tab terpotong atau tertutup baik di HP maupun di laptop. Untuk tab pane dengan jumlah dan panjang kata yang tidak terlalu banyak (jumlah tab <= 6), DILARANG menyembunyikan tab di balik scroll horizontal (`overflow-x-auto whitespace-nowrap`). Seluruh tab wajib langsung terlihat secara utuh melalui pembungkusan responsif multi-baris (`flex flex-wrap gap-1.5` atau grid adaptif), sehingga pengguna tidak perlu menggulir ke samping hanya untuk melihat atau mengklik tab yang tersedia.
+40. **[INV-UI-04] ELEGANT_MINIMALISM_AND_ACCESSIBILITY**: Seluruh antarmuka web WAJIB mematuhi filosofi minimalisme elegan Dieter Rams (*Weniger, aber besser*), rasio data-ke-tinta tinggi Edward Tufte (menghapus ornamen visual dan border tebal tak berguna), keterbacaan tipografi Robert Bringhurst (panjang baris ideal 45–75 CPL, modular type scale, font-mono untuk data tabular/angka), batas kontainer terkontrol (`max-w-6xl`/`7xl` dengan `mx-auto px-4 sm:px-6 lg:px-8`, tidak membentang liar memenuhi layar monitor lebar), dan aksesibilitas universal WCAG 2.2 AAA (kontras teks $\ge 4.5:1$ s/d $7:1$, touch target $\ge 44\times 44$ px, keyboard focus visible ring).
+41. **[INV-UI-05] MASTERPIECE_ANTI_AI_SLOP_DESIGN**: Seluruh antarmuka web WAJIB memiliki standar keaslian estetika karya manusia (*human-crafted authenticity*) dan keanggunan berkarakter (*quiet luxury*). DILARANG KERAS menggunakan klise visual AI murahan (*AI-generated design cliches/slop*): latar belakang gradient ungu-pink neon (`from-indigo-500 via-purple-500 to-pink-500`), cyan glow berlebihan, ornamen blob lingkaran kabur yang melayang tanpa guna (`blur-3xl opacity-30`), efek frosted glass / glassmorphism buram yang merusak keterbacaan, atau ikon sparkle/bintang AI tanpa arti. Wajib gunakan palet tonal teredam bermartabat (*dignified muted tonal palette*): monokrom Slate/Stone/Obsidian yang tenang dipadukan dengan tepat 1 aksen warna fungsional berkarakter (Emerald di Yayasan PQTM, Indigo/Emerald di Hyperion Vault), micro-action button yang presisi, dan hierarki terarah di mana setiap elemen memiliki alasan keberadaan fungsional (*purpose-driven UI*).
+42. **[INV-UI-06] CLIENT_SIDE_CSV_EXPORT_MANDATE**: Seluruh tabel data yang dibuat WAJIB menyediakan kemampuan ekspor CSV dari sisi klien (*client-side export*) berbasis memori peramban tanpa memicu round-trip query tambahan ke server backend. CSV yang diekspor wajib menyertakan UTF-8 BOM (`\uFEFF`), escaping tanda kutip dua (`""`), mitigasi formula injection CWE-1236 (`=`, `+`, `-`, `@`), dan tombol "Ekspor CSV" yang langsung dapat diakses pengguna pada bilah kontrol tabel via [`DataTable.svelte`](frontend/src/lib/components/ui/DataTable.svelte) dan [`csvExport.js`](frontend/src/lib/utils/csvExport.js).
+43. **[INV-UI-07] FILTER_AND_SORT_ENGINE**: Seluruh tabel data operasional WAJIB menyediakan kontrol filter pencarian instan debounced 120ms ke seluruh kolom kunci, segmented tabs/pills ber-wrap responsif (RULE-14), sorting kolom multi-tipe (tanggal, numerik, teks alfabetis, dan urutan status kanonik), serta larangan menumpuk lebih dari 1 tabel data independen dalam 1 viewport halaman gulung (wajib dipisahkan ke dalam sub-halaman/rute mandiri atau sub-tab dengan tree sidebar menu terisolasi).
+44. **[INV-UI-08] SURFACE_CONTRAST_AND_ELEVATION_HIERARCHY**: Seluruh antarmuka WAJIB mematuhi arsitektur elevasi 3-Tier (L0 Kanvas teduh `bg-slate-100/70` atau `dark:bg-[#070b12]`, L1 Kartu Makro solid `bg-white` atau `dark:bg-slate-900/90` ber-border 1px presisi `border-slate-200/80` / `dark:border-slate-800` & `shadow-2xs`, L2 Elemen Mikro tersemat dengan kontras diferensiasi jelas `bg-slate-50/70` atau `dark:bg-slate-950/60`). DILARANG KERAS ilusi pseudo-glassmorphism transparan rendah (`bg-white/40`, `dark:bg-white/[0.02]`) di atas kanvas flat yang memicu efek bunglon visual (*visual camouflage*) dan ketidakjelasan batas antar-elemen.
+
+---
+
+## 8. PETA ENDPOINT RESTFUL API
+- `GET  /sanctum/csrf-cookie`: Inisialisasi token CSRF.
+- `POST /api/v1/auth/login`: Autentikasi, catat device di `user_devices`, terbitkan HttpOnly session & signed JWT dengan klaim roles dan permissions.
+- `POST /api/v1/auth/logout`: Terminasi sesi, hapus device record, bersihkan cookie domain.
+- `POST /api/v1/auth/logout-other-devices`: Putus sesi perangkat lain milik user saat ini (+1 `token_version`).
+- `GET  /api/v1/auth/me`: Data profil & multiple roles terotentikasi.
+- `GET  /api/v1/admin/version`: Status versi sistem, versi terpasang, pembaruan tersedia, dan riwayat update.
+- `GET  /api/v1/admin/users`: Daftar pengguna (`?search=`, `?status=`, `?limit=`).
+- `POST /api/v1/admin/users`: Buat akun baru dengan multiple roles.
+- `PUT  /api/v1/admin/users/{id}`: Edit data pengguna, role, dan password.
+- `DELETE /api/v1/admin/users/{id}`: Hapus akun pengguna (proteksi akun sendiri).
+- `POST /api/v1/admin/users/{id}/toggle-status`: Tangguhkan / aktifkan akun.
+- `POST /api/v1/admin/users/{id}/revoke-sessions`: Cabut seluruh sesi user (+1 `token_version`).
+- `GET  /api/v1/admin/sessions`: Audit perangkat aktif real-time (IP, User-Agent, Device, OS, Expiry).
+- `POST /api/v1/admin/sessions/{id}/revoke`: Cabut sesi 1 perangkat spesifik.
+- `POST /api/v1/admin/sessions/user/{id}/revoke`: Cabut seluruh sesi user target.
+- `POST /api/v1/admin/sessions/revoke-all`: Global kill-switch darurat.
+- `POST /api/v1/admin/sessions/cleanup`: Purge SQL atomik sesi kadaluarsa / stale.
+
+---
+
+## 9. VERIFIKASI PENGUJIAN OTOMATIS (QUALITY GATES)
+```powershell
+# 1. Backend PHPUnit (29 tests, 376 assertions - 100% Passed)
+cd D:\laragon\www\hyperion-vault\backend && php artisan test
+
+# 2. Frontend Build Verification (0 warning a11y, 0 error - 100% Passed)
+cd D:\laragon\www\hyperion-vault\frontend && npm run build
+```

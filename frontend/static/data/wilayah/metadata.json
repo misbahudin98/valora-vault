@@ -1,0 +1,17 @@
+{
+  "source": "Kementerian Dalam Negeri Republik Indonesia & Badan Pusat Statistik (BPS)",
+  "url": "https://sig.bps.go.id/bridging-kode/index",
+  "legal_foundation": "Keputusan Menteri Dalam Negeri Nomor 300.2.2-2430 Tahun 2025",
+  "standards": [
+    "Keputusan Menteri Dalam Negeri Nomor 300.2.2-2430 Tahun 2025 (Pemutakhiran Kode, Data Wilayah Administrasi Pemerintahan, dan Pulau)",
+    "BPS Geoportal SIG Bridging Kode 2026 (https://sig.bps.go.id/bridging-kode/index)"
+  ],
+  "updated_at": "2026-10-06T16:14:00.000Z",
+  "summary": {
+    "provinces": 38,
+    "regencies": 514,
+    "districts": 7265,
+    "villages_total": 83345,
+    "villages_partitioned_provinces": 38
+  }
+}
