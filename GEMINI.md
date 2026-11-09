@@ -1,5 +1,5 @@
 # Universal System Invariants & Autonomous Agent Rules (GEMINI.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standards:** PER Coding Style 2.0, OWASP Top 10, WCAG 2.2 AAA, RFC 7807, SemVer 2.0.0
 
 ---
@@ -97,7 +97,7 @@ Seluruh model AI (Gemini, Antigravity, Claude, Cursor) dan engineer manusia waji
     - **Eliminasi Klise Visual AI (Zero AI Design Clichés):**
       - DILARANG KERAS menggunakan latar belakang gradasi ungu-pink neon (`from-indigo-500 via-purple-500 to-pink-500`), cyan glow berlebihan, blob blur lingkaran mengambang tanpa guna (`blur-3xl opacity-30`), efek frosted glass / glassmorphism buram yang merusak keterbacaan, atau ikon sparkle/bintang AI tanpa arti.
     - **Karya Berkarakter & Human-Crafted Aesthetic:**
-      - Gunakan palet tonal teredam bermartabat (*dignified muted tonal palette*): monokrom Slate/Stone/Obsidian yang tenang dipadukan dengan tepat 1 warna aksen fungsional berkarakter (Emerald tajam untuk Yayasan PQTM, Indigo/Emerald untuk Hyperion Vault).
+      - Gunakan palet tonal teredam bermartabat (*dignified muted tonal palette*): monokrom Slate/Stone/Obsidian yang tenang dipadukan dengan tepat 1 warna aksen fungsional berkarakter (Emerald tajam untuk PT Valora Digital Solusindo).
       - Tipografi berbobot dan berirama (*editorial rhythm*): heading tegas, label mikro terukur, font-mono untuk angka/data tabular.
       - Tekstur dan pembatas presisi: hairline 1px borders (`border border-slate-200/80 dark:border-slate-800/80`), micro shadows 2xs, dan negative space lapang.
     - **Harmoni Fungsionalitas & Zero Superfluous Elements:**
@@ -170,7 +170,7 @@ Seluruh model AI (Gemini, Antigravity, Claude, Cursor) dan engineer manusia waji
 
 ---
 
-## 2. INVARIAN STACK HYPERION VAULT
+## 2. INVARIAN STACK VALORA VAULT
 
 - **Backend:** Laravel 13, PHP 8.3 / 8.4.
   - **Auth:** Laravel Sanctum SPA Session-Based (`SESSION_DRIVER=file` MANDATORY; `SESSION_DRIVER=database` FORBIDDEN).
@@ -205,7 +205,7 @@ Seluruh model AI (Gemini, Antigravity, Claude, Cursor) dan engineer manusia waji
 
 ---
 
-## 5. PETA 5+2 ENGINE ARSITEKTUR HYPERION VAULT
+## 5. PETA 5+2 ENGINE ARSITEKTUR VALORA VAULT
 
 | Domain Arsitektur | Invarian Sistem (Rules) | Playbook Eksekusi (Skill) | SSoT Dokumen (Whitepaper) |
 | :--- | :--- | :--- | :--- |

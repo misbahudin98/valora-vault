@@ -14,7 +14,7 @@
 
 ## 1. PENDAHULUAN & PRINSIP DASAR
 
-Sistem Hyperion Vault menolak "kode malas" (*code slop*), abstraksi prematur (*speculative generality*), dan kerumitan buatan (*incidental complexity*). Aturan di bawah ini adalah distilasi operasional dari edisi terbaru literatur rekayasa perangkat lunak dunia yang diterjemahkan menjadi **invarian sistem yang mengikat secara deterministik**.
+Sistem Valora Vault menolak "kode malas" (*code slop*), abstraksi prematur (*speculative generality*), dan kerumitan buatan (*incidental complexity*). Aturan di bawah ini adalah distilasi operasional dari edisi terbaru literatur rekayasa perangkat lunak dunia yang diterjemahkan menjadi **invarian sistem yang mengikat secara deterministik**.
 
 ```mermaid
 flowchart LR
@@ -73,7 +73,7 @@ flowchart LR
 ---
 
 ### [RULE-CC-06] SVELTE 5 FUNCTIONAL SIMPLICITY (FOWLER 2ND ED MODERN JS)
-- **Pure JavaScript Modern (ES2024+):** DILARANG menggunakan TypeScript (`.ts`) untuk frontend Hyperion Vault.
+- **Pure JavaScript Modern (ES2024+):** DILARANG menggunakan TypeScript (`.ts`) untuk frontend Valora Vault.
 - **Runes Cohesion:**
   - Gunakan `$state` untuk state primitif/objek terfokus.
   - Gunakan `$derived.by()` untuk komputasi in-memory murni (misal: filtering tabel < 0.1ms tanpa mutasi array manual).

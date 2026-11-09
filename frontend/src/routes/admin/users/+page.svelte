@@ -362,7 +362,7 @@
 </script>
 
 <svelte:head>
-  <title>Kelola Pengguna — Hyperion Vault</title>
+  <title>Kelola Pengguna — Valora Vault</title>
   <meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
@@ -755,7 +755,7 @@
         type="email"
         bind:value={formEmail}
         required
-        placeholder="john@hyperion-vault.test"
+        placeholder="john@valora-vault.test"
         class="w-full px-3.5 py-2.5 min-h-[44px] bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition"
       />
       {#if formErrors.email}<span class="text-[11px] text-rose-500 dark:text-rose-400 mt-1 block font-medium">{formErrors.email[0]}</span>{/if}

@@ -70,7 +70,7 @@
       <svg class="w-3 h-3 text-stone-400 dark:text-slate-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
       </svg>
-      <span class="font-semibold text-stone-700 dark:text-slate-300 hidden sm:inline shrink-0">{import.meta.env.VITE_APP_NAME || 'Hyperion Vault'}</span>
+      <span class="font-semibold text-stone-700 dark:text-slate-300 hidden sm:inline shrink-0">{import.meta.env.VITE_APP_NAME || 'Valora Vault'}</span>
       <svg class="w-3 h-3 text-stone-400 dark:text-slate-600 hidden sm:inline shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
       </svg>

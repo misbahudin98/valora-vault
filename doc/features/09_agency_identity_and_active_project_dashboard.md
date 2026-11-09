@@ -1,6 +1,6 @@
 # Fitur 09: Profil Legal Agency, Identitas Terpadu & Dashboard Mini Proyek Aktif
 > **Domain:** Enterprise Agency Governance & Real-Time Operational Cockpit  
-> **Target:** Hyperion Vault / Valora OS v6.31.0  
+> **Target:** Valora Vault / Valora OS v6.31.0  
 > **Standar:** Stephen Few (2013), Edward Tufte (2001), RFC 7807, Svelte 5 Runes, Laravel 13, OWASP Top 10
 
 ---

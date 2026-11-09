@@ -1,5 +1,5 @@
 # Specification-Driven Development (SDD) Master Orchestrator (prompt.feature.md)
-> **Standard:** Enterprise Autonomous Spec-to-Code Compiler v7.2.0 (Hyperion Vault v6.31.0)  
+> **Standard:** Enterprise Autonomous Spec-to-Code Compiler v7.2.0 (Valora Vault v6.31.0)  
 > **Target Execution:** 100% Deterministic Code Generation (Migrations, Eloquent Models, RBAC, REST API, PHPUnit Tests, Svelte 5 Runes SPA) tanpa celah asumsi (*Zero Hallucination Guarantee*).
 
 ---
@@ -69,7 +69,7 @@ flowchart TD
 3. **Link, Don't Duplicate:** Tautkan referensi spesifikasi ke file aslinya, jangan menduplikasi baris kolom di berkas lain.
 
 ### 4. Aturan Tata Kelola Semantic Versioning 2.0.0 (SemVer Governance)
-Hyperion Vault mematuhi secara ketat standar **SemVer 2.0.0 (`MAJOR.MINOR.PATCH`)**:
+Valora Vault mematuhi secara ketat standar **SemVer 2.0.0 (`MAJOR.MINOR.PATCH`)**:
 1. **MAJOR (X.0.0):** Perubahan arsitektur/database yang *breaking* (*backward-incompatible*).
 2. **MINOR (x.Y.0):** Penambahan fitur baru yang *backward-compatible* (misal: modul CRUD baru, endpoint baru, role baru). Reset `PATCH` ke 0.
 3. **PATCH (x.y.Z):** Perbaikan bug (*bugfix*), kontras UI/UX, atau refaktorisasi internal tanpa mengubah kontrak API.
@@ -389,7 +389,7 @@ Gunakan template di bawah ini saat tim arsitek atau pengguna meminta pembersihan
    - **Via Blueprint Studio Web UI:** Buka `/admin/studio` ➔ Tahap 5 ➔ Pilih tab `🧹 Prompt Refactor` ➔ Klik `Salin Prompt Refactor`.
    - **Via PowerShell CLI:**
      ```powershell
-     powershell -File ".agents/skills/prompt-architect/scripts/compile-prompt.ps1" -Mode refactor -WorkspaceName "Hyperion Vault Enterprise"
+     powershell -File ".agents/skills/prompt-architect/scripts/compile-prompt.ps1" -Mode refactor -WorkspaceName "Valora Vault Enterprise"
      ```
 4. **SSoT Dokumen Lengkap:** [`doc/prompts/international_audit_and_refactor_prompt.md`](prompts/international_audit_and_refactor_prompt.md)
 ```

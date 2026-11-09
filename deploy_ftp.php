@@ -1,6 +1,6 @@
 <?php
 /**
- * HYPERION VAULT — Ultra-Fast Automated FTP Deployment Engine
+ * VALORA VAULT — Ultra-Fast Automated FTP Deployment Engine
  * Packages, streams, unpacks, and provisions the production environment in seconds.
  *
  * Usage:
@@ -18,7 +18,7 @@ declare(strict_types=1);
 $startTime = microtime(true);
 
 echo "=================================================================\n";
-echo "   🚀 HYPERION VAULT — PRODUCTION FTP AUTOMATED DEPLOYMENT ENGINE \n";
+echo "   🚀 VALORA VAULT — PRODUCTION FTP AUTOMATED DEPLOYMENT ENGINE  \n";
 echo "=================================================================\n\n";
 
 $baseDir = __DIR__;
@@ -64,7 +64,7 @@ $ftpUser = $options['user'] ?? $deployEnv['DEPLOY_FTP_USER'] ?? getenv('DEPLOY_F
 $ftpPass = $options['pass'] ?? $deployEnv['DEPLOY_FTP_PASS'] ?? getenv('DEPLOY_FTP_PASS') ?: '';
 $appDomain = rtrim($options['domain'] ?? $deployEnv['DEPLOY_APP_DOMAIN'] ?? getenv('DEPLOY_APP_DOMAIN') ?: '', '/');
 $remotePath = trim($options['path'] ?? $deployEnv['DEPLOY_FTP_REMOTE_PATH'] ?? getenv('DEPLOY_FTP_REMOTE_PATH') ?: '/', '/');
-$appName = $deployEnv['DEPLOY_APP_NAME'] ?? getenv('DEPLOY_APP_NAME') ?: 'Hyperion Vault';
+$appName = $deployEnv['DEPLOY_APP_NAME'] ?? getenv('DEPLOY_APP_NAME') ?: 'Valora Vault';
 $dbConnection = $deployEnv['DEPLOY_DB_CONNECTION'] ?? getenv('DEPLOY_DB_CONNECTION') ?: 'sqlite';
 $dbDatabase = $deployEnv['DEPLOY_DB_DATABASE'] ?? getenv('DEPLOY_DB_DATABASE') ?: '';
 

@@ -1,5 +1,5 @@
 # Matriks Tipologi UI/UX & Rekayasa Motion Design (ui_ux_motion_matrix.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Rujukan:** Jakob Nielsen (NN/g), Steven Hoober (Thumb Zone), WCAG 2.2 AAA, Google Web Vitals, GreenSock Animation Platform (GSAP), Svelte 5 Modern Runes.
 
 ---

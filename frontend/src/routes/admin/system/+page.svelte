@@ -256,7 +256,7 @@
 </script>
 
 <svelte:head>
-  <title>Pemantauan Sistem & Log — Hyperion Vault</title>
+  <title>Pemantauan Sistem & Log — Valora Vault</title>
   <meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 

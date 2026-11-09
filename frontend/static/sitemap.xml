@@ -4,13 +4,13 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-    <loc>http://hyperion-vault.test/</loc>
+    <loc>http://valora-vault.test/</loc>
     <lastmod>2026-10-05T23:00:00+07:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://hyperion-vault.test/login</loc>
+    <loc>http://valora-vault.test/login</loc>
     <lastmod>2026-10-05T23:00:00+07:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

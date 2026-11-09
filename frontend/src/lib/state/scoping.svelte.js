@@ -1,5 +1,5 @@
 /**
- * HYPERION VAULT - UNIVERSAL PROJECT SCOPING & SPECIFICATION STATE
+ * VALORA VAULT - UNIVERSAL PROJECT SCOPING & SPECIFICATION STATE
  * Svelte 5 Runes ($state, $derived) Pure JavaScript
  * Standard: SDD-Enterprise-Deterministic v8.0.0
  * Invariants: Zero financial/budget metrics, Zero Man-Days, Lean Technical Architecture
@@ -8,9 +8,9 @@
 class ScopingManager {
   // 1. PROJECT & CLIENT METADATA
   project = $state({
-    clientName: 'Hyperion Enterprise Ecosystem',
-    projectName: 'Hyperion Vault Core Starter Kit',
-    slug: 'hyperion_vault_core',
+    clientName: 'PT Valora Digital Solusindo',
+    projectName: 'Valora Vault Starter Engine',
+    slug: 'valora_vault_core',
     appType: 'webapp', // 'webapp' | 'cms_landing'
     authMechanism: 'login_only', // 'login_only' | 'login_register' | 'none'
     targetDeliveryDays: 14,
@@ -69,9 +69,9 @@ class ScopingManager {
           { label: 'Keamanan Akun', value: '100% MFA', trend: 'Optimal' }
         ],
         mockStream: [
-          { id: 1, name: 'Root Administrator', email: 'admin@hyperion-vault.test', role: 'Super Administrator', status: 'Aktif' },
-          { id: 2, name: 'Staff Operator 01', email: 'operator@hyperion-vault.test', role: 'Operator / Regular User', status: 'Aktif' },
-          { id: 3, name: 'Demo User Guest', email: 'user@hyperion-vault.test', role: 'Operator / Regular User', status: 'Aktif' }
+          { id: 1, name: 'Root Administrator', email: 'admin@valora-vault.test', role: 'Super Administrator', status: 'Aktif' },
+          { id: 2, name: 'Lead Fullstack', email: 'iqbal@valora-vault.test', role: 'Lead Fullstack Engineer', status: 'Aktif' },
+          { id: 3, name: 'Backend Architect', email: 'misbah@valora-vault.test', role: 'Database Architect', status: 'Aktif' }
         ]
       },
       features: [
@@ -513,11 +513,11 @@ class ScopingManager {
       {
         key: 'enterprise_starter',
         name: 'Enterprise Starter Kit Engine & Governance Hub',
-        keywords: ['starter', 'kit', 'auth', 'rbac', 'admin', 'user', 'session', 'telemetri', 'system', 'governance', 'clean', 'hyperion', 'dashboard'],
+        keywords: ['starter', 'kit', 'auth', 'rbac', 'admin', 'user', 'session', 'telemetri', 'system', 'governance', 'clean', 'valora', 'dashboard'],
         preset: {
-          clientName: 'Hyperion Enterprise Ecosystem',
-          projectName: 'Hyperion Vault Core Starter Kit',
-          slug: 'hyperion_vault_core',
+          clientName: 'PT Valora Digital Solusindo',
+          projectName: 'Valora Vault Starter Engine',
+          slug: 'valora_vault_core',
           appType: 'webapp',
           authMechanism: 'login_only',
           targetDeliveryDays: 14,

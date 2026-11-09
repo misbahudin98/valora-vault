@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# HYPERION VAULT — Enterprise Production SSH Deployment Script
+# VALORA VAULT — Enterprise Production SSH Deployment Script
 # Supports:
 #   1. Hardened OWASP Architecture (Backend in ~/apps/... outside public web root)
 #   2. Main Domain (~/public_html) or Subdomain (~/public_html/subdomain, ~/sub.domain.com)
@@ -18,12 +18,12 @@
 set -e # Exit immediately on error
 
 echo "================================================================="
-echo "   🛡️ HYPERION VAULT — ENTERPRISE SSH DEPLOYMENT ENGINE         "
+echo "   🛡️ VALORA VAULT — ENTERPRISE SSH DEPLOYMENT ENGINE          "
 echo "================================================================="
 
 # Default Configuration
 DEPLOY_MODE="${DEPLOY_MODE:-split}" # 'split' or 'standard'
-APP_NAME="${APP_NAME:-hyperion-vault}"
+APP_NAME="${APP_NAME:-valora-vault}"
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 HOME_DIR="${HOME:-/home/$(whoami)}"
 
@@ -330,7 +330,7 @@ echo ""
 echo "[4/6] Menyiapkan basis data, snapshot cadangan & migrasi produksi..."
 
 DB_CONN=$(grep -E '^DB_CONNECTION=' .env | cut -d '=' -f2 | tr -d '"' | tr -d "'" | tr -d '\r' || echo "mysql")
-DB_NAME=$(grep -E '^DB_DATABASE=' .env | cut -d '=' -f2 | tr -d '"' | tr -d "'" | tr -d '\r' || echo "hyperion_vault")
+DB_NAME=$(grep -E '^DB_DATABASE=' .env | cut -d '=' -f2 | tr -d '"' | tr -d "'" | tr -d '\r' || echo "valora_vault")
 DB_HOST=$(grep -E '^DB_HOST=' .env | cut -d '=' -f2 | tr -d '"' | tr -d "'" | tr -d '\r' || echo "127.0.0.1")
 DB_PORT=$(grep -E '^DB_PORT=' .env | cut -d '=' -f2 | tr -d '"' | tr -d "'" | tr -d '\r' || echo "3306")
 DB_USER=$(grep -E '^DB_USERNAME=' .env | cut -d '=' -f2 | tr -d '"' | tr -d "'" | tr -d '\r' || echo "")

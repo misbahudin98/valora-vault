@@ -1,5 +1,5 @@
 # Cetak Biru Standar Analisis Data, Intelijen Bisnis, & Pelaporan Eksekutif (data_analysis_standard.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Status:** Single Source of Truth (SSoT) — Standar Arsitektur Analitika Data Institusi  
 > **Target Audience:** Arsitek Sistem, Tim Rekayasa Perangkat Lunak, Analis Data, dan AI Coding Agents
 
@@ -9,7 +9,7 @@
 
 Data dalam ekosistem institusi pesantren dan pendidikan (santri, presensi, kurikulum KBM, hafalan Al-Qur'an, dan keuangan) bukan sekadar catatan riwayat transaksi (*dormant logs*), melainkan aset strategis untuk memandu pengambilan keputusan pimpinan.
 
-Cetak biru ini menetapkan standar analitika data kelas dunia di lingkungan Hyperion Vault dengan berpijak pada prinsip fundamental **Douglas W. Hubbard (*Applied Information Economics*)**:
+Cetak biru ini menetapkan standar analitika data kelas dunia di lingkungan Valora Vault dengan berpijak pada prinsip fundamental **Douglas W. Hubbard (*Applied Information Economics*)**:
 > *"Suatu pengukuran atau analitika data hanya bernilai jika ia mengurangi ketidakpastian dalam pengambilan keputusan nyata. Jika angka yang disajikan tidak mengubah keputusan apa pun, angka tersebut adalah kesia-siaan (vanity metric)."*
 
 Dokumen ini menjadi rujukan konseptual tertinggi (*Tier 3*) yang menopang aturan sistem mutlak [`.agents/rules/temporal_dashboard_invariants.md`](../.agents/rules/temporal_dashboard_invariants.md) (*Tier 1*) dan playbook operasional [`.agents/skills/dashboard-architect/SKILL.md`](../.agents/skills/dashboard-architect/SKILL.md) (*Tier 2*).
@@ -18,11 +18,11 @@ Dokumen ini menjadi rujukan konseptual tertinggi (*Tier 3*) yang menopang aturan
 
 ## 2. TAKSONOMI STANDAR INTERNASIONAL TERPADU
 
-Hyperion Vault menyintesis 6 standar internasional ke dalam satu kesatuan arsitektur yang deterministik:
+Valora Vault menyintesis 6 standar internasional ke dalam satu kesatuan arsitektur yang deterministik:
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────┐
-│              SINTESIS STANDAR INTERNASIONAL ANALITIKA DATA HYPERION VAULT         │
+│              SINTESIS STANDAR INTERNASIONAL ANALITIKA DATA VALORA VAULT         │
 ├──────────────────────────────────────────────────────────────────────────────────┤
 │ 1. SIKLUS PROSES      │ CRISP-DM (Chapman et al., 2000)                          │
 │ 2. TATA KELOLA DATA   │ DAMA-DMBOK 2nd Edition (Data Management Association)     │
@@ -71,7 +71,7 @@ flowchart TD
 
 ## 4. TINGKAT KEMATANGAN ANALITIK (GARTNER 4 STAGES)
 
-Dasbor eksekutif di Hyperion Vault dilarang hanya berfungsi sebagai "buku rekapitulasi statis". Setiap antarmuka dirancang untuk memfasilitasi perjalanan kognitif pengguna:
+Dasbor eksekutif di Valora Vault dilarang hanya berfungsi sebagai "buku rekapitulasi statis". Setiap antarmuka dirancang untuk memfasilitasi perjalanan kognitif pengguna:
 
 ```
 1. DESCRIPTIVE (Apa yang terjadi?)
@@ -92,7 +92,7 @@ Dasbor eksekutif di Hyperion Vault dilarang hanya berfungsi sebagai "buku rekapi
 ## 5. PEMODELAN DATA DIMENSIONAL & SEMANTIC LAYER
 
 ### 5.1 Tiga Arketipe Tabel Fakta (Ralph Kimball)
-Untuk memastikan skalabilitas ribuan santri dengan puluhan juta log transaksi tanpa degradasi kecepatan, Hyperion Vault membagi data ke dalam 3 tabel:
+Untuk memastikan skalabilitas ribuan santri dengan puluhan juta log transaksi tanpa degradasi kecepatan, Valora Vault membagi data ke dalam 3 tabel:
 
 1. **Transaction Fact Table (`*_transaksional`):**
    - *Grain:* 1 baris per kejadian atomik (misal: 1 santri per 1 sesi presensi).
@@ -122,7 +122,7 @@ Merata-ratakan nilai persentase secara langsung tanpa memperhitungkan jumlah pop
 
 $$\text{SALAH: } \frac{P_1 + P_2 + \dots + P_n}{n} \quad\neq\quad \text{BENAR: } \frac{\sum \text{Numerator Atomik}}{\sum \text{Denominator Atomik}} \times 100\%$$
 
-*Kaidah Baku Hyperion Vault:*
+*Kaidah Baku Valora Vault:*
 Seluruh kalkulasi rasio wajib dilakukan melalui pembagian total agregat atomik di level kueri database engine atau service agregator:
 ```php
 $summary = DB::table('presensi_transaksional')
@@ -205,11 +205,11 @@ Sebelum data diagregasikan ke tabel rollup, integritas data diverifikasi berdasa
 
 ---
 
-## 8. ARSITEKTUR TEKNIS IMPLEMENTASI HYPERION VAULT
+## 8. ARSITEKTUR TEKNIS IMPLEMENTASI VALORA VAULT
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ STACK TEKNIS ANALITIK HYPERION VAULT                                   │
+│ STACK TEKNIS ANALITIK VALORA VAULT                                   │
 ├────────────────────────────────────────────────────────────────────────┤
 │ • Backend   : Laravel 13, PHP 8.3/8.4 strict_types=1                   │
 │ • Database  : SQLite WAL Mode (foreign_keys=ON, busy_timeout=5000)     │

@@ -12,7 +12,7 @@
 .PARAMETER TargetRole
     Role aktor pengguna (misal: "Staff Legal"). Diperlukan jika Mode = 'feature'.
 .PARAMETER WorkspaceName
-    Nama workspace / aplikasi target (misal: "Yayasan PQTM" atau "Hyperion Vault").
+    Nama workspace / aplikasi target (misal: "Yayasan PQTM" atau "Valora Vault").
 .PARAMETER SSoTDoc
     Dokumen SSoT referensi (misal: "doc/architecture.md, doc/feature.md").
 .PARAMETER OutputFile
@@ -35,7 +35,7 @@ param(
     [string]$TargetRole,
 
     [Parameter(Mandatory = $false)]
-    [string]$WorkspaceName = "Hyperion Enterprise Ecosystem",
+    [string]$WorkspaceName = "Valora Enterprise Ecosystem",
 
     [Parameter(Mandatory = $false)]
     [string]$SSoTDoc = "doc/architecture.md, doc/design.md, AGENTS.md, GEMINI.md, llms.txt",

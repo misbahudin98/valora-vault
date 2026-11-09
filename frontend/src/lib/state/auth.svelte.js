@@ -56,7 +56,7 @@ export function parseJwt(token) {
 function getCachedUser() {
   if (typeof window === 'undefined') return null;
   try {
-    const raw = localStorage.getItem('hyperion_user');
+    const raw = localStorage.getItem('valora_user');
     return raw ? JSON.parse(raw) : null;
   } catch {
     return null;
@@ -114,7 +114,7 @@ class AuthState {
     this.user = data;
     if (typeof window !== 'undefined' && data) {
       try {
-        localStorage.setItem('hyperion_user', JSON.stringify(data));
+        localStorage.setItem('valora_user', JSON.stringify(data));
       } catch (e) {
         console.warn('LocalStorage save failed:', e);
       }
@@ -144,8 +144,8 @@ class AuthState {
     this.cookieRole = null;
     if (typeof window !== 'undefined') {
       try {
-        localStorage.removeItem('hyperion_user');
-        localStorage.removeItem('hyperion_token');
+        localStorage.removeItem('valora_user');
+        localStorage.removeItem('valora_token');
         sessionStorage.clear();
       } catch (e) {}
     }

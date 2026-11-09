@@ -1,5 +1,5 @@
 # Standar Rekayasa Pengujian Perangkat Lunak Korporasi (doc/testing_standards.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standar Rujukan Internasional:**  
 > 1. Vladimir Khorikov (2020) — *Unit Testing: Principles, Practices, and Patterns* (Manning Publications)  
 > 2. Martin Fowler & Mike Cohn — *The Practical Test Pyramid & Test Doubles Taxonomy*  
@@ -9,13 +9,13 @@
 > 6. ISO/IEC/IEEE 29119 — *Software Testing: Concepts, Processes, and Techniques*  
 > 7. W3C Web Accessibility Automated Verification — *WCAG 2.2 Level AAA Automated Rules*  
 
-Dokumen ini merupakan **Single Source of Truth (SSoT)** metodologi, taksonomi, dan arsitektur pengujian otomatis (*automated software testing*) untuk backend dan frontend pada seluruh ekosistem Hyperion Vault.
+Dokumen ini merupakan **Single Source of Truth (SSoT)** metodologi, taksonomi, dan arsitektur pengujian otomatis (*automated software testing*) untuk backend dan frontend pada seluruh ekosistem Valora Vault.
 
 ---
 
 ## 1. PRINSIP FILOSOFIS & 4 PILAR UNIT TEST BERKUALITAS (VLADIMIR KHORIKOV)
 
-Standar pengujian Hyperion Vault menolak "angka cakupan semu" (*vanity coverage metrics*). Kode pengujian yang banyak namun rapuh (*brittle tests*) adalah beban liabilitas arsitektur yang memperlambat inovasi.
+Standar pengujian Valora Vault menolak "angka cakupan semu" (*vanity coverage metrics*). Kode pengujian yang banyak namun rapuh (*brittle tests*) adalah beban liabilitas arsitektur yang memperlambat inovasi.
 
 Setiap unit test wajib dievaluasi berdasarkan **4 Pilar Tes Berkualitas Tinggi (*The 4 Pillars of a Good Test*)**:
 
@@ -40,9 +40,9 @@ flowchart TD
 
 ## 2. DIKOTOMI ALIRAN PENGUJIAN: CLASSICAL (DETROIT) VS LONDON (MOCKIST)
 
-Dalam arsitektur korporasi enterprise modern, Hyperion Vault menganut **Classical School (Detroit / Chicago)** dan memberlakukan pembatasan ketat terhadap *mocking*:
+Dalam arsitektur korporasi enterprise modern, Valora Vault menganut **Classical School (Detroit / Chicago)** dan memberlakukan pembatasan ketat terhadap *mocking*:
 
-| Karakteristik | London School (Mockist) | Classical School (Detroit / Hyperion Standard) |
+| Karakteristik | London School (Mockist) | Classical School (Detroit / Valora Standard) |
 | :--- | :--- | :--- |
 | **Definisi Unit** | Unit adalah 1 class atau 1 fungsi terisolasi. | Unit adalah 1 perilaku bisnis (*unit of behavior*), dapat melibatkan lebih dari satu class/fungsi. |
 | **Penanganan Dependensi** | Mem-mock hampir semua dependensi internal (*over-mocking*). | Menggunakan dependensi nyata selama in-memory dan cepat (misal: class helper, domain model). |
@@ -57,7 +57,7 @@ Dalam arsitektur korporasi enterprise modern, Hyperion Vault menganut **Classica
 
 ## 3. TOPOLOGI PENGUJIAN: TEST PYRAMID (BACKEND) VS TESTING TROPHY (FRONTEND)
 
-Arsitektur pengujian Hyperion Vault memisahkan topologi pengujian backend dan frontend sesuai karakteristik arsitekturnya:
+Arsitektur pengujian Valora Vault memisahkan topologi pengujian backend dan frontend sesuai karakteristik arsitekturnya:
 
 ```mermaid
 flowchart TD

@@ -20,6 +20,12 @@ class ClientProjectSeeder extends Seeder
      */
     public function run(): void
     {
+        // Proteksi Produksi: Dilarang menyuntikkan data dummy jika tidak secara eksplisit diizinkan
+        if (! filter_var(config('app.seed_demo_clients', false), FILTER_VALIDATE_BOOLEAN)) {
+            $this->command?->info('[PRODUKSI] Pembuatan data dummy klien dilewati. Basis data tetap bersih untuk produksi.');
+            return;
+        }
+
         // Bersihkan data awal jika seeder dijalankan ulang
         ClientProjectPayment::query()->delete();
         ProjectDatabaseTable::query()->delete();

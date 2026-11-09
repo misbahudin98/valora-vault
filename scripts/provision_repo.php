@@ -1,8 +1,8 @@
 <?php
 /**
- * HYPERION VAULT — Universal Repository Provisioning Wizard Engine (CLI & Automation)
+ * VALORA VAULT — Universal Repository Provisioning Wizard Engine (CLI & Automation)
  *
- * Automates provisioning a new clean, production-ready repository derived from Hyperion Vault:
+ * Automates provisioning a new clean, production-ready repository derived from Valora Vault:
  * 1. Validates project parameters (Slug, Description, Visibility, Ports).
  * 2. Checks GitHub CLI and provisions remote repository (gh repo create).
  * 3. Copies clean foundation to D:\laragon\www\<slug> (excluding .git, vendor, node_modules, logs).
@@ -23,7 +23,7 @@ declare(strict_types=1);
 $startTime = microtime(true);
 
 echo "=================================================================\n";
-echo "   🚀 HYPERION VAULT — REPOSITORY PROVISIONING WIZARD ENGINE    \n";
+echo "   🚀 VALORA VAULT — REPOSITORY PROVISIONING WIZARD ENGINE    \n";
 echo "=================================================================\n\n";
 
 $sourceRoot = dirname(__DIR__);
@@ -77,7 +77,7 @@ if (!$projectName || !preg_match('/^[a-z0-9_-]+$/i', (string) $projectName)) {
 
 $projectSlug = strtolower(str_replace('_', '-', (string) $projectName));
 $targetDir = $baseWwwDir . DIRECTORY_SEPARATOR . $projectSlug;
-$projectDesc = $cliOpts['desc'] ?? "Clean Enterprise Starter Kit derived from Hyperion Vault";
+$projectDesc = $cliOpts['desc'] ?? "Clean Enterprise Starter Kit derived from Valora Vault";
 $rawVisibility = $cliOpts['visibility'] ?? 'private';
 $visibility = in_array($rawVisibility, ['public', 'private'], true) ? $rawVisibility : 'private';
 $fePort = (int) ($cliOpts['fe-port'] ?? 5174);
@@ -274,7 +274,7 @@ echo "   Start-Process -FilePath \"D:\\laragon\\bin\\php\\8.3\\php-cgi.exe\" -Ar
 echo "3. Jalankan Vite Dev Server (Port {$fePort}):\n";
 echo "   cd frontend && npm run dev -- --port {$fePort}\n";
 echo "4. Buat initial commit:\n";
-echo "   git add . && git commit -m \"feat: initial clean repository provisioned from hyperion-vault v8.0.0\"\n";
+echo "   git add . && git commit -m \"feat: initial clean repository provisioned from valora-vault v8.0.0\"\n";
 if ($remoteUrl) {
     echo "   git push -u origin main\n";
 }

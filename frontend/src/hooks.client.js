@@ -80,13 +80,13 @@ function attemptStaleChunkRecovery(err) {
     if (!isDynamicImportError(err)) return;
 
     try {
-        const key = '__hyperion_chunk_reload_ts';
+        const key = '__valora_chunk_reload_ts';
         const lastReload = sessionStorage.getItem(key);
         const now = Date.now();
         // Allow auto-reload only once per 15 seconds to prevent loops
         if (!lastReload || (now - parseInt(lastReload, 10)) > 15000) {
             sessionStorage.setItem(key, String(now));
-            console.warn('[Hyperion Vault] Berkas chunk versi lama terdeteksi setelah deployment. Memuat ulang antarmuka terbaru...');
+            console.warn('[Valora Vault] Berkas chunk versi lama terdeteksi setelah deployment. Memuat ulang antarmuka terbaru...');
             window.location.reload();
         }
     } catch {

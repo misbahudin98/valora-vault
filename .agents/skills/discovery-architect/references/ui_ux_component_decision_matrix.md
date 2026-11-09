@@ -1,12 +1,12 @@
 # Matriks Keputusan Pola UI/UX Web & Responsibilitas Mobile (UI/UX Component Decision Matrix)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standar Rujukan:** Jenifer Tidwell (Designing Interfaces 3rd Ed), Luke Wroblewski (Web Form Design & Mobile First), Bill Scott & Theresa Neil (Designing Web Interfaces), Steve Krug (Don't Make Me Think), Don Norman (The Design of Everyday Things), Nielsen Norman Group (NN/g), W3C WAI-ARIA APG, W3C WCAG 2.2 AAA, IBM Carbon, Atlassian Design System, Salesforce Lightning (SLDS), GOV.UK Design System, Apple HIG, Google Material Design 3.
 
 ---
 
 ## 1. PENDAHULUAN & PRINSIP ERGONOMI KOGNITIF
 
-Pemilihan pola antarmuka (*UI Pattern*) dalam Hyperion Vault **bukan ditentukan oleh preferensi estetika visual**, melainkan oleh kalkulasi ilmiah terhadap:
+Pemilihan pola antarmuka (*UI Pattern*) dalam Valora Vault **bukan ditentukan oleh preferensi estetika visual**, melainkan oleh kalkulasi ilmiah terhadap:
 1. **Beban Kognitif Pengguna (*Cognitive Load*):** Berapa banyak informasi yang harus diproses dan diingat sebelum mengambil tindakan.
 2. **Konteks & Frekuensi Tugas (*Task Context & Frequency*):** Apakah aksi bersifat sekilas (1–3 detik), inspeksi audit, atau transaksi mendalam bertahap.
 3. **Ergonomi Perangkat & Jangkauan Fisik (*Device Ergonomics & Viewport*):** Perbedaan mendasar antara manipulasi kursor mouse desktop (presisi tinggi) vs manipulasi ibu jari layar sentuh mobile (*touch target* dan *Thumb Zone*).

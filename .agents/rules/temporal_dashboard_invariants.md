@@ -1,5 +1,5 @@
 # Invariants Sistem: Dasbor Analitik & Pelaporan Multi-Temporal (temporal_dashboard_invariants.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standards:** Stephen Few (2013), Edward Tufte (2001), Ralph Kimball (2013), Ben Shneiderman (1996), Colin Ware (2020), CRISP-DM, DAMA-DMBOK 2nd Ed, Douglas Hubbard (2014), WCAG 2.2 AAA, RFC 7807, PER Coding Style 2.0  
 > **Target:** Autonomous Coding Agents (Antigravity, Gemini, Claude, Cursor) & Human Engineers  
 > **Trigger Tags:** `@dashboard`, `@analytics`, `#kpi` | **Playbook:** [`.agents/skills/dashboard-architect/SKILL.md`](../skills/dashboard-architect/SKILL.md)

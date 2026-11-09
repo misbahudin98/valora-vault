@@ -1,5 +1,5 @@
 # Universal Agent Invariants & System Contract (AGENTS.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Target:** Autonomous Coding Agents (Antigravity, Gemini, Claude, Cursor, Copilot)
 
 Rujuk berkas berikut sebagai Single Source of Truth (SSoT):

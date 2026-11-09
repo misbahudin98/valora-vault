@@ -99,7 +99,7 @@ erDiagram
       {
         "id": 1,
         "name": "Super Administrator",
-        "email": "admin@hyperion-vault.test",
+        "email": "admin@valora-vault.test",
         "role": ["admin"],
         "is_active": true,
         "status": "active",
@@ -119,7 +119,7 @@ erDiagram
   ```json
   {
     "name": "Jane Doe",
-    "email": "jane@hyperion-vault.test",
+    "email": "jane@valora-vault.test",
     "password": "password123",
     "role": ["manager", "user"],
     "is_active": true
@@ -129,7 +129,7 @@ erDiagram
   ```json
   {
     "message": "Pengguna berhasil ditambahkan.",
-    "data": { "id": 2, "name": "Jane Doe", "email": "jane@hyperion-vault.test" }
+    "data": { "id": 2, "name": "Jane Doe", "email": "jane@valora-vault.test" }
   }
   ```
 

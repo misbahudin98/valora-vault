@@ -110,7 +110,7 @@ class RoleConsolidationTest extends TestCase
         // 1. Store ditolak saat role tidak terdaftar di permission.php
         $storeRes = $this->actingAs($admin)->postJson('/api/v1/admin/users', [
             'name' => 'Invalid Role User',
-            'email' => 'invalid_role@hyperion-vault.test',
+            'email' => 'invalid_role@valora-vault.test',
             'password' => 'password123',
             'role' => ['invalid_fake_role'],
             'is_active' => true,

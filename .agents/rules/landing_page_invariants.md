@@ -1,5 +1,5 @@
 # Invariants Sistem: Rekayasa Landing Page & Optimasi Penemuan (landing_page_invariants.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standards:** Google Core Web Vitals (2024/2026), Princeton GEO (Aggarwal et al., 2023), Answer.ai llms.txt (Jeremy Howard, 2024), MECLABS Conversion Heuristic, StoryBrand SB7 (Donald Miller), Julian Shapiro CRO, WCAG 2.2 AAA, Schema.org JSON-LD  
 > **Target:** Autonomous Coding Agents (Antigravity, Gemini, Claude, Cursor) & Human Engineers  
 > **Trigger Tags:** `@landing`, `@landing-page`, `@seo`, `@geo`, `@cro`, `@aio` | **Playbook:** [`.agents/skills/landing-architect/SKILL.md`](../skills/landing-architect/SKILL.md)

@@ -132,12 +132,12 @@ async function main() {
   // Create output directories
   const staticDir = path.resolve('frontend/static/data/wilayah');
   const libDir = path.resolve('frontend/src/lib/data');
-  const starterStaticDir = path.resolve('D:/laragon/www/hyperion-vault/frontend/static/data/wilayah');
-  const starterLibDir = path.resolve('D:/laragon/www/hyperion-vault/frontend/src/lib/data');
+  const starterStaticDir = path.resolve('D:/laragon/www/valora-vault/frontend/static/data/wilayah');
+  const starterLibDir = path.resolve('D:/laragon/www/valora-vault/frontend/src/lib/data');
 
   fs.mkdirSync(staticDir, { recursive: true });
   fs.mkdirSync(libDir, { recursive: true });
-  if (fs.existsSync('D:/laragon/www/hyperion-vault')) {
+  if (fs.existsSync('D:/laragon/www/valora-vault')) {
     fs.mkdirSync(starterStaticDir, { recursive: true });
     fs.mkdirSync(starterLibDir, { recursive: true });
   }
@@ -172,7 +172,7 @@ async function main() {
   fs.writeFileSync(path.join(libDir, 'regencies.json'), regStr);
 
   // Mirror to starter repo if exists
-  if (fs.existsSync('D:/laragon/www/hyperion-vault')) {
+  if (fs.existsSync('D:/laragon/www/valora-vault')) {
     fs.writeFileSync(path.join(starterStaticDir, 'provinces.json'), provStr);
     fs.writeFileSync(path.join(starterStaticDir, 'regencies.json'), regStr);
     fs.writeFileSync(path.join(starterStaticDir, 'districts.json'), distStr);

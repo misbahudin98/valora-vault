@@ -7,7 +7,7 @@ class ThemeManager {
 
   constructor() {
     if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('hyperion_theme');
+      const stored = localStorage.getItem('valora_theme');
       if (stored === 'dark' || stored === 'light') {
         this.current = stored;
       } else {
@@ -20,7 +20,7 @@ class ThemeManager {
   toggle() {
     this.current = this.current === 'light' ? 'dark' : 'light';
     if (typeof window !== 'undefined') {
-      localStorage.setItem('hyperion_theme', this.current);
+      localStorage.setItem('valora_theme', this.current);
       this.syncDOM();
     }
   }
@@ -29,7 +29,7 @@ class ThemeManager {
     if (theme !== 'light' && theme !== 'dark') return;
     this.current = theme;
     if (typeof window !== 'undefined') {
-      localStorage.setItem('hyperion_theme', theme);
+      localStorage.setItem('valora_theme', theme);
       this.syncDOM();
     }
   }

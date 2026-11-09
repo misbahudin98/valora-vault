@@ -1,5 +1,5 @@
 # ==============================================================================
-# AUDITOR INTEGRITAS & PENYELARASAN SELURUH SKILL (Hyperion Vault SSoT Engine)
+# AUDITOR INTEGRITAS & PENYELARASAN SELURUH SKILL (Valora Vault SSoT Engine)
 # Memvalidasi YAML frontmatter, broken links, ketersediaan referensi & aturan
 # ==============================================================================
 param (
@@ -10,7 +10,7 @@ param (
 $ErrorActionPreference = "SilentlyContinue"
 
 Write-Host "=================================================================" -ForegroundColor Cyan
-Write-Host "   AUDITOR INTEGRITAS TATA KELOLA SKILL & ATURAN (Hyperion SSoT)  " -ForegroundColor Cyan
+Write-Host "   AUDITOR INTEGRITAS TATA KELOLA SKILL & ATURAN (Valora SSoT)    " -ForegroundColor Cyan
 Write-Host "=================================================================" -ForegroundColor Cyan
 Write-Host "Direktori Skill : $SkillsDir" -ForegroundColor Gray
 Write-Host "Direktori Aturan: $RulesDir`n" -ForegroundColor Gray

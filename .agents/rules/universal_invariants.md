@@ -1,6 +1,6 @@
 # Universal System Invariants & Anti-Slop Policy (SDD-Enterprise-Deterministic)
 > **Version:** 8.0.0 | **Standard:** Specification-Driven Development (SDD) & PER Coding Style 2.0  
-> **Target Scope:** Universal across Hyperion Vault Core Engine, Valora Vault, Yayasan PQTM, and all generated repos.
+> **Target Scope:** Universal across Valora Vault Core Engine, Valora Vault, Yayasan PQTM, and all generated repos.
 
 ---
 
@@ -58,7 +58,7 @@ Setiap komponen antarmuka Svelte 5 Runes yang mengambil atau memproses data WAJI
 ### [RULE-03-YAGNI-KISS] YAGNI & ANTI-OVERENGINEERING
 - Terapkan prinsip YAGNI (You Aren't Gonna Need It) & KISS (Keep It Simple, Stupid).
 - DILARANG menciptakan abstraksi palsu seperti puluhan lapisan `Service`, `Repository`, `Interface`, `Adapter`, `Factory` jika fitur tersebut hanya sebuah operasi CRUD biasa.
-- **Pola Standar Hyperion:**
+- **Pola Standar Valora:**
   - Thin Controller.
   - Form Request untuk validasi ketat.
   - Eloquent API Resource untuk transformasi data.
@@ -154,7 +154,7 @@ Setiap komponen antarmuka Svelte 5 Runes yang mengambil atau memproses data WAJI
   - DILARANG KERAS menggunakan palet warna "AI generic/SaaS template" seperti latar belakang gradient ungu-pink neon (`from-indigo-500 via-purple-500 to-pink-500`), cyan glow berlebihan, ornamen blob lingkaran kabur (`blur-3xl opacity-30`) yang mengambang tanpa guna, atau ikon sparkle/bintang AI dekoratif yang tidak fungsional.
   - Dilarang efek frosted glass / glassmorphism buram yang mengaburkan kontras teks.
 - **Karya Berkarakter & Human-Crafted Aesthetic:**
-  - Wajib menerapkan palet tonal teredam bermartabat (*dignified muted tonal palette*): monokrom Slate/Stone/Obsidian yang tenang dipadukan dengan tepat 1 warna aksen fungsional berkarakter (Emerald di Yayasan PQTM, Indigo/Emerald di Hyperion Vault).
+  - Wajib menerapkan palet tonal teredam bermartabat (*dignified muted tonal palette*): monokrom Slate/Stone/Obsidian yang tenang dipadukan dengan tepat 1 warna aksen fungsional berkarakter (Emerald di Yayasan PQTM, Indigo/Emerald di Valora Vault).
   - Tipografi berbobot dan berirama (*editorial rhythm*): heading tegas, label mikro terukur, `font-mono` untuk angka, timestamp, UUID, dan data tabular.
   - Tekstur dan pembatas presisi: hairline 1px borders (`border border-slate-200/80 dark:border-slate-800/80`), bayangan mikro lembut `shadow-2xs`, dan negative space lapang.
 - **Harmoni Fungsionalitas & Zero Superfluous Elements:**
@@ -241,7 +241,7 @@ Setiap komponen antarmuka Svelte 5 Runes yang mengambil atau memproses data WAJI
 
 ---
 
-## 3. INVARIAN TEKNOLOGI STACK HYPERION
+## 3. INVARIAN TEKNOLOGI STACK VALORA VAULT
 
 ### 3.1 Backend Invariants
 - **PHP 8.3 / 8.4 dengan Laravel 13.**

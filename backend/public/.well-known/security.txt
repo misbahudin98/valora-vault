@@ -1,6 +1,6 @@
-# Hyperion Vault Security Disclosure Policy (RFC 9116)
-Contact: mailto:security@hyperion-vault.test
+# Valora Vault Security Disclosure Policy (RFC 9116)
+Contact: mailto:security@valora-vault.test
 Expires: 2027-12-31T23:59:59.000Z
 Preferred-Languages: id, en
-Canonical: http://hyperion-vault.test/.well-known/security.txt
-Policy: http://hyperion-vault.test/security-policy
+Canonical: http://valora-vault.test/.well-known/security.txt
+Policy: http://valora-vault.test/security-policy

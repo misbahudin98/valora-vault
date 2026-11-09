@@ -1,5 +1,5 @@
 # Buku Putih Standar Arsitektur Dokumentasi Proyek Universal (project_documentation_standards.md)
-> **Engine:** Hyperion Vault v6.36.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.36.0 SDD-Enterprise-Deterministic  
 > **Standar Industri Internasional:** ISO/IEC/IEEE 29148:2018 (Requirements Engineering), IEEE Std 1016-2009 (Software Design Descriptions), BPMN 2.0 (ISO/IEC 19510), The C4 Model (Simon Brown), arc42 Architecture Framework, Diátaxis Documentation Framework (Daniele Procida), ISO 24495-1:2023 (Plain Language), US Federal Plain Writing Act, Edward Tufte (Information Design), Robert Bringhurst (Typography), Nielsen Norman Group (NN/g Senior Usability), AARP Human Factors Standards.  
 > **Target Audience:** Solution Architects, Technical Writers, Lead Engineers, Domain Experts, Public Officers, AI Coding Agents.
 
@@ -9,7 +9,7 @@
 
 Dokumentasi proyek rekayasa perangkat lunak dan proses bisnis enterprise kerap mengalami kegagalan fatal di industri akibat **"The Curse of Knowledge"**—situasi psikologis di mana para perancang sistem menulis dokumen hanya untuk dipahami oleh sesama spesialis teknis. Akibatnya, dokumen dipenuhi oleh akronim kriptik, instruksi asumtif, dan diagram monolitik yang mengintimidasi masyarakat awam serta membingungkan pengguna lanjut usia (*baby boomer*).
 
-Dokumentasi kelas dunia di lingkungan Hyperion Vault didefinisikan sebagai **antarmuka kognitif (*cognitive interface*)** yang menjembatani 4 dunia pembaca secara proporsional:
+Dokumentasi kelas dunia di lingkungan Valora Vault didefinisikan sebagai **antarmuka kognitif (*cognitive interface*)** yang menjembatani 4 dunia pembaca secara proporsional:
 1. **Dunia Kebijakan & Bisnis (Eksekutif & Pimpinan):** Membutuhkan kejelasan tata kelola, mitigasi risiko hukum, dan alur nilai (*value stream*).
 2. **Dunia Rekayasa Teknis (Engineer & DevOps):** Membutuhkan spesifikasi deterministik, kontrak API, skema basis data 3NF, dan bukti uji *zero-regression*.
 3. **Dunia Operasional Harian (Operator & Staf):** Membutuhkan panduan tugas cepat, *checklist* verifikasi, dan prosedur pemulihan gangguan.
@@ -183,7 +183,7 @@ Seluruh materi dokumentasi wajib dipisahkan secara disiplin ke dalam 4 kuadran:
 │                                                                        │
 │ 4. EXPLANATION (Berorientasi Pemahaman Konsep & Arsitektur)            │
 │    - Menguraikan latar belakang, filosofi desain, dan 'mengapa'.       │
-│    - Contoh: "Mengapa Hyperion Vault Memilih Session Berbasis File".   │
+│    - Contoh: "Mengapa Valora Vault Memilih Session Berbasis File".   │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -266,7 +266,7 @@ Pengguna generasi senior (usia 60+ tahun) memiliki karakteristik biologis dan ps
 
 ## 8. INTEGRASI SISTEM & TATA KELOLA TRITUNGGAL REPOSITORI
 
-| Komponen Tata Kelola | Repositori `hyperion-vault` (Upstream) | Repositori `irwan-baddu` (Legal Notariat) | Repositori `yayasan-pqtm` (Pendidikan Pesantren) |
+| Komponen Tata Kelola | Repositori `valora-vault` (Upstream) | Repositori `irwan-baddu` (Legal Notariat) | Repositori `yayasan-pqtm` (Pendidikan Pesantren) |
 | :--- | :--- | :--- | :--- |
 | **Aturan Sistem (Rules)** | `[RULE-20-UNIVERSAL-DOCUMENTATION-ARCHITECTURE]` pada `GEMINI.md` & `AGENTS.md`. | Mengadopsi RULE-20 dengan penekanan pada hak hukum klien & kepatuhan UUJN. | Mengadopsi RULE-20 dengan penekanan pada transparansi SPP & raport santri. |
 | **Buku Putih SSoT (`doc/`)** | `doc/project_documentation_standards.md` (Master Blueprint Netral). | `doc/panduan_user_awam_notaris_ppat.md` & `doc/panduan_lengkap_dan_ketentuan_notaris_ppat.md`. | `doc/DOKUMENTASI_PENGGUNA_AWAM_SIM_PQTM.md` & panduan kesantrian. |
@@ -275,4 +275,4 @@ Pengguna generasi senior (usia 60+ tahun) memiliki karakteristik biologis dan ps
 
 ---
 
-*Hyperion Vault Documentation Architecture Specification v6.36.0 — International Standards, Universal Usability, Multi-Persona Empathy.*
+*Valora Vault Documentation Architecture Specification v6.36.0 — International Standards, Universal Usability, Multi-Persona Empathy.*

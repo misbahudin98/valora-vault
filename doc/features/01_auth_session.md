@@ -29,7 +29,7 @@
 ## 3. ACCEPTANCE CRITERIA (BDD GIVEN-WHEN-THEN)
 
 ### AC-1: Login Sukses & Pencatatan Perangkat Fisik
-- **Given:** Pengguna memasukkan kredensial valid (`admin@hyperion-vault.test` / `password123`).
+- **Given:** Pengguna memasukkan kredensial valid (`admin@valora-vault.test` / `password123`).
 - **When:** Pengguna menekan tombol "Masuk Sistem" (`POST /api/v1/auth/login`).
 - **Then:** Server merespons HTTP 200, menerbitkan cookie `laravel_session`, `XSRF-TOKEN`, dan `auth_jwt`. Record baru tersimpan di tabel `user_devices`, dan pengguna diarahkan ke dashboard dalam waktu $\le 50\text{ ms}$.
 
@@ -119,7 +119,7 @@ erDiagram
 - **Request Body:**
   ```json
   {
-    "email": "admin@hyperion-vault.test",
+    "email": "admin@valora-vault.test",
     "password": "password123"
   }
   ```
@@ -130,7 +130,7 @@ erDiagram
     "user": {
       "id": 1,
       "name": "Super Administrator",
-      "email": "admin@hyperion-vault.test",
+      "email": "admin@valora-vault.test",
       "role": ["admin"],
       "is_active": true
     },
@@ -169,7 +169,7 @@ sequenceDiagram
     C->>FS: Write session data (encrypted)
     C->>D: INSERT INTO user_devices (device metadata)
     C-->>S: Set-Cookie (laravel_session, XSRF-TOKEN, auth_jwt) + JSON 200
-    S->>S: authState.setUser(res.user) + localStorage.setItem('hyperion_user')
+    S->>S: authState.setUser(res.user) + localStorage.setItem('valora_user')
     S-->>U: Redirect to /admin/dashboard
 ```
 
@@ -178,7 +178,7 @@ sequenceDiagram
 ## 7. FRONTEND UI/UX BLUEPRINT (SVELTE 5 RUNES)
 - **Komponen Utama:** [`LoginForm.svelte`](../../frontend/src/lib/components/features/auth/LoginForm.svelte)
 - **State Variables:**
-  - `let email = $state('admin@hyperion-vault.test');`
+  - `let email = $state('admin@valora-vault.test');`
   - `let password = $state('password123');`
   - `let showPassword = $state(false);`
   - `let loading = $state(false);`

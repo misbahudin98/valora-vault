@@ -9,7 +9,7 @@ Tugasmu adalah mengompilasi spesifikasi fitur SDD berikut menjadi kode 100% utuh
 </role>
 
 <context>
-- Workspace: Hyperion Vault Enterprise
+- Workspace: Valora Vault Enterprise
 - SSoT References: `doc/architecture.md`, `doc/design.md`, `doc/prompt.feature.md`
 - Database: SQLite WAL mode dengan PRAGMA terproteksi (`busy_timeout=5000; journal_mode=WAL;`)
 - Sesi & Cache: File driver pada disk NVMe (`SESSION_DRIVER=file`). DILARANG `SESSION_DRIVER=database`.

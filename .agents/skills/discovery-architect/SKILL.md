@@ -52,7 +52,7 @@ flowchart TD
 
 ### Langkah 1: Profiling Aktor & Pain Points Mapping
 1. Identifikasi aktor operasional riil yang menanggung beban kerja manual terberat.
-2. Petakan ke dalam Peran Kanonikal sistem yang terdaftar resmi di `backend/config/permissions.php` (contoh pada Hyperion Vault Starter: `admin`, `manager`, `staff`, `auditor`, `user`; atau peran kanonikal spesifik yang didaftarkan pada domain klien). **DILARANG KERAS membuat nama alias peran atau mengonsolidasi peran-peran berbeda menjadi peran gabungan (Zero Aliasing & Zero Consolidation Mandate).**
+2. Petakan ke dalam Peran Kanonikal sistem yang terdaftar resmi di `backend/config/permissions.php` (contoh pada Valora Vault Starter: `admin`, `manager`, `staff`, `auditor`, `user`; atau peran kanonikal spesifik yang didaftarkan pada domain klien). **DILARANG KERAS membuat nama alias peran atau mengonsolidasi peran-peran berbeda menjadi peran gabungan (Zero Aliasing & Zero Consolidation Mandate).**
 3. Temukan dampak kerugian konkret jika sistem tidak dibuat (waktu terbuang, selisih finansial, kebocoran data).
 
 ### Langkah 2: Formulasi Jobs-to-be-Done (JTBD)

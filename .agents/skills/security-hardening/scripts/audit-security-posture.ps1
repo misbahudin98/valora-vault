@@ -1,5 +1,5 @@
 # ==============================================================================
-# AUDITOR OTOMATIS POSTUR KEAMANAN APLIKASI WEB & API (Hyperion Vault DevSecOps)
+# AUDITOR OTOMATIS POSTUR KEAMANAN APLIKASI WEB & API (Valora Vault DevSecOps)
 # Memeriksa kepatuhan terhadap .agents/rules/security_invariants.md
 # ==============================================================================
 param (
@@ -9,7 +9,7 @@ param (
 $ErrorActionPreference = "SilentlyContinue"
 
 Write-Host "=================================================================" -ForegroundColor Cyan
-Write-Host "   AUDITOR POSTUR KEAMANAN WEB & API (Hyperion Vault DevSecOps)   " -ForegroundColor Cyan
+Write-Host "   AUDITOR POSTUR KEAMANAN WEB & API (Valora Vault DevSecOps)   " -ForegroundColor Cyan
 Write-Host "=================================================================" -ForegroundColor Cyan
 Write-Host "Basis Direktori: $BasePath`n" -ForegroundColor Gray
 

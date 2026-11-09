@@ -16,7 +16,7 @@ class AdminUserManagementTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Config::set('sanctum.stateful', ['valora-vault.test', 'hyperion-vault.test', 'template.org', 'localhost']);
+        Config::set('sanctum.stateful', ['valora-vault.test', 'template.org', 'localhost']);
         Config::set('session.driver', 'file');
     }
 
@@ -24,7 +24,7 @@ class AdminUserManagementTest extends TestCase
     {
         $admin = User::factory()->create([
             'name' => 'Admin User',
-            'email' => 'admin@hyperion-vault.test',
+            'email' => 'admin@valora-vault.test',
             'role' => ['admin'],
             'is_active' => true,
             'token_version' => 1
@@ -32,18 +32,18 @@ class AdminUserManagementTest extends TestCase
 
         $regularUser = User::factory()->create([
             'name' => 'Normal User',
-            'email' => 'user@hyperion-vault.test',
+            'email' => 'user@valora-vault.test',
             'role' => ['user'],
             'is_active' => true,
             'token_version' => 1
         ]);
 
         // 1. Regular user trying to access admin endpoints gets 403 Forbidden
-        $unauthRes = $this->actingAs($regularUser)->getJson('/api/v1/admin/users', ['Referer' => 'http://hyperion-vault.test']);
+        $unauthRes = $this->actingAs($regularUser)->getJson('/api/v1/admin/users', ['Referer' => 'http://valora-vault.test']);
         $unauthRes->assertStatus(403);
 
         // 2. Admin can list all users
-        $listRes = $this->actingAs($admin)->getJson('/api/v1/admin/users', ['Referer' => 'http://hyperion-vault.test']);
+        $listRes = $this->actingAs($admin)->getJson('/api/v1/admin/users', ['Referer' => 'http://valora-vault.test']);
         $listRes->assertStatus(200);
         $listRes->assertJsonStructure([
             'data' => [
@@ -55,7 +55,7 @@ class AdminUserManagementTest extends TestCase
 
         // 3. Admin can toggle regular user status to suspended
         $toggleRes = $this->actingAs($admin)->postJson("/api/v1/admin/users/{$regularUser->id}/toggle-status", [], [
-            'Referer' => 'http://hyperion-vault.test'
+            'Referer' => 'http://valora-vault.test'
         ]);
         $toggleRes->assertStatus(200);
         $this->assertFalse($regularUser->fresh()->is_active);
@@ -63,21 +63,21 @@ class AdminUserManagementTest extends TestCase
 
         // 4. Admin cannot toggle their own status
         $selfToggleRes = $this->actingAs($admin)->postJson("/api/v1/admin/users/{$admin->id}/toggle-status", [], [
-            'Referer' => 'http://hyperion-vault.test'
+            'Referer' => 'http://valora-vault.test'
         ]);
         $selfToggleRes->assertStatus(400);
 
         // 5. Admin can revoke sessions (increments token_version)
         $initialVersion = $regularUser->fresh()->token_version;
         $revokeRes = $this->actingAs($admin)->postJson("/api/v1/admin/users/{$regularUser->id}/revoke-sessions", [], [
-            'Referer' => 'http://hyperion-vault.test'
+            'Referer' => 'http://valora-vault.test'
         ]);
         $revokeRes->assertStatus(200);
         $this->assertEquals($initialVersion + 1, $regularUser->fresh()->token_version);
 
         // 6. Suspended user gets blocked by CheckUserActive middleware
         $suspendedAttempt = $this->actingAs($regularUser->fresh())->getJson('/api/v1/user/profile', [
-            'Referer' => 'http://hyperion-vault.test'
+            'Referer' => 'http://valora-vault.test'
         ]);
         $suspendedAttempt->assertStatus(403);
     }
@@ -86,7 +86,7 @@ class AdminUserManagementTest extends TestCase
     {
         $admin = User::factory()->create([
             'name' => 'Admin Boss',
-            'email' => 'boss@hyperion-vault.test',
+            'email' => 'boss@valora-vault.test',
             'role' => ['admin'],
             'is_active' => true,
             'token_version' => 1
@@ -121,13 +121,13 @@ class AdminUserManagementTest extends TestCase
 
         // 3. Delete Self (Forbidden)
         $deleteSelfRes = $this->actingAs($admin)->deleteJson("/api/v1/admin/users/{$admin->id}", [], [
-            'Referer' => 'http://hyperion-vault.test'
+            'Referer' => 'http://valora-vault.test'
         ]);
         $deleteSelfRes->assertStatus(400);
 
         // 4. Delete Target User
         $deleteRes = $this->actingAs($admin)->deleteJson("/api/v1/admin/users/{$newUser->id}", [], [
-            'Referer' => 'http://hyperion-vault.test'
+            'Referer' => 'http://valora-vault.test'
         ]);
         $deleteRes->assertStatus(200);
         $this->assertDatabaseMissing('users', ['id' => $newUser->id]);
@@ -137,7 +137,7 @@ class AdminUserManagementTest extends TestCase
     {
         $admin = User::factory()->create([
             'name' => 'Admin SecOps',
-            'email' => 'secops@hyperion-vault.test',
+            'email' => 'secops@valora-vault.test',
             'role' => ['admin'],
             'is_active' => true,
             'token_version' => 1
@@ -184,7 +184,7 @@ class AdminUserManagementTest extends TestCase
         ]);
 
         // 1. List active device sessions
-        $res = $this->actingAs($admin)->getJson('/api/v1/admin/sessions', ['Referer' => 'http://hyperion-vault.test']);
+        $res = $this->actingAs($admin)->getJson('/api/v1/admin/sessions', ['Referer' => 'http://valora-vault.test']);
         $res->assertStatus(200);
         $res->assertJsonStructure([
             'data' => [
@@ -196,14 +196,14 @@ class AdminUserManagementTest extends TestCase
 
         // 2. Revoke a specific single device session
         $revokeDevice = $this->actingAs($admin)->postJson("/api/v1/admin/sessions/{$deviceUser1->id}/revoke", [], [
-            'Referer' => 'http://hyperion-vault.test'
+            'Referer' => 'http://valora-vault.test'
         ]);
         $revokeDevice->assertStatus(200);
         $this->assertDatabaseMissing('user_devices', ['id' => $deviceUser1->id]);
 
         // 3. Revoke all sessions for a user by user ID
         $revokeUser = $this->actingAs($admin)->postJson("/api/v1/admin/sessions/user/{$user2->id}/revoke", [], [
-            'Referer' => 'http://hyperion-vault.test'
+            'Referer' => 'http://valora-vault.test'
         ]);
         $revokeUser->assertStatus(200);
         $this->assertEquals(2, $user2->fresh()->token_version);
@@ -211,13 +211,13 @@ class AdminUserManagementTest extends TestCase
 
         // 4. Auto-cleanup endpoint
         $cleanupRes = $this->actingAs($admin)->postJson('/api/v1/admin/sessions/cleanup', [], [
-            'Referer' => 'http://hyperion-vault.test'
+            'Referer' => 'http://valora-vault.test'
         ]);
         $cleanupRes->assertStatus(200);
 
         // 5. Emergency Revoke All (except admin)
         $revokeAll = $this->actingAs($admin)->postJson('/api/v1/admin/sessions/revoke-all', [], [
-            'Referer' => 'http://hyperion-vault.test'
+            'Referer' => 'http://valora-vault.test'
         ]);
         $revokeAll->assertStatus(200);
     }
@@ -231,7 +231,7 @@ class AdminUserManagementTest extends TestCase
 
         // 1. Missing required fields triggers 422
         $res = $this->actingAs($admin)->postJson('/api/v1/admin/users', [], [
-            'Referer' => 'http://hyperion-vault.test'
+            'Referer' => 'http://valora-vault.test'
         ]);
         $res->assertStatus(422);
         $res->assertJsonValidationErrors(['name', 'email', 'password']);
@@ -239,10 +239,10 @@ class AdminUserManagementTest extends TestCase
         // 2. Invalid role triggers 422
         $invalidRoleRes = $this->actingAs($admin)->postJson('/api/v1/admin/users', [
             'name' => 'Invalid Role User',
-            'email' => 'invalid_role@hyperion-vault.test',
+            'email' => 'invalid_role@valora-vault.test',
             'password' => 'secret12345',
             'role' => ['non_existent_role_xyz'],
-        ], ['Referer' => 'http://hyperion-vault.test']);
+        ], ['Referer' => 'http://valora-vault.test']);
 
         $invalidRoleRes->assertStatus(422);
         $invalidRoleRes->assertJsonValidationErrors(['role']);
@@ -250,9 +250,9 @@ class AdminUserManagementTest extends TestCase
         // 3. Short password triggers 422
         $shortPassRes = $this->actingAs($admin)->postJson('/api/v1/admin/users', [
             'name' => 'Short Pass',
-            'email' => 'short_pass@hyperion-vault.test',
+            'email' => 'short_pass@valora-vault.test',
             'password' => '123',
-        ], ['Referer' => 'http://hyperion-vault.test']);
+        ], ['Referer' => 'http://valora-vault.test']);
 
         $shortPassRes->assertStatus(422);
         $shortPassRes->assertJsonValidationErrors(['password']);
@@ -297,14 +297,14 @@ class AdminUserManagementTest extends TestCase
         // 1. Negative grace_minutes triggers 422
         $res = $this->actingAs($admin)->postJson('/api/v1/admin/sessions/cleanup', [
             'grace_minutes' => -10,
-        ], ['Referer' => 'http://hyperion-vault.test']);
+        ], ['Referer' => 'http://valora-vault.test']);
         $res->assertStatus(422);
         $res->assertJsonValidationErrors(['grace_minutes']);
 
         // 2. Exceeding max grace_minutes triggers 422
         $excessRes = $this->actingAs($admin)->postJson('/api/v1/admin/sessions/cleanup', [
             'grace_minutes' => 99999,
-        ], ['Referer' => 'http://hyperion-vault.test']);
+        ], ['Referer' => 'http://valora-vault.test']);
         $excessRes->assertStatus(422);
         $excessRes->assertJsonValidationErrors(['grace_minutes']);
     }

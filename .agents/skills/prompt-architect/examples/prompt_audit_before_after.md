@@ -56,7 +56,7 @@ Kamu menolak kode separuh jadi, melarang keras penggunaan placeholder, dan mener
 </role>
 
 <context>
-- Workspace: Hyperion Vault Enterprise
+- Workspace: Valora Vault Enterprise
 - Single Source of Truth: `doc/architecture.md` dan `doc/feature.md`
 - Backend: Laravel 13, PHP 8.3+, SQLite WAL Mode (`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;`)
 - Frontend: 100% Pure JavaScript (ES2024+), Svelte 5 Runes (`$state`, `$derived`, `$props`), Tailwind CSS v4

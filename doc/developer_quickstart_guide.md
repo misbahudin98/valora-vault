@@ -1,5 +1,5 @@
-# Panduan Cepat Pengembang: Hyperion Vault Starter Kit (doc/developer_quickstart_guide.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+# Panduan Cepat Pengembang: Valora Vault Starter Kit (doc/developer_quickstart_guide.md)
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Klasifikasi Diátaxis:** Tutorial & How-To Guide (Pragmatis, Deterministik, Bebas Asumsi)  
 > **Target Audiens:** Lead Architect, Software Engineer, Junior Developer, & AI Coding Agents
 
@@ -7,11 +7,11 @@
 
 ## 1. PENDAHULUAN: POLA GOLDEN MASTER ARCHETYPE
 
-Hyperion Vault dirancang bukan sebagai aplikasi monolitik yang membengkak, melainkan sebagai **Golden Master Archetype & Project Spawner**. Dari satu direktori inti Hyperion Vault, Anda dapat melahirkan (*spawn*) puluhan aplikasi web mandiri tingkat enterprise dalam hitungan detik (~3-5 detik) tanpa perlu mengunduh ulang dependensi `composer` dan `npm`.
+Valora Vault dirancang bukan sebagai aplikasi monolitik yang membengkak, melainkan sebagai **Golden Master Archetype & Project Spawner**. Dari satu direktori inti Valora Vault, Anda dapat melahirkan (*spawn*) puluhan aplikasi web mandiri tingkat enterprise dalam hitungan detik (~3-5 detik) tanpa perlu mengunduh ulang dependensi `composer` dan `npm`.
 
 ```mermaid
 flowchart TD
-    Master["👑 Hyperion Vault Starter Kit\n(Master Archetype Engine v6.31.0)"]
+    Master["👑 Valora Vault Starter Kit\n(Master Archetype Engine v6.31.0)"]
     
     Spawner{"php install.php spawn <nama-aplikasi>"}
     
@@ -29,7 +29,7 @@ flowchart TD
 
 ## 2. PRASYARAT SISTEM MINIMAL
 
-Sebelum menjalankan Hyperion Vault di Laragon atau server lokal:
+Sebelum menjalankan Valora Vault di Laragon atau server lokal:
 - **PHP:** $\ge 8.2$ (Sangat direkomendasikan PHP 8.3 / 8.4)
 - **Ekstensi PHP Wajib:** `pdo_sqlite`, `sqlite3`, `curl`, `mbstring`, `openssl`, `fileinfo`, `json`
 - **Node.js:** $\ge 20.x$ / 22.x LTS
@@ -44,18 +44,18 @@ Jalankan perintah berikut untuk menginisialisasi starter kit pertama kali:
 
 ```bash
 # 1. Masuk ke direktori starter kit
-cd D:/laragon/www/hyperion-vault
+cd D:/laragon/www/valora-vault
 
 # 2. Cek status diagnostik prasyarat
 php install.php status
 
 # 3. Jika belum terinstal, jalankan instalasi otomatis
-php install.php install --name="Hyperion Vault" --domain="hyperion-vault.test"
+php install.php install --name="Valora Vault" --domain="valora-vault.test"
 ```
 
 Aplikasi master akan aktif di:
-- **URL:** `http://hyperion-vault.test`
-- **Akun Utama:** `admin@hyperion-vault.test` *(Password: `password123`)*
+- **URL:** `http://valora-vault.test`
+- **Akun Utama:** `admin@valora-vault.test` *(Password: `password123`)*
 
 ---
 
@@ -98,7 +98,7 @@ Saat membangun modul baru pada aplikasi hasil spawn, patuhi aturan mutlak **`[RU
 
 ## 6. PETA 6 ENGINEERING SKILLS & AUTOMATION SCRIPTS
 
-Hyperion Vault dilengkapi dengan 6 AI Engineering Skills siap panggil via trigger tag:
+Valora Vault dilengkapi dengan 6 AI Engineering Skills siap panggil via trigger tag:
 
 | Trigger Tag | Nama Skill | Direktori | Skrip Otomasi |
 | :--- | :--- | :--- | :--- |

@@ -15,7 +15,7 @@ class SanctumAuthTest extends TestCase {
 
     protected function setUp(): void {
         parent::setUp();
-        Config::set('sanctum.stateful', ['valora-vault.test', 'hyperion-vault.test', 'template.org', 'localhost']);
+        Config::set('sanctum.stateful', ['valora-vault.test', 'template.org', 'localhost']);
         Config::set('session.driver', 'file');
     }
 
@@ -130,7 +130,7 @@ class SanctumAuthTest extends TestCase {
 
         // 8. Audit HTTP 401 Akses Unauthenticated
         \Illuminate\Support\Facades\Auth::forgetGuards();
-        $afterLogout = $this->withSession([])->getJson('/api/v1/auth/me', ['Referer' => 'http://hyperion-vault.test']);
+        $afterLogout = $this->withSession([])->getJson('/api/v1/auth/me', ['Referer' => 'http://valora-vault.test']);
         $afterLogout->assertStatus(401);
     }
 
@@ -170,24 +170,24 @@ class SanctumAuthTest extends TestCase {
 
     public function test_auto_remove_revoked_session_and_cookie_purge(): void {
         $user = User::factory()->create([
-            'email' => 'revoked@hyperion-vault.test',
+            'email' => 'revoked@valora-vault.test',
             'password' => 'password123',
             'role' => ['admin'],
             'token_version' => 1,
             'is_active' => true,
         ]);
 
-        $csrfRes = $this->get('/sanctum/csrf-cookie', ['Referer' => 'http://hyperion-vault.test']);
+        $csrfRes = $this->get('/sanctum/csrf-cookie', ['Referer' => 'http://valora-vault.test']);
         $xsrfToken = $csrfRes->getCookie('XSRF-TOKEN')->getValue();
         $sessionCookie = $csrfRes->getCookie(config('session.cookie'))->getValue();
 
         $loginRes = $this->withCookies([
             config('session.cookie') => $sessionCookie
         ])->withSession(['_token' => $xsrfToken])->postJson('/api/v1/auth/login', [
-            'email' => 'revoked@hyperion-vault.test',
+            'email' => 'revoked@valora-vault.test',
             'password' => 'password123'
         ], [
-            'Referer' => 'http://hyperion-vault.test',
+            'Referer' => 'http://valora-vault.test',
             'X-XSRF-TOKEN' => $xsrfToken,
         ]);
         $loginRes->assertStatus(200);
@@ -202,7 +202,7 @@ class SanctumAuthTest extends TestCase {
         $checkRes = $this->withCookies([
             config('session.cookie') => $sessionCookie
         ])->withSession(['_token' => $xsrfToken, 'auth_token_version' => 1])->getJson('/api/v1/auth/me', [
-            'Referer' => 'http://hyperion-vault.test'
+            'Referer' => 'http://valora-vault.test'
         ]);
 
         $checkRes->assertStatus(401);
@@ -222,7 +222,7 @@ class SanctumAuthTest extends TestCase {
 
         // 2. Create a dummy active session tracked in user_devices
         $admin = User::factory()->create([
-            'email' => 'admin_session_test@hyperion-vault.test',
+            'email' => 'admin_session_test@valora-vault.test',
             'role' => ['admin'],
         ]);
         $activeSessionId = 'test_active_dummy_session_456';
@@ -279,7 +279,7 @@ class SanctumAuthTest extends TestCase {
         $initialDiskCount = \App\Models\UserDevice::countDiskSessions();
 
         $user = User::factory()->create([
-            'email' => 'zerodup@hyperion-vault.test',
+            'email' => 'zerodup@valora-vault.test',
             'password' => 'password123',
             'role' => ['admin'],
             'is_active' => true,
@@ -287,7 +287,7 @@ class SanctumAuthTest extends TestCase {
         ]);
 
         // 2. Fetch CSRF Cookie
-        $csrfRes = $this->get('/sanctum/csrf-cookie', ['Referer' => 'http://hyperion-vault.test']);
+        $csrfRes = $this->get('/sanctum/csrf-cookie', ['Referer' => 'http://valora-vault.test']);
         $csrfRes->assertStatus(204);
         $xsrfToken = $csrfRes->getCookie('XSRF-TOKEN')->getValue();
         $preLoginSessionCookie = $csrfRes->getCookie(config('session.cookie'))->getValue();
@@ -300,10 +300,10 @@ class SanctumAuthTest extends TestCase {
         $loginRes = $this->withCredentials()->withCookies([
             config('session.cookie') => $preLoginSessionCookie
         ])->postJson('/api/v1/auth/login', [
-            'email' => 'zerodup@hyperion-vault.test',
+            'email' => 'zerodup@valora-vault.test',
             'password' => 'password123',
         ], [
-            'Referer' => 'http://hyperion-vault.test',
+            'Referer' => 'http://valora-vault.test',
             'X-XSRF-TOKEN' => $xsrfToken,
         ]);
         $loginRes->assertStatus(200);
@@ -329,7 +329,7 @@ class SanctumAuthTest extends TestCase {
         $logoutRes = $this->withCredentials()->withCookies([
             config('session.cookie') => $authSessionCookie
         ])->postJson('/api/v1/auth/logout', [], [
-            'Referer' => 'http://hyperion-vault.test',
+            'Referer' => 'http://valora-vault.test',
             'X-XSRF-TOKEN' => $newXsrfToken,
         ]);
         $logoutRes->assertStatus(204);
@@ -350,13 +350,13 @@ class SanctumAuthTest extends TestCase {
 
     public function test_admin_can_export_users_streamed_csv(): void {
         $admin = User::factory()->create([
-            'email' => 'exportadmin@hyperion-vault.test',
+            'email' => 'exportadmin@valora-vault.test',
             'role' => ['admin'],
             'is_active' => true,
         ]);
 
         $regular = User::factory()->create([
-            'email' => 'regular@hyperion-vault.test',
+            'email' => 'regular@valora-vault.test',
             'role' => ['user'],
             'is_active' => true,
         ]);
@@ -373,19 +373,19 @@ class SanctumAuthTest extends TestCase {
         
         $content = $res->streamedContent();
         $this->assertStringContainsString('ID,Nama,Email,Jabatan,"Kontak (HP/WA)","Alamat Domisili","Spesialisasi Keahlian","Peran (Roles)","Status Akun","Token Version","Dibuat Pada"', $content);
-        $this->assertStringContainsString('exportadmin@hyperion-vault.test', $content);
-        $this->assertStringContainsString('regular@hyperion-vault.test', $content);
+        $this->assertStringContainsString('exportadmin@valora-vault.test', $content);
+        $this->assertStringContainsString('regular@valora-vault.test', $content);
     }
 
     public function test_admin_system_status_and_maintenance_mode(): void {
         $admin = User::factory()->create([
-            'email' => 'sysadmin@hyperion-vault.test',
+            'email' => 'sysadmin@valora-vault.test',
             'role' => ['admin'],
             'is_active' => true,
         ]);
 
         $regular = User::factory()->create([
-            'email' => 'sysregular@hyperion-vault.test',
+            'email' => 'sysregular@valora-vault.test',
             'role' => ['user'],
             'is_active' => true,
         ]);
@@ -423,7 +423,7 @@ class SanctumAuthTest extends TestCase {
             'error_id' => 'err-unit-test-123',
             'message' => 'TypeError: Cannot read properties of undefined',
             'stack' => 'at test.js:10:5',
-            'url' => 'http://hyperion-vault.test/dashboard',
+            'url' => 'http://valora-vault.test/dashboard',
         ]);
 
         $res->assertStatus(200)
@@ -435,7 +435,7 @@ class SanctumAuthTest extends TestCase {
     }
 
     public function test_login_request_validations_and_account_status_checks(): void {
-        $csrfRes = $this->get('/sanctum/csrf-cookie', ['Referer' => 'http://hyperion-vault.test']);
+        $csrfRes = $this->get('/sanctum/csrf-cookie', ['Referer' => 'http://valora-vault.test']);
         $xsrfToken = $csrfRes->getCookie('XSRF-TOKEN')->getValue();
         $sessionCookie = $csrfRes->getCookie(config('session.cookie'))->getValue();
 
@@ -443,7 +443,7 @@ class SanctumAuthTest extends TestCase {
         $res = $this->withCookies([
             config('session.cookie') => $sessionCookie
         ])->withSession(['_token' => $xsrfToken])->postJson('/api/v1/auth/login', [], [
-            'Referer' => 'http://hyperion-vault.test',
+            'Referer' => 'http://valora-vault.test',
             'X-XSRF-TOKEN' => $xsrfToken,
         ]);
         $res->assertStatus(422);
@@ -453,10 +453,10 @@ class SanctumAuthTest extends TestCase {
         $shortRes = $this->withCookies([
             config('session.cookie') => $sessionCookie
         ])->withSession(['_token' => $xsrfToken])->postJson('/api/v1/auth/login', [
-            'email' => 'valid@hyperion-vault.test',
+            'email' => 'valid@valora-vault.test',
             'password' => 'short',
         ], [
-            'Referer' => 'http://hyperion-vault.test',
+            'Referer' => 'http://valora-vault.test',
             'X-XSRF-TOKEN' => $xsrfToken,
         ]);
         $shortRes->assertStatus(422);
@@ -464,7 +464,7 @@ class SanctumAuthTest extends TestCase {
 
         // 3. Suspended account login returns 422 with suspension notice
         $suspendedUser = User::factory()->create([
-            'email' => 'suspended_user@hyperion-vault.test',
+            'email' => 'suspended_user@valora-vault.test',
             'password' => 'password123',
             'role' => ['user'],
             'is_active' => false,
@@ -473,10 +473,10 @@ class SanctumAuthTest extends TestCase {
         $suspendedRes = $this->withCookies([
             config('session.cookie') => $sessionCookie
         ])->withSession(['_token' => $xsrfToken])->postJson('/api/v1/auth/login', [
-            'email' => 'suspended_user@hyperion-vault.test',
+            'email' => 'suspended_user@valora-vault.test',
             'password' => 'password123',
         ], [
-            'Referer' => 'http://hyperion-vault.test',
+            'Referer' => 'http://valora-vault.test',
             'X-XSRF-TOKEN' => $xsrfToken,
         ]);
         $suspendedRes->assertStatus(422);
@@ -484,7 +484,7 @@ class SanctumAuthTest extends TestCase {
 
         // 4. Invalid unconfigured role returns 422
         $invalidRoleUser = User::factory()->create([
-            'email' => 'invalid_role_user@hyperion-vault.test',
+            'email' => 'invalid_role_user@valora-vault.test',
             'password' => 'password123',
             'role' => ['fictional_role_xyz'],
             'is_active' => true,
@@ -493,10 +493,10 @@ class SanctumAuthTest extends TestCase {
         $invalidRoleRes = $this->withCookies([
             config('session.cookie') => $sessionCookie
         ])->withSession(['_token' => $xsrfToken])->postJson('/api/v1/auth/login', [
-            'email' => 'invalid_role_user@hyperion-vault.test',
+            'email' => 'invalid_role_user@valora-vault.test',
             'password' => 'password123',
         ], [
-            'Referer' => 'http://hyperion-vault.test',
+            'Referer' => 'http://valora-vault.test',
             'X-XSRF-TOKEN' => $xsrfToken,
         ]);
         $invalidRoleRes->assertStatus(422);
@@ -560,7 +560,7 @@ class SanctumAuthTest extends TestCase {
 
     public function test_system_monitoring_form_request_validations(): void {
         $admin = User::factory()->create([
-            'email' => 'sys_validator@hyperion-vault.test',
+            'email' => 'sys_validator@valora-vault.test',
             'role' => ['admin'],
             'is_active' => true,
         ]);
@@ -568,7 +568,7 @@ class SanctumAuthTest extends TestCase {
         // 1. Invalid maintenance action triggers 422
         $res = $this->actingAs($admin)->postJson('/api/v1/admin/system/maintenance/toggle', [
             'action' => 'destroy_server',
-        ], ['Referer' => 'http://hyperion-vault.test']);
+        ], ['Referer' => 'http://valora-vault.test']);
         $res->assertStatus(422);
         $res->assertJsonValidationErrors(['action']);
 
@@ -576,14 +576,14 @@ class SanctumAuthTest extends TestCase {
         $retryRes = $this->actingAs($admin)->postJson('/api/v1/admin/system/maintenance/toggle', [
             'action' => 'enable',
             'retry' => 2, // minimum is 5
-        ], ['Referer' => 'http://hyperion-vault.test']);
+        ], ['Referer' => 'http://valora-vault.test']);
         $retryRes->assertStatus(422);
         $retryRes->assertJsonValidationErrors(['retry']);
 
         // 3. Invalid clear logs type triggers 422
         $clearRes = $this->actingAs($admin)->deleteJson('/api/v1/admin/system/logs', [
             'type' => 'unknown_log_type',
-        ], ['Referer' => 'http://hyperion-vault.test']);
+        ], ['Referer' => 'http://valora-vault.test']);
         $clearRes->assertStatus(422);
         $clearRes->assertJsonValidationErrors(['type']);
 

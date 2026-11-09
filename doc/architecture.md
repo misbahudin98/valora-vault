@@ -5,7 +5,7 @@ Dokumen ini adalah spesifikasi arsitektur teknis dan panduan implementasi langka
 ---
 
 ## 0. PETA KESINAMBUNGAN DOKUMEN & KERANGKA DIÁTAXIS
-Dokumentasi teknis Hyperion Vault distrukturkan berlandaskan **Diátaxis Framework** (Tutorials, How-To Guides, Reference, Explanation) dan kepatuhan presisi terhadap kata kunci **RFC 2119**:
+Dokumentasi teknis Valora Vault distrukturkan berlandaskan **Diátaxis Framework** (Tutorials, How-To Guides, Reference, Explanation) dan kepatuhan presisi terhadap kata kunci **RFC 2119**:
 
 | Kuadran Diátaxis | Berkas | Peruntukan & Tujuan Utama | Standar RFC 2119 |
 |---|---|---|---|
@@ -204,7 +204,7 @@ Formula Little's Law: $L = \lambda \times W$ (di mana $L$ = konkurensi koneksi, 
     - **Fase 3 (High Availability Enterprise Cluster):** Dual stateless web/API nodes di balik Cloudflare / Nginx Load Balancer, SQLite LiteFS / MySQL Primary-Replica dengan ProxySQL, MinIO S3 Object Storage, target SLO 99.99% ketersediaan dan RTO < 15 menit.
 32. **Dual-Mode Session & Bearer Authentication Guard:**
     - Middleware sesi Laravel diinjeksikan secara eksplisit ke grup `api` pada `bootstrap/app.php` (`StartSession`, `EncryptCookies`, `AddQueuedCookiesToResponse`, `ShareErrorsFromSession`).
-    - Personal Access Token (`token`) diterbitkan saat login dan disimpan di `localStorage ('hyperion_token')`, disertakan sebagai header `Authorization: Bearer <token>` bersama `credentials: 'include'`. Mencegah hilangnya status otentikasi saat navigasi client-side SvelteKit tanpa ketergantungan pada header HTTP `Referer`.
+    - Personal Access Token (`token`) diterbitkan saat login dan disimpan di `localStorage ('valora_token')`, disertakan sebagai header `Authorization: Bearer <token>` bersama `credentials: 'include'`. Mencegah hilangnya status otentikasi saat navigasi client-side SvelteKit tanpa ketergantungan pada header HTTP `Referer`.
 33. **Kesiapan Unggah FTP Turnkey & Root Gateway Security (Hostinger Shared Hosting / cPanel):**
     - Root `.htaccess` mengamankan file sensitif (`.env`, `.sqlite`, `.git`, `composer.*`) dengan status `403 Forbidden` dan merutekan traffic API & SPA ke root gateway `index.php`.
     - Svelte 5 dikompilasi ke SPA statis murni di `frontend/build/` via `@sveltejs/adapter-static` tanpa membutuhkan runtime Node.js di server shared hosting.
@@ -260,7 +260,7 @@ Formula Little's Law: $L = \lambda \times W$ (di mana $L$ = konkurensi koneksi, 
 ## BAGIAN 3: STRUKTUR DIREKTORI PROYEK LENGKAP
 
 ```
-D:/laragon/www/hyperion-vault/
+D:/laragon/www/valora-vault/
 ├── index.php                           # Zero-Config Universal Gateway Laragon & Reverse-Proxy
 ├── install.php                         # Automated Installer, Diagnostic & Safe In-Place Updater v6.30.0
 ├── .installed                          # Production Security Lock File & Version Audit Registry
@@ -358,11 +358,11 @@ D:/laragon/www/hyperion-vault/
 
 ### 4.1. Konfigurasi Environment Backend (`backend/.env`)
 ```ini
-APP_NAME=Hyperion Vault
+APP_NAME=Valora Vault
 APP_ENV=local
 APP_KEY=base64:aenWdnvQRngxSXybYXySBgvhFy2fNnpPEvD+sfGlMGk=
 APP_DEBUG=true
-APP_URL=http://hyperion-vault.test
+APP_URL=http://valora-vault.test
 
 DB_CONNECTION=sqlite
 
@@ -370,7 +370,7 @@ SESSION_DRIVER=file
 SESSION_LIFETIME=120
 SESSION_ENCRYPT=false
 SESSION_PATH=/
-SESSION_DOMAIN=.hyperion-vault.test
+SESSION_DOMAIN=.valora-vault.test
 SESSION_SECURE_COOKIE=false
 SESSION_HTTP_ONLY=true
 SESSION_SAME_SITE=lax
@@ -688,12 +688,12 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
 ## BAGIAN 5: ZERO-CONFIG UNIVERSAL GATEWAY & INSTALLER / UPDATER OTOMATIS
 
 ### 5.1. Universal Gateway & Security Headers (`index.php`)
-Simpan di root folder proyek: `D:\laragon\www\hyperion-vault\index.php`.
+Simpan di root folder proyek: `D:\laragon\www\valora-vault\index.php`.
 ```php
 <?php
 /**
  * Zero-Config Universal Gateway for Laragon Default Nginx
- * Serves Laravel API + Svelte 5 Frontend under single domain (http://hyperion-vault.test)
+ * Serves Laravel API + Svelte 5 Frontend under single domain (http://valora-vault.test)
  * without modifying any Nginx virtual host configurations.
  */
 
@@ -832,9 +832,9 @@ function proxyToVite($targetUrl) {
 ```
 
 ### 5.2. Automated Setup Wizard & Health Diagnostic Tool (`install.php`)
-Simpan di root folder proyek: `D:\laragon\www\hyperion-vault\install.php`.
+Simpan di root folder proyek: `D:\laragon\www\valora-vault\install.php`.
 * **Dukungan Dual-Mode:**
-  - **Browser Mode:** `http://hyperion-vault.test/install.php` menyajikan antarmuka visual dark-theme responsif dengan pengecekan diagnostik *real-time*.
+  - **Browser Mode:** `http://valora-vault.test/install.php` menyajikan antarmuka visual dark-theme responsif dengan pengecekan diagnostik *real-time*.
   - **CLI Mode:** `php install.php install` mengeksekusi instalasi otomatis tanpa interaksi (headless) yang cocok untuk pipeline CI/CD atau script bootstrap.
 * **13 Poin Pemeriksaan Prasyarat:**
   1. Versi PHP (>= 8.2, rekomendasi 8.3/8.4).
@@ -848,7 +848,7 @@ Simpan di root folder proyek: `D:\laragon\www\hyperion-vault\install.php`.
 ### 5.3. Golden Archetype Spawner Engine (`install.php spawn`)
 Sistem mengadopsi pola **Golden Master Archetype Scaffolding** untuk melahirkan proyek-proyek baru dalam hitungan $\le 5$ detik tanpa perlu mengunduh ulang dependensi:
 * **Perintah CLI:** `php install.php spawn <nama-folder-target> [--name="..."] [--domain="..."] [--desc="..."]`
-* **Antarmuka Web:** Formulir visual terintegrasi pada `http://hyperion-vault.test/install.php` (Card: *Spawner Proyek Baru*).
+* **Antarmuka Web:** Formulir visual terintegrasi pada `http://valora-vault.test/install.php` (Card: *Spawner Proyek Baru*).
 * **Mekanisme Replikasi Otonom:**
   1. **Zero-Dependency Re-download:** Menggunakan *multi-threaded I/O robocopy* (`/MT:16` di Windows) untuk mereplikasi `backend/vendor` dan `frontend/node_modules` secara lokal instan.
   2. **Sanitasi State Kritis:** Mengecualikan berkas `.git`, `storage/framework/sessions/*`, `storage/logs/*`, `bootstrap/cache/*`, dan `database/database.sqlite` dari proyek induk.
@@ -860,7 +860,7 @@ Sistem mengadopsi pola **Golden Master Archetype Scaffolding** untuk melahirkan 
 ### 5.4. Mekanisme Safe In-Place Updater & Riwayat Versi (`install.php` & `.installed`)
 Ketika terdapat pembaruan arsitektur atau kode dari GitHub (`git pull`), sistem menyediakan mekanisme pembaruan aman tanpa merusak data:
 * **Perintah CLI:** `php install.php update`
-* **Antarmuka Web:** Akses `http://hyperion-vault.test/install.php` $\implies$ Sistem otomatis mendeteksi perbedaan versi antara codebase (`APP_VERSION = 5.6.0`) dan berkas `.installed`, menampilkan banner pembaruan, dan menyediakan tombol **"Perbarui Sistem Sekarang (Safe Update)"**.
+* **Antarmuka Web:** Akses `http://valora-vault.test/install.php` $\implies$ Sistem otomatis mendeteksi perbedaan versi antara codebase (`APP_VERSION = 5.6.0`) dan berkas `.installed`, menampilkan banner pembaruan, dan menyediakan tombol **"Perbarui Sistem Sekarang (Safe Update)"**.
 * **Tahapan Eksekusi Deterministik:**
   1. Membersihkan cache aplikasi (`artisan optimize:clear`).
   2. Menjalankan migrasi pending secara aman (`artisan migrate --force` - **DILARANG** `migrate:fresh` di production agar data pengguna dan sesi tetap utuh).
@@ -877,7 +877,7 @@ Sistem menyediakan automasi commit semantik dan sinkronisasi push yang mengaudit
   4. **Atomic Push:** Otomatis mendeteksi branch aktif dan mem-push ke `origin/<branch>` secara aman.
 
 ### 5.6. Skill & SSoT Synchronization Engine (`install.php sync-skills`)
-Mekanisme resmi untuk mendistribusikan tata kelola AI, aturan invarian, skill rekayasa, dan dokumen SSoT secara deterministik dari Master Archetype (`hyperion-vault`) ke downstream proyek (`yayasan-pqtm`, dll):
+Mekanisme resmi untuk mendistribusikan tata kelola AI, aturan invarian, skill rekayasa, dan dokumen SSoT secara deterministik dari Master Archetype (`valora-vault`) ke downstream proyek (`yayasan-pqtm`, dll):
 * **Perintah CLI:** `php install.php sync-skills [--target=<path>] [--source=<path>] [--dry-run]`
 * **Fitur Utama:**
   1. **Audit Checksum SHA-256:** Membandingkan hash berkas secara deterministik; hanya menyalin berkas yang baru atau mengalami pembaruan konten.
@@ -969,15 +969,15 @@ Mekanisme resmi untuk mendistribusikan tata kelola AI, aturan invarian, skill re
 ### 7.1. Verifikasi Backend (PHPUnit SQLite In-Memory)
 Jalankan di `backend`:
 ```powershell
-cd D:\laragon\www\hyperion-vault\backend
+cd D:\laragon\www\valora-vault\backend
 php artisan test
 ```
 **Hasil:** `Tests: 7 passed (135 assertions), Duration: ~2.3s (100% Passed)`.
 
-### 7.2. Verifikasi Frontend E2E (Playwright Live Browser di `http://hyperion-vault.test`)
+### 7.2. Verifikasi Frontend E2E (Playwright Live Browser di `http://valora-vault.test`)
 Jalankan di `frontend`:
 ```powershell
-cd D:\laragon\www\hyperion-vault\frontend
+cd D:\laragon\www\valora-vault\frontend
 npx playwright test
 ```
 **Hasil:** `2 passed (56.7s) (100% Passed)`.
@@ -993,13 +993,13 @@ Kunjungi `http://localhost/phpmyadmin/` $\implies$ **HTTP 200 OK**.
 
 Bagian ini dirancang agar setiap insinyur tingkat pemula (junior programmer) atau model AI hemat token (seperti Gemini Flash Lite, Claude Haiku, GPT-4o-mini) dapat memahami, menjalankan, mereplikasi, dan memperluas sistem ini secara deterministik tanpa risiko melanggar invariansi sistem.
 
-### 8.0. Mental Model Hyperion Vault (Pahami dalam 60 Detik)
+### 8.0. Mental Model Valora Vault (Pahami dalam 60 Detik)
 1. **Frontend (Svelte 5 Runes SPA):**
    - Berjalan 100% di browser klien. Tidak membutuhkan server Node.js di production (dibangun statis via `@sveltejs/adapter-static` ke `frontend/build/index.html`).
    - Reaktivitas menggunakan runes (`$state`, `$derived`, `$props`). Tidak ada Virtual DOM overhead.
    - Pencarian dan filter tabel dieksekusi 100% di RAM browser via `$derived.by()` di [DataTable.svelte](../frontend/src/lib/components/ui/DataTable.svelte). Keystroke pengetikan **tidak pernah** mengirim query ke server!
 2. **Gateway Universal ([index.php](../index.php)):**
-   - Menjembatani auto-vhost Laragon (`http://hyperion-vault.test`) dan phpMyAdmin tanpa modifikasi konfigurasi Nginx.
+   - Menjembatani auto-vhost Laragon (`http://valora-vault.test`) dan phpMyAdmin tanpa modifikasi konfigurasi Nginx.
    - Otomatis mengarahkan ke [install.php](../install.php) jika aplikasi belum terpasang.
 3. **Backend & Sesi ([Laravel 13 Sanctum](../backend/routes/api.php)):**
    - **Kunci Anti-Crash:** `SESSION_DRIVER=file` menyimpan sesi di disk NVMe (0 query database). Sesi tidak pernah memakan kuota 25 koneksi MySQL Hostinger.
@@ -1009,7 +1009,7 @@ Bagian ini dirancang agar setiap insinyur tingkat pemula (junior programmer) ata
 ### 8.1. Alur Cepat 1-Langkah: Dari Git Clone Menjadi Sistem Berjalan
 ```powershell
 # 1. Pindah ke direktori proyek (Laragon www)
-cd D:\laragon\www\hyperion-vault
+cd D:\laragon\www\valora-vault
 
 # 2. Jalankan installer otomatis (otomatis menginstal Composer & npm jika belum ada)
 php install.php install
@@ -1025,9 +1025,9 @@ Start-Process -FilePath "cmd.exe" -ArgumentList "/c npm run dev -- --host 127.0.
 cd ..
 
 # 5. Akses sistem di peramban
-# Buka: http://hyperion-vault.test
-# Login Admin: admin@hyperion-vault.test | Password: password123
-# Login Regular: user@hyperion-vault.test  | Password: password123
+# Buka: http://valora-vault.test
+# Login Admin: admin@valora-vault.test | Password: password123
+# Login Regular: user@valora-vault.test  | Password: password123
 ```
 
 ### 8.1b. Alur Pembaruan Sistem (Safe Update via CLI & Web)
@@ -1036,7 +1036,7 @@ Jika repositori ditarik versi terbarunya (`git pull origin main`):
 # Jalankan pembaruan aman 1-langkah (non-destructive)
 php install.php update
 ```
-Atau buka peramban di `http://hyperion-vault.test/install.php` dan klik tombol **"Perbarui Sistem Sekarang"**. Sistem otomatis menjalankan migrasi aman `migrate --force`, refresh cache, dan kompilasi bundle frontend.
+Atau buka peramban di `http://valora-vault.test/install.php` dan klik tombol **"Perbarui Sistem Sekarang"**. Sistem otomatis menjalankan migrasi aman `migrate --force`, refresh cache, dan kompilasi bundle frontend.
 
 ### 8.2. Alur Menambah Fitur Baru Menggunakan `prompt.feature.md`
 Untuk menghasilkan kode dan arsitektur fitur baru yang 100% konsisten:
@@ -1072,13 +1072,13 @@ Untuk menghasilkan kode dan arsitektur fitur baru yang 100% konsisten:
 Sebelum melakukan commit atau rilis kode baru, wajib memverifikasi tiga gerbang pengujian:
 ```powershell
 # Gate 1: PHPUnit Suite (Wajib 100% Pass: 10 tests, 172 assertions)
-cd D:\laragon\www\hyperion-vault\backend && php artisan test
+cd D:\laragon\www\valora-vault\backend && php artisan test
 
 # Gate 2: Svelte Static Build Suite (Wajib 100% Pass: Zero a11y warning, Exit code 0)
-cd D:\laragon\www\hyperion-vault\frontend && npm run build
+cd D:\laragon\www\valora-vault\frontend && npm run build
 
 # Gate 3: Playwright E2E UAT (Wajib 100% Pass)
-cd D:\laragon\www\hyperion-vault\frontend && npx playwright test
+cd D:\laragon\www\valora-vault\frontend && npx playwright test
 ```
 
 ### 8.6. Pilar Pengerasan v6.30.0 (Adopsi Best Practice Arsitektur Enterprise)
@@ -1099,7 +1099,7 @@ cd D:\laragon\www\hyperion-vault\frontend && npx playwright test
 
 ```
 +---------------------------------------------------------------------------------------------------+
-|                        TOPOLOGI DEPLOYMENT PRODUKSI HYPERION VAULT                                |
+|                        TOPOLOGI DEPLOYMENT PRODUKSI VALORA VAULT                                |
 +---------------------------------------------------------------------------------------------------+
 | 1. WORKSTATION (DEVELOPER)                                                                        |
 |    - npm run build (Frontend SPA statis di frontend/build/)                                       |
@@ -1116,7 +1116,7 @@ cd D:\laragon\www\hyperion-vault\frontend && npx playwright test
 |         │                                              │                                          |
 |         ▼                                              ▼                                          |
 | 3. EKSEKUSI RUNNER DI SERVER                      3. OWASP HARDENED GATEWAY                       |
-|    - Trigger HTTPS: /deploy_runner.php?token=...  - Backend di ~/apps/hyperion-vault/             |
+|    - Trigger HTTPS: /deploy_runner.php?token=...  - Backend di ~/apps/valora-vault/             |
 |    - ZipArchive unpack dalam 1-2 detik            - Public Gateway di ~/public_html/index.php     |
 |    - chmod 775 storage & database                 - Zero file sensitif (.env/sqlite) di webroot   |
 |    - Artisan clear, migrate, config/route cache                                                   |
@@ -1138,7 +1138,7 @@ cd D:\laragon\www\hyperion-vault\frontend && npx playwright test
 
 #### B. Mekanisme Jalur B: SSH OWASP Hardened Architecture (`deploy_ssh.sh` & `deploy_ssh.php`)
 - **Pola Pemisahan Direktori (Hardened Security):**
-  - Folder `backend/` diletakkan **DI LUAR** direktori publik web (`/home/username/apps/hyperion-vault/backend/`). Berkas `.env`, `database.sqlite`, dan `storage/` kebal 100% dari celah HTTP langsung.
+  - Folder `backend/` diletakkan **DI LUAR** direktori publik web (`/home/username/apps/valora-vault/backend/`). Berkas `.env`, `database.sqlite`, dan `storage/` kebal 100% dari celah HTTP langsung.
   - Direktori publik (`/home/username/public_html/`) **HANYA** memuat aset statis hasil kompilasi Vite (`_app/`, `favicon.svg`) dan gateway pintu masuk [`index.php`](../index.php).
 - **Automasi 1-Perintah:**
   - Developer lokal cukup mengeksekusi `php deploy_ssh.php` untuk memicu pipeline SSH jarak jauh.
@@ -1149,9 +1149,9 @@ cd D:\laragon\www\hyperion-vault\frontend && npx playwright test
 ## BAGIAN 9: ENTERPRISE SECURITY ARCHITECTURE & THREAT MODEL
 
 ### 9.1. OWASP Top 10 Mitigation Checklist
-Arsitektur Hyperion Vault mengimplementasikan kontrol mitigasi deterministik terhadap kerentanan OWASP Top 10:
+Arsitektur Valora Vault mengimplementasikan kontrol mitigasi deterministik terhadap kerentanan OWASP Top 10:
 
-| ID Kerentanan | Kategori Ancaman | Kontrol Mitigasi Arsitektural Hyperion Vault |
+| ID Kerentanan | Kategori Ancaman | Kontrol Mitigasi Arsitektural Valora Vault |
 |---|---|---|
 | **A01:2021** | Broken Access Control (BOLA / IDOR) | Seluruh endpoint privat dan mutasi resource WAJIB menggunakan Laravel Policy (`UserPolicy`, `$this->authorize(...)`). Middleware RBAC berlapis (`auth:sanctum`, `user.active`, `permission:`). |
 | **A02:2021** | Cryptographic Failures | Password hashing menggunakan bcrypt dengan cost factor aman. Token sesi Sanctum bertanda tangan kriptografis dengan rotasi token version (`token_version`). |
@@ -1177,7 +1177,7 @@ Arsitektur Hyperion Vault mengimplementasikan kontrol mitigasi deterministik ter
 Seluruh respons kegagalan API backend (HTTP 4xx dan 5xx) WAJIB mengembalikan payload berstruktur RFC 7807:
 ```json
 {
-  "type": "https://hyperion-vault.test/errors/unprocessable-entity",
+  "type": "https://valora-vault.test/errors/unprocessable-entity",
   "title": "Unprocessable Entity",
   "status": 422,
   "detail": "Data yang dikirimkan tidak memenuhi kriteria validasi sistem.",

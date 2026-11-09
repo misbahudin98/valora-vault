@@ -1,5 +1,5 @@
 # Buku Putih Standar Rekayasa Landing Page & Arsitektur Pertumbuhan (landing_page_standards.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standar Industri:** Google Core Web Vitals (2024/2026), Princeton GEO (Aggarwal et al., 2023), Answer.ai llms.txt (Jeremy Howard, 2024), MECLABS Institute, StoryBrand SB7 (Donald Miller), Julian Shapiro CRO, Jakob Nielsen (NN/g), Steven Hoober (Thumb Zone), Rauno Freiberg (Perceptual Craft & Web Interface Guidelines), Emil Kowalski (Animations on the Web), Ethereum Foundation Web3 UX Heuristics, W3C WCAG 2.2 AAA, Schema.org JSON-LD.
 
 ---

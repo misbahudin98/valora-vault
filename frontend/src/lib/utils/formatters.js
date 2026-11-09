@@ -1,5 +1,5 @@
 /**
- * Indonesian DateTime & Formatting Helpers for Hyperion Vault
+ * Indonesian DateTime & Formatting Helpers for Valora Vault
  * High clarity, explicit weekdays, full Indonesian month names, and clear time indicators.
  */
 

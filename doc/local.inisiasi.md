@@ -1,8 +1,8 @@
 # SYSTEM INSTRUCTION: DETERMINISTIC ENTERPRISE FULLSTACK BOOTSTRAPPER (LARAGON ZERO-CONFIG v6.30.0)
 Role: Enterprise CTO & Senior Implementation Engineer
 Stack: PHP 8.3/8.4 | Laravel 13 + Sanctum | SQLite WAL / MySQL | Svelte 5 (Pure JS, Runes) | Tailwind CSS v4 | Nginx (Laragon Default Auto-VHost)
-Domains: Unified Single Domain `http://hyperion-vault.test` (melayani Frontend & API sekaligus, alias: `localhost`, `127.0.0.1`)
-Working Directory: `D:\laragon\www\hyperion-vault`
+Domains: Unified Single Domain `http://valora-vault.test` (melayani Frontend & API sekaligus, alias: `localhost`, `127.0.0.1`)
+Working Directory: `D:\laragon\www\valora-vault`
 Prinsip: Zero Fluff, Hemat Token, SemVer 2.0.0 (6.30.0), Granular Client RBAC & Permission Matrix (`config/permissions.php`), In-Place Safe Updater (`php install.php update`), Urutan Kronologis Anti-Terlewat, Multiple Roles, Tamper-Proof JWT Cookie, Real Device Tracking, Automated Installer (install.php), Session File Disk GC, Brotli/Gzip Root Delivery, Request Collapsing Map, Universal Dual-Theme, Maskot AI Volt, Reusable PageLoader, Skalabilitas 9000+ Data, Zero Nginx Hack, Design System Tokens, Autonomous Feature Engine.
 
 ---
@@ -44,8 +44,8 @@ Prinsip: Zero Fluff, Hemat Token, SemVer 2.0.0 (6.30.0), Granular Client RBAC & 
 
 Jalankan perintah berikut di PowerShell:
 ```powershell
-mkdir "D:\laragon\www\hyperion-vault" -ErrorAction SilentlyContinue
-cd "D:\laragon\www\hyperion-vault"
+mkdir "D:\laragon\www\valora-vault" -ErrorAction SilentlyContinue
+cd "D:\laragon\www\valora-vault"
 
 # 1. Scaffolding Backend Laravel
 composer create-project laravel/laravel backend
@@ -69,20 +69,20 @@ cd ..
 
 1. **Konfigurasi Environment Backend (`backend/.env`)**:
    ```ini
-   APP_NAME=HyperionVault
+   APP_NAME=ValoraVault
    APP_ENV=local
    APP_KEY= # Dihasilkan via php artisan key:generate
    APP_DEBUG=true
-   APP_URL=http://hyperion-vault.test
-   FRONTEND_URL=http://hyperion-vault.test
-   SANCTUM_STATEFUL_DOMAINS=hyperion-vault.test,localhost,127.0.0.1
+   APP_URL=http://valora-vault.test
+   FRONTEND_URL=http://valora-vault.test
+   SANCTUM_STATEFUL_DOMAINS=valora-vault.test,localhost,127.0.0.1
 
    DB_CONNECTION=sqlite
 
    SESSION_DRIVER=file
    SESSION_LIFETIME=120
    SESSION_PATH=/
-   SESSION_DOMAIN=.hyperion-vault.test
+   SESSION_DOMAIN=.valora-vault.test
    SESSION_SECURE_COOKIE=false
    SESSION_HTTP_ONLY=true
    SESSION_SAME_SITE=lax
@@ -99,7 +99,7 @@ cd ..
 
 2. **Inisialisasi File Database SQLite**:
    ```powershell
-   cd D:\laragon\www\hyperion-vault\backend
+   cd D:\laragon\www\valora-vault\backend
    php artisan key:generate
    New-Item -ItemType File -Path "database/database.sqlite" -Force
    ```
@@ -180,11 +180,11 @@ cd ..
     ```php
     UserDevice::query()->delete();
     User::updateOrCreate(
-        ['email' => 'admin@hyperion-vault.test'],
-        ['name' => 'Hyperion Admin', 'password' => 'password123', 'role' => ['admin', 'manager'], 'is_active' => true, 'status' => 'active', 'token_version' => 1]
+        ['email' => 'admin@valora-vault.test'],
+        ['name' => 'Valora Admin', 'password' => 'password123', 'role' => ['admin', 'manager'], 'is_active' => true, 'status' => 'active', 'token_version' => 1]
     );
     User::updateOrCreate(
-        ['email' => 'user@hyperion-vault.test'],
+        ['email' => 'user@valora-vault.test'],
         ['name' => 'Pengguna Regular', 'password' => 'password123', 'role' => ['user'], 'is_active' => true, 'status' => 'active', 'token_version' => 1]
     );
     ```
@@ -193,14 +193,14 @@ cd ..
 
 ### FASE 3: UNIVERSAL GATEWAY ZERO-CONFIG & INSTALLER / UPDATER OTOMATIS
 
-1. **Universal Gateway & Security Headers (`D:\laragon\www\hyperion-vault\index.php`)**:
+1. **Universal Gateway & Security Headers (`D:\laragon\www\valora-vault\index.php`)**:
    - Menghubungkan Nginx auto-vhost bawaan Laragon langsung ke Laravel dan Vite tanpa custom conf.
    - Menginjeksikan header keamanan perbankan: `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy: strict-origin-when-cross-origin`.
    - Mengarahkan rute `/install.php` langsung ke installer mandiri.
 
-2. **Automated Setup, Diagnostic Wizard & Safe Updater (`D:\laragon\www\hyperion-vault\install.php`)**:
+2. **Automated Setup, Diagnostic Wizard & Safe Updater (`D:\laragon\www\valora-vault\install.php`)**:
    - Skrip setup 1-klik untuk memeriksa 13 prasyarat sistem, otomatis memasang dependensi Composer & npm jika belum ada, inisialisasi `.env` dengan nama & domain dinamis, generate `APP_KEY`, inisialisasi database SQLite, eksekusi migrasi & seeding, serta membuat berkas lock keamanan `.installed`.
-   - Mode Fresh Install: `php install.php install` atau browser: `http://hyperion-vault.test/install.php`.
+   - Mode Fresh Install: `php install.php install` atau browser: `http://valora-vault.test/install.php`.
    - Mode Safe In-Place Update: `php install.php update`. Menjalankan `migrate --force` non-destruktif (DILARANG `migrate:fresh`), `optimize:clear`, frontend SPA build, dan audit log riwayat versi di `.installed`.
 
 ---
@@ -219,7 +219,7 @@ cd ..
    - `ArchitectMascot.svelte`: Maskot AI "Volt" dengan 4 mood reaktif, animasi SVG+CSS, dan panduan 6 pilar arsitektur.
 4. **Komponen Layout (`src/lib/components/layout/`)**:
    - `AppSidebar.svelte`: Navigasi sidebar tanpa Beranda, tombol eksplisit **"Keluar Sesi Ini"** (`#logout-btn`) dengan ikon pintu keluar SVG dan tooltip deskriptif, profil tunggal di footer, badge versi `v6.30.0`.
-   - `AppTopbar.svelte`: Mobile hamburger & breadcrumbs Hyperion Vault dengan SVG Home icon dan chevron separator (bebas dari vanity metric "FastCGI Online").
+   - `AppTopbar.svelte`: Mobile hamburger & breadcrumbs Valora Vault dengan SVG Home icon dan chevron separator (bebas dari vanity metric "FastCGI Online").
 5. **Layout Induk & Halaman Utama**:
    - `src/routes/+layout.svelte`: Sidebar disembunyikan sepenuhnya pada landing page (`/`) dan login (`/login`), integrasi `<PageLoader />` saat logout, dan **Auto-Reject Shield** sinkron pencegah document preview leak sebelum pengalihan `goto()`.
    - `src/routes/+page.svelte`: Landing page modern terintegrasi dengan `<ArchitectMascot />`.
@@ -238,27 +238,27 @@ cd ..
 
 1. **Jalankan Vite Dev Server**:
    ```powershell
-   cd D:\laragon\www\hyperion-vault\frontend
+   cd D:\laragon\www\valora-vault\frontend
    npm run dev
    ```
 
 2. **Eksekusi Test Backend (SQLite In-Memory)**:
    ```powershell
-   cd D:\laragon\www\hyperion-vault\backend
+   cd D:\laragon\www\valora-vault\backend
    php artisan test
    # Target: 7 passed, 135 assertions (100% Passed)
    ```
 
-3. **Eksekusi Test UAT Playwright (Browser Live di `http://hyperion-vault.test`)**:
+3. **Eksekusi Test UAT Playwright (Browser Live di `http://valora-vault.test`)**:
    ```powershell
-   cd D:\laragon\www\hyperion-vault\frontend
+   cd D:\laragon\www\valora-vault\frontend
    npx playwright test
    # Target: 2 passed (Alur Penuh Sanctum + Dynamic Menu Hiding, Route Guard, Admin User CRUD & Device Session Management)
    ```
 
 4. **Verifikasi Safe In-Place Update (CLI)**:
    ```powershell
-   cd D:\laragon\www\hyperion-vault
+   cd D:\laragon\www\valora-vault
    php install.php update
    # Target: STATUS: SUCCESS, .installed version history updated
    ```

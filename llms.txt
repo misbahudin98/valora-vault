@@ -1,4 +1,4 @@
-# Valora Vault (Hyperion Engine) - AI Fast Index & Token Optimizer (v6.31.0)
+# Valora Vault - AI Fast Index & Token Optimizer (v6.31.0)
 > Target: Valora Agency OS (Laravel 13 Sanctum + SQLite/MySQL + Svelte 5 Runes) on Windows Laragon / Hostinger Shared Hosting. Synchronized with PQTM enterprise production standard.
 
 ```yaml
@@ -8,7 +8,7 @@ backend: "Laravel 13 (PHP 8.3/8.4), Sanctum Session Auth, SQLite WAL / MySQL"
 frontend: "Svelte 5 (Pure JS Runes: $state, $derived, $props), Tailwind CSS v4"
 web_server: "Nginx Laragon (Zero-Config Universal Gateway: index.php + .htaccess Brotli/Gzip delivery)"
 installer_updater: "install.php (Web / CLI wizard, smart git ship 'php install.php ship', skill synchronizer 'php install.php sync-skills', project spawner 'php install.php spawn <target>', safe in-place updater 'php install.php update', .installed lock & history log)"
-domain: "http://valora-vault.test (aliases: localhost, 127.0.0.1, hyperion-vault.test)"
+domain: "http://valora-vault.test (aliases: localhost, 127.0.0.1)"
 scale_profile: "Indexed for 9000+ records (B-Tree composite indexes + 1000 item safe limit ceiling)"
 workers: "FastCGI 127.0.0.1:9003 & 9004 (PHP_FCGI_MAX_REQUESTS=0)"
 session_driver: "file (NVMe SSD I/O, ZERO MySQL connection overhead + physical unlink GC)"
@@ -108,8 +108,8 @@ Sebelum instalasi dijalankan pada mesin baru, pastikan kondisi berikut terpenuhi
    - Node.js versi 18+ (disarankan Node 20+) & npm (didukung universal lintas versi via `frontend/.npmrc`).
 4. **Web Server & Hosts**:
    - Laragon Nginx berjalan pada port `80`.
-   - Host mapping (`C:\Windows\System32\drivers\etc\hosts`): `127.0.0.1 hyperion-vault.test`.
-   - Direktori root repositori: `D:\laragon\www\hyperion-vault`.
+   - Host mapping (`C:\Windows\System32\drivers\etc\hosts`): `127.0.0.1 valora-vault.test`.
+   - Direktori root repositori: `D:\laragon\www\valora-vault`.
 5. **Port Jaringan Aktif**:
    - `80`: Nginx reverse-proxy universal gateway (`index.php`).
    - `9003` & `9004`: Dual worker FastCGI persisten (`$env:PHP_FCGI_MAX_REQUESTS="0"`).
@@ -121,7 +121,7 @@ Sebelum instalasi dijalankan pada mesin baru, pastikan kondisi berikut terpenuhi
 
 ### Jalur 1: CLI Otomatis (1-Langkah Mandiri - Rekomendasi AI & CI/CD)
 ```powershell
-cd D:\laragon\www\hyperion-vault
+cd D:\laragon\www\valora-vault
 
 # 1. Jalankan installer otomatis (otomatis menginstal Composer & npm jika belum ada)
 php install.php install
@@ -134,9 +134,9 @@ cd frontend && Start-Process -FilePath "cmd.exe" -ArgumentList "/c npm run dev -
 ```
 
 ### Jalur 2: Wizard Peramban Web (Auto-Detect 1-Klik)
-1. Buka peramban di `http://hyperion-vault.test/`.
-2. Gateway `index.php` mendeteksi ketiadaan berkas `.installed` dan otomatis me-redirect ke `http://hyperion-vault.test/install.php`.
-3. Klik **"Jalankan Instalasi Otomatis Sekarang"** (atau akses langsung `http://hyperion-vault.test/install.php?auto=1`).
+1. Buka peramban di `http://valora-vault.test/`.
+2. Gateway `index.php` mendeteksi ketiadaan berkas `.installed` dan otomatis me-redirect ke `http://valora-vault.test/install.php`.
+3. Klik **"Jalankan Instalasi Otomatis Sekarang"** (atau akses langsung `http://valora-vault.test/install.php?auto=1`).
 4. Sistem otomatis mengonfigurasi `.env`, membangkitkan `APP_KEY`, inisialisasi basis data SQLite WAL, migrasi & seeding, serta membuat berkas lock `.installed`.
 
 ### Jalur 3: Golden Archetype Spawner (Duplikasi Proyek Baru Instan ~5 Detik)
@@ -144,12 +144,12 @@ Melahirkan proyek aplikasi baru secara instan dari engine induk tanpa unduh ulan
 ```powershell
 php install.php spawn portal-santri --name="Portal Santri" --domain="portal-santri.test" --desc="Sistem Santri Terpadu"
 ```
-*(Atau gunakan Web GUI di `http://hyperion-vault.test/install.php` pada kartu 'Spawner Proyek Baru')*.
+*(Atau gunakan Web GUI di `http://valora-vault.test/install.php` pada kartu 'Spawner Proyek Baru')*.
 
 ### Kredensial Default Sistem:
-- **URL Aplikasi**: `http://hyperion-vault.test`
-- **Administrator**: `admin@hyperion-vault.test` / `password123` (Roles: `['admin', 'manager']`)
-- **Regular User**: `user@hyperion-vault.test` / `password123` (Role: `['user']`)
+- **URL Aplikasi**: `http://valora-vault.test`
+- **Administrator**: `admin@valora-vault.test` / `password123` (Roles: `['admin', 'manager']`)
+- **Regular User**: `user@valora-vault.test` / `password123` (Role: `['user']`)
 
 ---
 
@@ -164,7 +164,7 @@ php install.php update
   2. Menjalankan migrasi pending secara aman (`artisan migrate --force` - **DILARANG** `migrate:fresh`).
   3. Mengompilasi ulang bundel SPA (`npm run build`).
   4. Mencatat riwayat versi & timestamp pada berkas `.installed`.
-- **Akses Web Updater:** Akses `http://hyperion-vault.test/install.php` -> Klik tombol **"Perbarui Sistem Sekarang (Safe Update)"**.
+- **Akses Web Updater:** Akses `http://valora-vault.test/install.php` -> Klik tombol **"Perbarui Sistem Sekarang (Safe Update)"**.
 - **Audit Endpoint API:** `GET /api/v1/admin/version` menampilkan status versi kode vs versi instalasi.
 
 ---
@@ -225,7 +225,7 @@ php install.php update
 38. **[INV-UI-02] SPACIOUS_BREATHING_ROOM**: Seluruh antarmuka pengguna DILARANG KERAS terlihat sesak, padat, berdesakan (*cramped/congested*), atau penuh secara visual, baik pada layar HP/ponsel maupun layar laptop/desktop. Wajib menggunakan hierarki visual lapang (*spacious breathing room*), spasi vertikal/horizontal seimbang, container max-width terukur, penanganan data wrapping yang rapi, dan eliminasi penumpukan elemen (*UI bloat*) yang membuat mata lelah.
 39. **[INV-UI-03] TAB_PANE_VISIBILITY_AND_WRAP**: Setiap bilah tab/tab pane WAJIB memprioritaskan keterbacaan tinggi dan mencegah tab terpotong atau tertutup baik di HP maupun di laptop. Untuk tab pane dengan jumlah dan panjang kata yang tidak terlalu banyak (jumlah tab <= 6), DILARANG menyembunyikan tab di balik scroll horizontal (`overflow-x-auto whitespace-nowrap`). Seluruh tab wajib langsung terlihat secara utuh melalui pembungkusan responsif multi-baris (`flex flex-wrap gap-1.5` atau grid adaptif), sehingga pengguna tidak perlu menggulir ke samping hanya untuk melihat atau mengklik tab yang tersedia.
 40. **[INV-UI-04] ELEGANT_MINIMALISM_AND_ACCESSIBILITY**: Seluruh antarmuka web WAJIB mematuhi filosofi minimalisme elegan Dieter Rams (*Weniger, aber besser*), rasio data-ke-tinta tinggi Edward Tufte (menghapus ornamen visual dan border tebal tak berguna), keterbacaan tipografi Robert Bringhurst (panjang baris ideal 45–75 CPL, modular type scale, font-mono untuk data tabular/angka), batas kontainer terkontrol (`max-w-6xl`/`7xl` dengan `mx-auto px-4 sm:px-6 lg:px-8`, tidak membentang liar memenuhi layar monitor lebar), dan aksesibilitas universal WCAG 2.2 AAA (kontras teks $\ge 4.5:1$ s/d $7:1$, touch target $\ge 44\times 44$ px, keyboard focus visible ring).
-41. **[INV-UI-05] MASTERPIECE_ANTI_AI_SLOP_DESIGN**: Seluruh antarmuka web WAJIB memiliki standar keaslian estetika karya manusia (*human-crafted authenticity*) dan keanggunan berkarakter (*quiet luxury*). DILARANG KERAS menggunakan klise visual AI murahan (*AI-generated design cliches/slop*): latar belakang gradient ungu-pink neon (`from-indigo-500 via-purple-500 to-pink-500`), cyan glow berlebihan, ornamen blob lingkaran kabur yang melayang tanpa guna (`blur-3xl opacity-30`), efek frosted glass / glassmorphism buram yang merusak keterbacaan, atau ikon sparkle/bintang AI tanpa arti. Wajib gunakan palet tonal teredam bermartabat (*dignified muted tonal palette*): monokrom Slate/Stone/Obsidian yang tenang dipadukan dengan tepat 1 aksen warna fungsional berkarakter (Emerald di Yayasan PQTM, Indigo/Emerald di Hyperion Vault), micro-action button yang presisi, dan hierarki terarah di mana setiap elemen memiliki alasan keberadaan fungsional (*purpose-driven UI*).
+41. **[INV-UI-05] MASTERPIECE_ANTI_AI_SLOP_DESIGN**: Seluruh antarmuka web WAJIB memiliki standar keaslian estetika karya manusia (*human-crafted authenticity*) dan keanggunan berkarakter (*quiet luxury*). DILARANG KERAS menggunakan klise visual AI murahan (*AI-generated design cliches/slop*): latar belakang gradient ungu-pink neon (`from-indigo-500 via-purple-500 to-pink-500`), cyan glow berlebihan, ornamen blob lingkaran kabur yang melayang tanpa guna (`blur-3xl opacity-30`), efek frosted glass / glassmorphism buram yang merusak keterbacaan, atau ikon sparkle/bintang AI tanpa arti. Wajib gunakan palet tonal teredam bermartabat (*dignified muted tonal palette*): monokrom Slate/Stone/Obsidian yang tenang dipadukan dengan tepat 1 aksen warna fungsional berkarakter (Emerald di Yayasan PQTM, Emerald tajam untuk PT Valora Digital Solusindo), micro-action button yang presisi, dan hierarki terarah di mana setiap elemen memiliki alasan keberadaan fungsional (*purpose-driven UI*).
 42. **[INV-UI-06] CLIENT_SIDE_CSV_EXPORT_MANDATE**: Seluruh tabel data yang dibuat WAJIB menyediakan kemampuan ekspor CSV dari sisi klien (*client-side export*) berbasis memori peramban tanpa memicu round-trip query tambahan ke server backend. CSV yang diekspor wajib menyertakan UTF-8 BOM (`\uFEFF`), escaping tanda kutip dua (`""`), mitigasi formula injection CWE-1236 (`=`, `+`, `-`, `@`), dan tombol "Ekspor CSV" yang langsung dapat diakses pengguna pada bilah kontrol tabel via [`DataTable.svelte`](frontend/src/lib/components/ui/DataTable.svelte) dan [`csvExport.js`](frontend/src/lib/utils/csvExport.js).
 43. **[INV-UI-07] FILTER_AND_SORT_ENGINE**: Seluruh tabel data operasional WAJIB menyediakan kontrol filter pencarian instan debounced 120ms ke seluruh kolom kunci, segmented tabs/pills ber-wrap responsif (RULE-14), sorting kolom multi-tipe (tanggal, numerik, teks alfabetis, dan urutan status kanonik), serta larangan menumpuk lebih dari 1 tabel data independen dalam 1 viewport halaman gulung (wajib dipisahkan ke dalam sub-halaman/rute mandiri atau sub-tab dengan tree sidebar menu terisolasi).
 44. **[INV-UI-08] SURFACE_CONTRAST_AND_ELEVATION_HIERARCHY**: Seluruh antarmuka WAJIB mematuhi arsitektur elevasi 3-Tier (L0 Kanvas teduh `bg-slate-100/70` atau `dark:bg-[#070b12]`, L1 Kartu Makro solid `bg-white` atau `dark:bg-slate-900/90` ber-border 1px presisi `border-slate-200/80` / `dark:border-slate-800` & `shadow-2xs`, L2 Elemen Mikro tersemat dengan kontras diferensiasi jelas `bg-slate-50/70` atau `dark:bg-slate-950/60`). DILARANG KERAS ilusi pseudo-glassmorphism transparan rendah (`bg-white/40`, `dark:bg-white/[0.02]`) di atas kanvas flat yang memicu efek bunglon visual (*visual camouflage*) dan ketidakjelasan batas antar-elemen.
@@ -256,8 +256,8 @@ php install.php update
 ## 9. VERIFIKASI PENGUJIAN OTOMATIS (QUALITY GATES)
 ```powershell
 # 1. Backend PHPUnit (29 tests, 376 assertions - 100% Passed)
-cd D:\laragon\www\hyperion-vault\backend && php artisan test
+cd D:\laragon\www\valora-vault\backend && php artisan test
 
 # 2. Frontend Build Verification (0 warning a11y, 0 error - 100% Passed)
-cd D:\laragon\www\hyperion-vault\frontend && npm run build
+cd D:\laragon\www\valora-vault\frontend && npm run build
 ```

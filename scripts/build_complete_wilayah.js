@@ -136,13 +136,13 @@ async function main() {
   const staticVillagesDir = path.join(staticDir, 'villages');
   const libDir = path.resolve('frontend/src/lib/data');
 
-  const starterStaticDir = path.resolve('D:/laragon/www/hyperion-vault/frontend/static/data/wilayah');
+  const starterStaticDir = path.resolve('D:/laragon/www/valora-vault/frontend/static/data/wilayah');
   const starterStaticVillagesDir = path.join(starterStaticDir, 'villages');
-  const starterLibDir = path.resolve('D:/laragon/www/hyperion-vault/frontend/src/lib/data');
+  const starterLibDir = path.resolve('D:/laragon/www/valora-vault/frontend/src/lib/data');
 
   fs.mkdirSync(staticVillagesDir, { recursive: true });
   fs.mkdirSync(libDir, { recursive: true });
-  if (fs.existsSync('D:/laragon/www/hyperion-vault')) {
+  if (fs.existsSync('D:/laragon/www/valora-vault')) {
     fs.mkdirSync(starterStaticVillagesDir, { recursive: true });
     fs.mkdirSync(starterLibDir, { recursive: true });
   }
@@ -151,7 +151,7 @@ async function main() {
   for (const [provId, vList] of villagesByProvince.entries()) {
     const jsonStr = JSON.stringify(vList);
     fs.writeFileSync(path.join(staticVillagesDir, `${provId}.json`), jsonStr);
-    if (fs.existsSync('D:/laragon/www/hyperion-vault')) {
+    if (fs.existsSync('D:/laragon/www/valora-vault')) {
       fs.writeFileSync(path.join(starterStaticVillagesDir, `${provId}.json`), jsonStr);
     }
   }
@@ -165,7 +165,7 @@ async function main() {
     ...(villagesByProvince.get('36') || [])
   ];
   fs.writeFileSync(path.join(staticDir, 'villages.json'), JSON.stringify(priorityVillages, null, 2));
-  if (fs.existsSync('D:/laragon/www/hyperion-vault')) {
+  if (fs.existsSync('D:/laragon/www/valora-vault')) {
     fs.writeFileSync(path.join(starterStaticDir, 'villages.json'), JSON.stringify(priorityVillages, null, 2));
   }
 
@@ -182,7 +182,7 @@ async function main() {
   fs.writeFileSync(path.join(libDir, 'regencies.json'), regStr);
 
   // Mirror to starter repo
-  if (fs.existsSync('D:/laragon/www/hyperion-vault')) {
+  if (fs.existsSync('D:/laragon/www/valora-vault')) {
     fs.writeFileSync(path.join(starterStaticDir, 'provinces.json'), provStr);
     fs.writeFileSync(path.join(starterStaticDir, 'regencies.json'), regStr);
     fs.writeFileSync(path.join(starterStaticDir, 'districts.json'), distStr);
@@ -210,7 +210,7 @@ async function main() {
 
   const metaStr = JSON.stringify(metadata, null, 2);
   fs.writeFileSync(path.join(staticDir, 'metadata.json'), metaStr);
-  if (fs.existsSync('D:/laragon/www/hyperion-vault')) {
+  if (fs.existsSync('D:/laragon/www/valora-vault')) {
     fs.writeFileSync(path.join(starterStaticDir, 'metadata.json'), metaStr);
   }
 

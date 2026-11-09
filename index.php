@@ -1,7 +1,7 @@
 <?php
 /**
  * Zero-Config Universal Gateway for Laragon Default Nginx & Apache
- * Serves Laravel API + Svelte 5 Frontend under a single domain (e.g. hyperion-vault.test)
+ * Serves Laravel API + Svelte 5 Frontend under a single domain (e.g. valora-vault.test)
  * without modifying any Nginx or Apache configuration files.
  */
 

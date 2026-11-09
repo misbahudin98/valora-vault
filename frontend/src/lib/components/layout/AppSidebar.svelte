@@ -207,7 +207,7 @@
         </svg>
       </div>
       <div>
-        <span class="text-xs font-bold tracking-tight text-stone-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition">{import.meta.env.VITE_APP_NAME || 'Hyperion Vault'}</span>
+        <span class="text-xs font-bold tracking-tight text-stone-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition">{import.meta.env.VITE_APP_NAME || 'Valora Vault'}</span>
         <span class="block text-[8px] uppercase font-mono tracking-wider text-indigo-600 dark:text-indigo-400">v6.30.0</span>
       </div>
     </a>

@@ -148,6 +148,6 @@ sequenceDiagram
   - Memicu ekstraksi aman di sisi server via HTTPS dengan autentikasi *one-time cryptographic token* (`hash_equals()`).
   - Runner melakukan unpack, set permissions `0775`/`0664`, mengeksekusi `migrate --force`, meng-cache config/routes/views, dan membersihkan dirinya sendiri secara mandiri (*self-destruct*).
 - **Jalur B: Hardened OWASP SSH Deployer ([`deploy_ssh.sh`](../../deploy_ssh.sh) & [`deploy_ssh.php`](../../deploy_ssh.php)):**
-  - Mengisolasi kode sumber backend di luar webroot publik (`~/apps/hyperion-vault/backend/`).
+  - Mengisolasi kode sumber backend di luar webroot publik (`~/apps/valora-vault/backend/`).
   - Menghubungkan gateway publik di `~/public_html/index.php` ke autoloader backend di luar webroot.
   - Memastikan berkas sensitif (`.env`, `database.sqlite`, vendor) 100% kebal dari akses HTTP langsung.

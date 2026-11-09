@@ -1,7 +1,7 @@
 # ⚡ Valora Vault (v6.31.0)
 
 > **Sistem Operasi Agensi Digital & Platform Manajemen Penagihan Terpadu (PT Valora Digital Solusindo)**  
-> Dibangun di atas fondasi arsitektur **Hyperion Vault Engine** berkinerja tinggi (Laravel 13 Sanctum + Svelte 5 Native Runes + SQLite WAL). Dirancang khusus untuk kecepatan responsif (P99 < 150ms), auditabilitas finansial transparan, dan kesiapan produksi tanpa kendala koneksi database (*Zero Connection Exhaustion*).
+> Dibangun di atas fondasi arsitektur **Valora Vault Engine** berkinerja tinggi (Laravel 13 Sanctum + Svelte 5 Native Runes + SQLite WAL). Dirancang khusus untuk kecepatan responsif (P99 < 150ms), auditabilitas finansial transparan, dan kesiapan produksi tanpa kendala koneksi database (*Zero Connection Exhaustion*).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Laravel Version](https://img.shields.io/badge/Laravel-13.x-red.svg)](https://laravel.com)
@@ -36,7 +36,7 @@ Didukung oleh arsitektur penyimpanan sesi berbasis NVMe SSD lokal (`SESSION_DRIV
 
 ## 🗺️ Peta Kesinambungan Dokumen & Kerangka Diátaxis
 
-Struktur dokumentasi Hyperion Vault mengadopsi standar internasional **Diátaxis Framework** (Tutorials, How-To Guides, Reference, Explanation):
+Struktur dokumentasi Valora Vault mengadopsi standar internasional **Diátaxis Framework** (Tutorials, How-To Guides, Reference, Explanation):
 
 ```mermaid
 flowchart TD
@@ -104,7 +104,7 @@ flowchart TD
 
 ## 🧠 Ekosistem Autonomous Agent Skills & Canonical Engineering Rules
 
-Hyperion Vault menerapkan pendekatan rekayasa modern yang memadukan **Invarian Mutlak Sistem (`.agents/rules/`)** dan **Spesialisasi Keahlian Agen (`.agents/skills/`)**. Seluruh agen koding AI (Antigravity, Gemini, Claude, Cursor) maupun pengembang manusia wajib mematuhi standar ini untuk menjamin kode 100% *production-ready*, bebas kode pemalas (*Anti-Slop*), dan terbebas dari *regresi*.
+Valora Vault menerapkan pendekatan rekayasa modern yang memadukan **Invarian Mutlak Sistem (`.agents/rules/`)** dan **Spesialisasi Keahlian Agen (`.agents/skills/`)**. Seluruh agen koding AI (Antigravity, Gemini, Claude, Cursor) maupun pengembang manusia wajib mematuhi standar ini untuk menjamin kode 100% *production-ready*, bebas kode pemalas (*Anti-Slop*), dan terbebas dari *regresi*.
 
 ```mermaid
 flowchart LR
@@ -158,7 +158,7 @@ Cukup sertakan *trigger tag* di awal instruksi Anda, misalnya:
 - **Penyusunan / Audit Prompt:**  
   `@prompt evaluasi dan tingkatkan prompt ini ke standar internasional agar mematuhi aturan anti-slop sistem.`
 
-### 🗺️ Peta 5+2 Engine Arsitektur Rekayasa Hyperion Vault
+### 🗺️ Peta 5+2 Engine Arsitektur Rekayasa Valora Vault
 
 Sistem diorganisasikan ke dalam matriks simetris yang menghubungkan **Invarian Mutlak Aturan (`.agents/rules/`)**, **Keahlian Eksekusi Agen (`.agents/skills/`)**, dan **Dokumen Landasan SSoT (`doc/`)**:
 
@@ -372,7 +372,7 @@ Pastikan lingkungan komputer memenuhi spesifikasi berikut:
 2. **PHP 8.3 atau 8.4**: Pastikan ekstensi `pdo_sqlite`, `sqlite3`, `curl`, `mbstring`, `openssl`, `fileinfo`, `json`, dan `pdo_mysql` aktif di `php.ini`.
 3. **Composer 2.x**: Untuk dependensi backend Laravel.
 4. **Node.js versi 20+ & npm**: Untuk frontend Svelte 5 (didukung universal via `frontend/.npmrc`).
-5. **Laragon Nginx & Hosts**: Berjalan pada port `80` dengan host mapping `127.0.0.1 hyperion-vault.test`.
+5. **Laragon Nginx & Hosts**: Berjalan pada port `80` dengan host mapping `127.0.0.1 valora-vault.test`.
 
 ---
 
@@ -383,8 +383,8 @@ Ikuti 3 langkah mudah berikut di terminal PowerShell:
 ### Langkah 1: Unduh Repositori
 ```powershell
 cd D:\laragon\www
-git clone https://github.com/misbahudin98/hyperion-vault.git
-cd hyperion-vault
+git clone https://github.com/misbahudin98/valora-vault.git
+cd valora-vault
 ```
 
 ### Langkah 2: Jalankan Instalasi Otomatis (1-Langkah Cerdas)
@@ -403,7 +403,7 @@ php install.php install --name="Portal Santri" --domain="portal-santri.test" --d
 
 ## ⚡ Golden Archetype Spawner (Duplikasi Proyek Baru dalam ~5 Detik)
 
-Setelah `hyperion-vault` terinstal sekali sebagai mesin induk (*Golden Master Archetype*), Anda **tidak perlu lagi mengulang proses clone, `composer install`, maupun `npm install`** untuk proyek baru berikutnya. 
+Setelah `valora-vault` terinstal sekali sebagai mesin induk (*Golden Master Archetype*), Anda **tidak perlu lagi mengulang proses clone, `composer install`, maupun `npm install`** untuk proyek baru berikutnya. 
 
 Gunakan perintah `spawn` untuk melahirkan aplikasi baru secara instan:
 ```powershell
@@ -412,7 +412,7 @@ php install.php spawn portal-santri --name="Portal Santri Terpadu" --desc="Siste
 ```
 
 **Atau gunakan Web GUI Wizard:**
-Buka [http://hyperion-vault.test/install.php](install.php) di peramban, isi formulir pada kartu **"🚀 Spawner Proyek Baru"**, dan klik **"Duplikasi & Inisiasi Proyek Baru Sekarang"**.
+Buka [http://valora-vault.test/install.php](install.php) di peramban, isi formulir pada kartu **"🚀 Spawner Proyek Baru"**, dan klik **"Duplikasi & Inisiasi Proyek Baru Sekarang"**.
 
 **Apa yang terjadi dalam 5 detik?**
 1. Seluruh berkas engine, `vendor`, dan `node_modules` disalin via *multi-threaded I/O* (Zero download internet).
@@ -438,7 +438,7 @@ Start-Process "cmd.exe" -ArgumentList "/c npm run dev -- --host 127.0.0.1 --port
 cd ..
 ```
 
-Buka peramban Anda di: **[http://hyperion-vault.test](http://hyperion-vault.test)**  
+Buka peramban Anda di: **[http://valora-vault.test](http://valora-vault.test)**  
 *(Atau kunjungi [http://localhost:5173](http://localhost:5173) jika menggunakan port langsung)*.
 
 ---
@@ -452,7 +452,7 @@ php install.php update
 ```
 *Skrip aman ini membersihkan cache (`optimize:clear`), menjalankan migrasi pending tanpa menghapus data (`migrate --force`), mengompilasi ulang aset SPA, dan mencatat riwayat pembaruan di `.installed`.*
 
-Anda juga dapat membuka `http://hyperion-vault.test/install.php` melalui browser dan mengklik tombol **"Perbarui Sistem Sekarang (Safe Update)"**.
+Anda juga dapat membuka `http://valora-vault.test/install.php` melalui browser dan mengklik tombol **"Perbarui Sistem Sekarang (Safe Update)"**.
 
 ---
 
@@ -535,15 +535,15 @@ Gunakan kredensial berikut untuk masuk ke sistem:
 
 | Akun | Email | Kata Sandi | Hak Akses |
 |---|---|---|---|
-| **Administrator** | `admin@hyperion-vault.test` | `password123` | Akses Penuh: Kelola User, Forensik Sesi Multi-Device, Dashboard Admin |
-| **Pengguna Biasa** | `user@hyperion-vault.test` | `password123` | Dashboard Pengguna & Profil Akun |
+| **Administrator** | `admin@valora-vault.test` | `password123` | Akses Penuh: Kelola User, Forensik Sesi Multi-Device, Dashboard Admin |
+| **Pengguna Biasa** | `user@valora-vault.test` | `password123` | Dashboard Pengguna & Profil Akun |
 
 ---
 
 ## 📂 Struktur Folder Repositori
 
 ```
-hyperion-vault/
+valora-vault/
 ├── backend/                  # Server Laravel 13 (API RESTful Sanctum & SQLite WAL)
 │   ├── app/Http/Controllers/ # Logika API (Auth, Kelola User, Audit Sesi)
 │   ├── config/permissions.php# Matriks Hak Akses (Client RBAC)
@@ -577,7 +577,7 @@ hyperion-vault/
 
 ## 🚀 Panduan Deployment Mode Produksi (Production Best Practices)
 
-Hyperion Vault dirancang fleksibel untuk dapat di-deploy baik pada **Shared Hosting hemat biaya** (cPanel / LiteSpeed via FTP) maupun **Cloud VPS / Dedicated Server** berstandar Enterprise OWASP via SSH.
+Valora Vault dirancang fleksibel untuk dapat di-deploy baik pada **Shared Hosting hemat biaya** (cPanel / LiteSpeed via FTP) maupun **Cloud VPS / Dedicated Server** berstandar Enterprise OWASP via SSH.
 
 ```
 +-----------------------------------------------------------------------------------------+
@@ -636,7 +636,7 @@ Standar tertinggi industri (Enterprise OWASP Architecture): Seluruh kode sumber 
 ```
 /home/username/                     # Direktori beranda non-publik
 ├── apps/
-│   └── hyperion-vault/
+│   └── valora-vault/
 │       └── backend/                # TERLINDUNGI 100% DI LUAR WEB ROOT
 │           ├── .env                # Kebal dari permintaan HTTP langsung
 │           ├── app/
@@ -732,7 +732,7 @@ Ini terjadi jika worker PHP di Laragon belum dinyalakan atau prosesnya mati. Jal
 
 <details>
 <summary><b>2. Mengapa tidak menggunakan MySQL biasa untuk sesi login?</b></summary>
-Pada hosting murah seperti Hostinger Shared Hosting, jumlah koneksi MySQL dibatasi maksimal 25 koneksi simultan. Jika sesi disimpan di MySQL (`SESSION_DRIVER=database`), setiap klik pengunjung membuka koneksi baru dan memicu crash `1040 Too Many Connections`. Hyperion Vault menyimpan sesi di file disk lokal NVMe (`SESSION_DRIVER=file`), sehingga kuota koneksi database Anda 100% aman dan bebas macet.
+Pada hosting murah seperti Hostinger Shared Hosting, jumlah koneksi MySQL dibatasi maksimal 25 koneksi simultan. Jika sesi disimpan di MySQL (`SESSION_DRIVER=database`), setiap klik pengunjung membuka koneksi baru dan memicu crash `1040 Too Many Connections`. Valora Vault menyimpan sesi di file disk lokal NVMe (`SESSION_DRIVER=file`), sehingga kuota koneksi database Anda 100% aman dan bebas macet.
 </details>
 
 <details>

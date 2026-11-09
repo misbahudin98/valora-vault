@@ -1,4 +1,4 @@
-# Hyperion Vault - Konsep Desain & Landing Page (design.md)
+# Valora Vault - Konsep Desain & Landing Page (design.md)
 > **Spesifikasi Konsep Desain Visual, Blueprint Landing Page, dan Panduan Kustomisasi Elemen (v6.31.0)**  
 > *Single Source of Truth (SSoT) untuk UI/UX Designer, Frontend Engineer, dan LLM/AI Agent.*
 
@@ -34,7 +34,7 @@ Berkas ini dirancang sebagai panduan tunggal konsep visual dan antarmuka. Posisi
 ## 2. KONSEP DESAIN VISUAL (VISUAL DESIGN CONCEPT)
 
 ### A. Filosofi Desain: Neo-Enterprise Apple Spatial Materials & Glassmorphism
-Hyperion Vault mengadopsi estetika **Neo-Enterprise Apple Spatial Materials & Glassmorphism** yang memadukan keandalan sistem perbankan dengan antarmuka futuristik berkinerja tinggi, terinspirasi oleh Apple macOS/visionOS Human Interface Guidelines:
+Valora Vault mengadopsi estetika **Neo-Enterprise Apple Spatial Materials & Glassmorphism** yang memadukan keandalan sistem perbankan dengan antarmuka futuristik berkinerja tinggi, terinspirasi oleh Apple macOS/visionOS Human Interface Guidelines:
 1. **Apple Materials & Dynamic Vibrancy:** Menggunakan material bertingkat (*Ultra-Thin, Thin, Regular, Thick*) dengan `backdrop-blur-xl backdrop-saturate-150` dan dasar kontras terlindungi (*contrast shield*), menjamin teks tidak pernah kabur atau kehilangan keterbacaan (APCA $L_c \ge 75$).
 2. **Pencahayaan Spekular Tepi 1px (1px Specular Edge Chamfer):** Garis tepi atas bergradasi halus (`before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent`) yang mensimulasikan refraksi fisik kaca tebal.
 3. **Kenyamanan Operator (Anti-Eye-Fatigue):** Menggunakan palet Deep Obsidian (`#090d16`) untuk Dark Mode dan White/Slate-50 untuk Daylight Mode, memberikan fleksibilitas pencahayaan penuh sesuai preferensi pengguna.
@@ -115,7 +115,7 @@ Semua ukuran margin, padding, tinggi baris, dan jarak antar elemen (`gap`) mengg
 ## 3. KONSEP LANDING PAGE (LANDING PAGE CONCEPT)
 
 ### A. Tujuan Bisnis & Alur Konversi (Conversion Funnel)
-Landing page Hyperion Vault bukan sekadar halaman statis, melainkan representasi keandalan teknis sistem:
+Landing page Valora Vault bukan sekadar halaman statis, melainkan representasi keandalan teknis sistem:
 1. **Membangun Otoritas Instan (< 3 Detik):** Menampilkan metrik operasional riil (SLO Uptime 99.0%, Latensi P99 ~65ms, 0 Sesi Database) di atas lipatan layar (*above the fold*).
 2. **Edukasi Arsitektur Interaktif:** Memandu pengunjung memahami bagaimana arsitektur ini memangkas koneksi MySQL dan menjamin skalabilitas 9000+ data.
 3. **Pola Baca Z-Pattern:**
@@ -128,7 +128,7 @@ Landing page Hyperion Vault bukan sekadar halaman statis, melainkan representasi
 ### B. Blueprint Cetak Biru Landing Page
 ```
 +--------------------------------------------------------------------------+
-| [Logo: Hyperion Vault]                      [v5.6.0]  [Masuk Dashboard]  |
+| [Logo: Valora Vault]                      [v5.6.0]  [Masuk Dashboard]  |
 +--------------------------------------------------------------------------+
 | HERO SECTION (Split-View Asymmetrical Balance):                         |
 |                                                                          |
@@ -205,7 +205,7 @@ File [`install.php`](../install.php) adalah wizard instalasi & pembaruan mandiri
    - Ganti elemen `<svg>` dengan logo vektor SVG perusahaan Anda.
 3. **Mengubah Judul & Teks Sambutan:**
    - Buka baris 393 untuk `<title>`.
-   - Buka baris 452 untuk tag `<h1>Hyperion Vault Setup Wizard</h1>` dan subteks deskripsi di bawahnya.
+   - Buka baris 452 untuk tag `<h1>Valora Vault Setup Wizard</h1>` dan subteks deskripsi di bawahnya.
 4. **Menambah Pemeriksaan Diagnostik Kustom:**
    - Pada method `runDiagnostics()` di [`install.php`](../install.php), tambahkan dependensi PHP atau modul kustom klien:
      ```php
@@ -624,7 +624,7 @@ Setiap respons API backend dan root gateway wajib menyematkan header keamanan st
 
 ### B. Keaslian Karya & Human-Crafted Aesthetic
 1. **Palet Tonal Teredam Bermartabat (*Dignified Muted Tonal Palette*):**
-   - Utamakan monokrom elegan (Slate/Stone/Obsidian) dengan saturasi tenang yang dikombinasikan dengan tepat 1 warna aksen fungsional berkarakter (Emerald tajam di Yayasan PQTM, Indigo/Emerald di Hyperion Vault).
+   - Utamakan monokrom elegan (Slate/Stone/Obsidian) dengan saturasi tenang yang dikombinasikan dengan tepat 1 warna aksen fungsional berkarakter (Emerald tajam di Yayasan PQTM, Indigo/Emerald di Valora Vault).
 2. **Ritme Tipografi Berbobot (*Editorial Typographic Rhythm*):**
    - Menggabungkan hirarki heading tegas, label mikro terukur, dan `font-mono` untuk seluruh angka, tanggal, dan data teknis.
 3. **Tekstur Presisi:**
@@ -640,7 +640,7 @@ Setiap respons API backend dan root gateway wajib menyematkan header keamanan st
 
 ### A. Prinsip Zero Round-Trip & Kinerja Ekspor Instan
 1. **Ekspor In-Memory Peramban (< 5ms):**
-   - Seluruh tabel data yang disajikan pada antarmuka Hyperion Vault dan aplikasi turunan (Users, Sessions, Audit, System, dan modul kustom) WAJIB menyediakan kontrol tombol **"Ekspor CSV"** langsung dari memori browser.
+   - Seluruh tabel data yang disajikan pada antarmuka Valora Vault dan aplikasi turunan (Users, Sessions, Audit, System, dan modul kustom) WAJIB menyediakan kontrol tombol **"Ekspor CSV"** langsung dari memori browser.
    - Dilarang memicu query ulang atau request berlebih ke server backend untuk data yang telah ter-load di state/store frontend (*zero round-trip*).
 2. **Kepatuhan Format Internasional:**
    - **UTF-8 Byte Order Mark (BOM: `\uFEFF`):** Disematkan di awal stream berkas agar Microsoft Excel (Windows & macOS) dan Google Sheets langsung mengenali set karakter lokal dan aksara tanpa *mojibake*.
@@ -662,7 +662,7 @@ Setiap respons API backend dan root gateway wajib menyematkan header keamanan st
    - **30% Struktural (Permukaan & Kartu):** Komponen kartu, panel data, kontainer modal, dan hairline 1px border (`bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800/80`), serta teks pendukung berbobot menengah (`text-slate-600 dark:text-slate-400`).
    - **10% Aksen & Intensi (Action & Attention Anchors):** Tombol CTA primer, status badge aktif, fokus interaktif, dan progres bar. Tidak boleh lebih dari 10% agar tidak menimbulkan kejenuhan visual (*visual fatigue*).
 3. **Prinsip Kontras Simultan Josef Albers & Johannes Itten:**
-   - Warna aksen tidak boleh bertabrakan dengan warna saturasi tinggi lain. Satu aksen berkarakter (Indigo/Cyan untuk Hyperion Engine, Emerald untuk Notaris/PPAT, Forest Green untuk Pesantren) wajib dikelilingi oleh palet netral teredam (*dignified muted ground*) agar perhatian pengguna terfokus seketika.
+   - Warna aksen tidak boleh bertabrakan dengan warna saturasi tinggi lain. Satu aksen berkarakter (Indigo/Cyan untuk Valora Engine, Emerald untuk Notaris/PPAT, Forest Green untuk Pesantren) wajib dikelilingi oleh palet netral teredam (*dignified muted ground*) agar perhatian pengguna terfokus seketika.
 
 ### B. Standar Kontras Persepsi APCA (WCAG 3.0) & Kepatuhan WCAG 2.2 AAA
 1. **Accessible Perceptual Contrast Algorithm (APCA) — Standar Baru W3C Silver/WCAG 3.0:**
@@ -775,4 +775,4 @@ Untuk menjamin keterbacaan instan dan memisahkan antar-elemen antarmuka secara t
 
 ---
 
-*Hyperion Vault Design Specification v6.36.0 — High Performance, Neo-Enterprise Surface Elevation, Zero Cognitive Overload.*
+*Valora Vault Design Specification v6.36.0 — High Performance, Neo-Enterprise Surface Elevation, Zero Cognitive Overload.*

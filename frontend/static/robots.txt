@@ -35,4 +35,4 @@ Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /api/
 
-Sitemap: http://hyperion-vault.test/sitemap.xml
+Sitemap: http://valora-vault.test/sitemap.xml

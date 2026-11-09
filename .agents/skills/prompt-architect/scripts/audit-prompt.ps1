@@ -121,7 +121,7 @@ if ($PromptText -match '(?i)(buat yang bagus|sebagus mungkin|secepat mungkin|yan
 }
 if ($PromptText -match '(?i)(typescript|\.ts\b)') {
     if ($PromptText -notmatch '(?i)dilarang\s+(keras\s+)?(menggunakan\s+)?(typescript|\.ts)') {
-        $smells.Add("[SMELL] Terdeteksi TypeScript padahal standar proyek Hyperion adalah 100% Pure JavaScript ES2024+.")
+        $smells.Add("[SMELL] Terdeteksi TypeScript padahal standar proyek Valora adalah 100% Pure JavaScript ES2024+.")
     }
 }
 

@@ -92,7 +92,10 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $this->call(ClientProjectSeeder::class);
+        // 4. Inisialisasi Profil Legal Agensi PT Valora Digital Solusindo (SSoT)
+        \App\Models\AgencyProfile::getProfile();
+
+        // 5. Inisialisasi Master Tarif Baku Agensi
         $this->call(MasterBillingRateSeeder::class);
     }
 }

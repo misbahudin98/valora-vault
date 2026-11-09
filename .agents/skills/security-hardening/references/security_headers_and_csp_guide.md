@@ -1,5 +1,5 @@
 # Panduan Praktis HTTP Security Headers & Content Security Policy (CSP Level 3)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standar Rujukan:** W3C Content Security Policy Level 3, W3C Fetch Spec (CORS), RFC 6797 (HSTS), OWASP Secure Headers Project.
 
 ---

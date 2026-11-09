@@ -1930,7 +1930,7 @@
             <ol class="space-y-2 text-xs text-stone-700 dark:text-stone-300 list-decimal list-inside">
               <li><strong>Validasi Parameter:</strong> Cek keunikan slug folder lokal.</li>
               <li><strong>GitHub Remote:</strong> Eksekusi <code>gh repo create</code> jika akun terautentikasi.</li>
-              <li><strong>Clean Cloning:</strong> Salin core hyperion-vault (abaikan git, vendor, node_modules).</li>
+              <li><strong>Clean Cloning:</strong> Salin core valora-vault (abaikan git, vendor, node_modules).</li>
               <li><strong>Git Sanitization:</strong> Hapus git lawas, jalankan <code>git init -b main</code>.</li>
               <li><strong>Bootstrapping & Isolation:</strong> Generate APP_KEY baru, SQLite baru, atur port Vite & FastCGI.</li>
               <li><strong>Rule Injection:</strong> Salin <code>universal_invariants.md</code>, <code>GEMINI.md</code>, dan <code>llms.txt</code>.</li>
@@ -1967,7 +1967,7 @@
           <h3 class="text-base font-bold text-stone-900 dark:text-stone-100 flex items-center gap-2">
             🗄️ Modul Aktif Terpasang di doc/features/
           </h3>
-          <p class="text-xs text-stone-500">Berkas spesifikasi fitur yang terindeks resmi pada katalog Hyperion Vault.</p>
+          <p class="text-xs text-stone-500">Berkas spesifikasi fitur yang terindeks resmi pada katalog Valora Vault.</p>
         </div>
         <button
           type="button"

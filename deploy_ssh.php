@@ -1,6 +1,6 @@
 <?php
 /**
- * HYPERION VAULT — Enterprise SSH Automated Deployment Runner
+ * VALORA VAULT — Enterprise SSH Automated Deployment Runner
  * Cross-platform CLI orchestrator for executing remote SSH deployment.
  *
  * Mendukung 2 Model Konfigurasi:
@@ -32,7 +32,7 @@ declare(strict_types=1);
 $startTime = microtime(true);
 
 echo "=================================================================\n";
-echo "   🛡️ HYPERION VAULT — HIGH-SPEED SSH DEPLOYMENT RUNNER        \n";
+echo "   🛡️ VALORA VAULT — HIGH-SPEED SSH DEPLOYMENT RUNNER          \n";
 echo "=================================================================\n\n";
 
 $baseDir = __DIR__;
@@ -300,7 +300,7 @@ if (empty($sshHost) || empty($sshUser)) {
     echo "  CARA 1: SINGLE LINK & 1 PASSWORD (Paling Cepat & Direkomendasikan):\n";
     echo "     DEPLOY_SSH_URL=\"ssh://u1234567@46.202.138.212:65002\"\n";
     echo "     DEPLOY_PASSWORD=\"YourSecretPassword123!\"\n";
-    echo "     DEPLOY_DB_DATABASE=\"u1234567_hyperion\"\n";
+    echo "     DEPLOY_DB_DATABASE=\"u1234567_valora\"\n";
     echo "     DEPLOY_DB_USERNAME=\"u1234567_deploy\"\n\n";
     echo "  CARA 2: PEMISAHAN SEMUA VARIABEL (.env.deploy):\n";
     echo "     DEPLOY_SSH_HOST=\"46.202.138.212\"\n";
@@ -332,7 +332,7 @@ if (!empty($sshPass)) {
 // -----------------------------------------------------------------------------
 if ($hasTunnel) {
     echo "=================================================================\n";
-    echo "   🔗 HYPERION VAULT — SECURE SSH TUNNEL (MYSQL FORWARDING)      \n";
+    echo "   🔗 VALORA VAULT — SECURE SSH TUNNEL (MYSQL FORWARDING)        \n";
     echo "=================================================================\n\n";
     $keyArg = '';
     if (!empty($sshKey) && file_exists($sshKey)) {
@@ -352,7 +352,7 @@ if ($hasTunnel) {
     echo "Panduan Penggunaan GUI (DBeaver / TablePlus / HeidiSQL / Navicat):\n";
     echo "  • Host     : 127.0.0.1\n";
     echo "  • Port     : {$localTunnelPort}\n";
-    echo "  • Database : " . ($dbName ?: 'hyperion_vault') . "\n";
+    echo "  • Database : " . ($dbName ?: 'valora_vault') . "\n";
     echo "  • User     : " . ($dbUser ?: 'root') . "\n";
     echo "  • Password : " . ($dbPass ? '********' : '(password Anda)') . "\n\n";
     echo "Membuka tunnel SSH aman di latar depan (Tekan Ctrl+C untuk berhenti):\n";

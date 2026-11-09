@@ -1,5 +1,5 @@
 # Modul 08: Tagihan Klien, Master Tarif Standar & Integrasi Valuasi Biaya Proyek
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Status:** Production Ready (PRD, EventStorming, 3NF Model, UI 4 Visual States, Automated Tests, Client-Side CSV)  
 > **Rujukan Sumber:** `C:\Users\Misbahudin\Downloads\index.html` (baris 1205–1480, 2850–3040, 4480–4585)
 

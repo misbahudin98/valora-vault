@@ -578,7 +578,7 @@ if ($action === 'spawn' || $action === 'duplicate') {
                     'project_name' => $newAppName,
                     'domain' => $newDomain,
                     'description' => $newDesc,
-                    'spawned_from' => 'Hyperion Vault Archetype v' . APP_VERSION,
+                    'spawned_from' => 'Valora Vault Archetype v' . APP_VERSION,
                     'environment' => 'production_ready',
                     'history' => [
                         [
@@ -587,7 +587,7 @@ if ($action === 'spawn' || $action === 'duplicate') {
                             'timestamp' => date('c'),
                             'updated_by' => $isCli ? 'CLI (Spawner)' : ($_SERVER['REMOTE_ADDR'] ?? 'Web (Spawner)'),
                             'status' => 'success',
-                            'notes' => 'Proyek baru diduplikasi dari Hyperion Vault Archetype Engine.'
+                            'notes' => 'Proyek baru diduplikasi dari Valora Vault Engine.'
                         ]
                     ]
                 ], JSON_PRETTY_PRINT);
@@ -595,7 +595,7 @@ if ($action === 'spawn' || $action === 'duplicate') {
                 $outputLog[] = '[OK] Berkas lock keamanan target .installed berhasil dibuat.';
 
                 // 8. Inisiasi Git repo mandiri di target
-                $cmdGit = 'cd ' . escapeshellarg($destDir) . ' && git init 2>&1 && git add . 2>&1 && git commit -m "feat: initial commit spawned from Hyperion Vault Archetype v' . APP_VERSION . '" 2>&1';
+                $cmdGit = 'cd ' . escapeshellarg($destDir) . ' && git init 2>&1 && git add . 2>&1 && git commit -m "feat: initial commit spawned from Valora Vault v' . APP_VERSION . '" 2>&1';
                 @shell_exec($cmdGit);
                 $outputLog[] = '[OK] Repositori Git lokal baru berhasil diinisialisasi.';
 
@@ -1024,7 +1024,7 @@ header('Referrer-Policy: strict-origin-when-cross-origin');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hyperion Vault Setup & Updater Wizard v<?= APP_VERSION ?> - hyperion-vault.test</title>
+    <title>Valora Vault Setup & Updater Wizard v<?= APP_VERSION ?> - valora-vault.test</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <style>
         :root {
@@ -1261,8 +1261,8 @@ header('Referrer-Policy: strict-origin-when-cross-origin');
             <div class="alert alert-success">
                 <strong>✓ Berhasil!</strong> <?= htmlspecialchars($successMsg) ?>
                 <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #a7f3d0;">
-                    Akun Administrator: <strong>admin@hyperion-vault.test</strong> | Password: <strong>password123</strong><br>
-                    Akun Regular User: <strong>user@hyperion-vault.test</strong> | Password: <strong>password123</strong>
+                    Akun Administrator: <strong>admin@valora-vault.test</strong> | Password: <strong>password123</strong><br>
+                    Akun Regular User: <strong>user@valora-vault.test</strong> | Password: <strong>password123</strong>
                 </div>
             </div>
         <?php elseif ($errorMsg): ?>

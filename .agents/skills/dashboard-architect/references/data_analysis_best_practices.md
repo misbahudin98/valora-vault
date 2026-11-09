@@ -1,12 +1,12 @@
 # Pedoman Praktik Terbaik Analisis Data Internasional (Data Analysis Best Practices)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standar Rujukan:** CRISP-DM (Chapman, 2000), DAMA-DMBOK 2nd Ed, Gartner Analytics Maturity, Ralph Kimball (2013), Stephen Few (2013), Edward Tufte (2001), Colin Ware (2020), Douglas Hubbard (2014)
 
 ---
 
 ## 1. PENDAHULUAN & TUJUAN ARSITEKTUR
 
-Dokumen ini adalah rujukan teknis operasional (*technical reference manual*) bagi AI agent dan engineer di Hyperion Vault dalam mengeksekusi analitik data, pemodelan metrik, dan perancangan dasbor institusi. Dokumen ini menjabarkan implementasi praktis dari [`.agents/rules/temporal_dashboard_invariants.md`](../../../rules/temporal_dashboard_invariants.md).
+Dokumen ini adalah rujukan teknis operasional (*technical reference manual*) bagi AI agent dan engineer di Valora Vault dalam mengeksekusi analitik data, pemodelan metrik, dan perancangan dasbor institusi. Dokumen ini menjabarkan implementasi praktis dari [`.agents/rules/temporal_dashboard_invariants.md`](../../../rules/temporal_dashboard_invariants.md).
 
 ```mermaid
 flowchart LR
@@ -18,13 +18,13 @@ flowchart LR
 
 ---
 
-## 2. METODOLOGI ANALISIS DATA: SIKLUS CRISP-DM DI HYPERION VAULT
+## 2. METODOLOGI ANALISIS DATA: SIKLUS CRISP-DM DI VALORA VAULT
 
 Proses perancangan modul analitik mengikuti siklus **CRISP-DM** (*Cross-Industry Standard Process for Data Mining / Analytics*):
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────┐
-│ TAHAP SIKLUS CRISP-DM             IMPLEMENTASI DALAM HYPERION VAULT       │
+│ TAHAP SIKLUS CRISP-DM             IMPLEMENTASI DALAM VALORA VAULT       │
 ├───────────────────────────────────────────────────────────────────────────┤
 │ 1. Business Understanding  ───►  Petakan Jobs-to-be-Done (JTBD) pimpinan  │
 │ 2. Data Understanding      ───►  Audit kelayakan tabel fakta transaksional│

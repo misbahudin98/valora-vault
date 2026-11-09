@@ -62,7 +62,7 @@
 
       if (res.token && typeof window !== 'undefined') {
         try {
-          localStorage.setItem('hyperion_token', res.token);
+          localStorage.setItem('valora_token', res.token);
         } catch {}
       }
 

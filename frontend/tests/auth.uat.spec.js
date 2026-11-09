@@ -6,9 +6,9 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const BACKEND_DIR = process.env.BACKEND_DIR || path.resolve(__dirname, '../../backend');
-const BASE_URL = process.env.PLAYWRIGHT_BASE_URL || 'http://hyperion-vault.test';
+const BASE_URL = process.env.PLAYWRIGHT_BASE_URL || 'http://valora-vault.test';
 
-test.describe('UAT: Enterprise Sanctum & Svelte 5 Flow on hyperion-vault.test', () => {
+test.describe('UAT: Enterprise Sanctum & Svelte 5 Flow on valora-vault.test', () => {
   test.beforeEach(() => {
     execSync('php artisan db:seed --class=DatabaseSeeder', { cwd: BACKEND_DIR });
   });
@@ -28,7 +28,7 @@ test.describe('UAT: Enterprise Sanctum & Svelte 5 Flow on hyperion-vault.test', 
     await expect(page.locator('text=The email field must be a valid email address.')).toBeVisible({ timeout: 5000 });
 
     // 2. Submit Kredensial Valid (HTTP 200)
-    await page.fill('#email', 'admin@hyperion-vault.test');
+    await page.fill('#email', 'admin@valora-vault.test');
     await page.fill('#password', 'password123');
 
     // Uji toggle visibilitas kata sandi (Eye Icon)
@@ -57,7 +57,7 @@ test.describe('UAT: Enterprise Sanctum & Svelte 5 Flow on hyperion-vault.test', 
 
     expect(sessionCookie, 'Cookie session wajib ada').toBeDefined();
     expect(sessionCookie.httpOnly, 'Cookie session wajib HttpOnly').toBe(true);
-    expect(sessionCookie.domain, 'Domain cookie wajib valid').toMatch(/\.(hyperion-vault\.test|template\.org)/);
+    expect(sessionCookie.domain, 'Domain cookie wajib valid').toMatch(/\.(valora-vault\.test|template\.org)/);
 
     expect(xsrfCookie, 'Cookie XSRF-TOKEN wajib ada').toBeDefined();
     expect(xsrfCookie.httpOnly, 'Cookie XSRF-TOKEN wajib non-HttpOnly agar terbaca JS').toBe(false);
@@ -80,7 +80,7 @@ test.describe('UAT: Enterprise Sanctum & Svelte 5 Flow on hyperion-vault.test', 
     const payloadJson = Buffer.from(payloadB64.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8');
     const claims = JSON.parse(payloadJson);
 
-    expect(claims.name, 'Klaim nama dalam JWT wajib sesuai').toMatch(/(Admin|Hyperion Admin)/);
+    expect(claims.name, 'Klaim nama dalam JWT wajib sesuai').toMatch(/(Admin|Valora Admin)/);
     expect(claims.roles, 'Klaim roles dalam JWT wajib memuat admin dan manager').toEqual(
       expect.arrayContaining(['admin', 'manager'])
     );
@@ -115,8 +115,8 @@ test.describe('UAT: Enterprise Sanctum & Svelte 5 Flow on hyperion-vault.test', 
     await expect(page).toHaveURL(`${BASE_URL}/login`);
     await expect(page.locator('#app-sidebar')).not.toBeVisible();
 
-    // 3. Login sebagai Regular User ('user@hyperion-vault.test')
-    await page.fill('#email', 'user@hyperion-vault.test');
+    // 3. Login sebagai Regular User ('user@valora-vault.test')
+    await page.fill('#email', 'user@valora-vault.test');
     await page.fill('#password', 'password123');
     await page.click('#submit-btn');
 
@@ -142,8 +142,8 @@ test.describe('UAT: Enterprise Sanctum & Svelte 5 Flow on hyperion-vault.test', 
     await page.click('#logout-btn');
     await expect(page).toHaveURL(`${BASE_URL}/login`);
 
-    // 4. Login sebagai Admin ('admin@hyperion-vault.test')
-    await page.fill('#email', 'admin@hyperion-vault.test');
+    // 4. Login sebagai Admin ('admin@valora-vault.test')
+    await page.fill('#email', 'admin@valora-vault.test');
     await page.fill('#password', 'password123');
     await page.click('#submit-btn');
 
@@ -163,31 +163,31 @@ test.describe('UAT: Enterprise Sanctum & Svelte 5 Flow on hyperion-vault.test', 
 
     // Verifikasi daftar pengguna ter-render di tabel
     await expect(page.getByText('Pengguna Regular')).toBeVisible({ timeout: 15000 });
-    await expect(page.getByText('user@hyperion-vault.test')).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText('user@valora-vault.test')).toBeVisible({ timeout: 15000 });
 
     // 6. Uji Aksi: Tangguhkan Status Pengguna Regular
-    const suspendBtn = page.locator('tr:has-text("user@hyperion-vault.test") button:has-text("Tangguhkan")');
+    const suspendBtn = page.locator('tr:has-text("user@valora-vault.test") button:has-text("Tangguhkan")');
     await suspendBtn.click();
     await expect(page.locator('text=Pengguna berhasil ditangguhkan.')).toBeVisible({ timeout: 10000 });
-    await expect(page.locator('tr:has-text("user@hyperion-vault.test") span:has-text("Ditangguhkan")')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('tr:has-text("user@valora-vault.test") span:has-text("Ditangguhkan")')).toBeVisible({ timeout: 10000 });
 
     // 7. Uji Aksi: Cabut Sesi Pengguna Regular
     page.once('dialog', dialog => dialog.accept());
-    const revokeBtn = page.locator('tr:has-text("user@hyperion-vault.test") button:has-text("Cabut Sesi")');
+    const revokeBtn = page.locator('tr:has-text("user@valora-vault.test") button:has-text("Cabut Sesi")');
     await revokeBtn.click();
     await expect(page.locator('text=Seluruh sesi perangkat pengguna berhasil dicabut secara instan.')).toBeVisible({ timeout: 10000 });
 
     // 8. Kembalikan status ke Aktif
-    const activateBtn = page.locator('tr:has-text("user@hyperion-vault.test") button:has-text("Aktifkan")');
+    const activateBtn = page.locator('tr:has-text("user@valora-vault.test") button:has-text("Aktifkan")');
     await activateBtn.click();
     await expect(page.locator('text=Pengguna berhasil diaktifkan kembali.')).toBeVisible({ timeout: 10000 });
-    await expect(page.locator('tr:has-text("user@hyperion-vault.test") span:has-text("Aktif")')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('tr:has-text("user@valora-vault.test") span:has-text("Aktif")')).toBeVisible({ timeout: 10000 });
 
     // 9. Uji CRUD: Tambah Pengguna Baru via Modal
     await page.click('#add-user-btn');
     await expect(page.locator('text=Tambah Pengguna Baru')).toBeVisible();
     await page.fill('#form-name', 'Staf Baru Playwright');
-    await page.fill('#form-email', 'staf_baru@hyperion-vault.test');
+    await page.fill('#form-email', 'staf_baru@valora-vault.test');
     await page.fill('#form-password', 'password123');
 
     // Uji toggle visibilitas kata sandi di modal pengguna (Eye Icon)
@@ -201,10 +201,10 @@ test.describe('UAT: Enterprise Sanctum & Svelte 5 Flow on hyperion-vault.test', 
 
     await expect(page.locator('text=Pengguna berhasil ditambahkan.')).toBeVisible();
     await expect(page.getByText('Staf Baru Playwright')).toBeVisible();
-    await expect(page.getByText('staf_baru@hyperion-vault.test')).toBeVisible();
+    await expect(page.getByText('staf_baru@valora-vault.test')).toBeVisible();
 
     // 10. Uji CRUD: Edit Pengguna via Modal
-    const editBtn = page.locator('tr:has-text("staf_baru@hyperion-vault.test") button:has-text("Edit")');
+    const editBtn = page.locator('tr:has-text("staf_baru@valora-vault.test") button:has-text("Edit")');
     await editBtn.click();
     await expect(page.locator('text=Edit Data Pengguna')).toBeVisible();
     await page.fill('#form-name', 'Staf Senior Playwright');
@@ -215,18 +215,18 @@ test.describe('UAT: Enterprise Sanctum & Svelte 5 Flow on hyperion-vault.test', 
 
     // 11. Uji CRUD: Hapus Pengguna
     page.once('dialog', dialog => dialog.accept());
-    const deleteBtn = page.locator('tr:has-text("staf_baru@hyperion-vault.test") button:has-text("Hapus")');
+    const deleteBtn = page.locator('tr:has-text("staf_baru@valora-vault.test") button:has-text("Hapus")');
     await deleteBtn.click();
 
     await expect(page.locator('text=Pengguna berhasil dihapus')).toBeVisible();
-    await expect(page.getByText('staf_baru@hyperion-vault.test')).not.toBeVisible();
+    await expect(page.getByText('staf_baru@valora-vault.test')).not.toBeVisible();
 
     // 12. Uji Halaman Manajemen Sesi Terpisah & Verifikasi Perangkat Nyata
     await page.click('#main-navigation a:has-text("Manajemen Sesi")');
     await expect(page).toHaveURL(`${BASE_URL}/admin/sessions`);
     await expect(page.locator('h1')).toContainText('Manajemen Sesi & Perangkat Aktif');
-    await expect(page.getByText('admin@hyperion-vault.test')).toBeVisible();
-    await expect(page.getByText('user@hyperion-vault.test')).not.toBeVisible();
+    await expect(page.getByText('admin@valora-vault.test')).toBeVisible();
+    await expect(page.getByText('user@valora-vault.test')).not.toBeVisible();
     await expect(page.locator('button:has-text("Cabut Sesi Ini")').first()).toBeVisible();
     await expect(page.locator('button:has-text("Auto-Remove Sesi Kadaluarsa")')).toBeVisible();
   });

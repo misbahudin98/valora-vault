@@ -1,4 +1,4 @@
-# Hyperion Vault - Frontend Architecture (Svelte 5 Runes + Tailwind CSS v4)
+# Valora Vault - Frontend Architecture (Svelte 5 Runes + Tailwind CSS v4)
 
 Frontend Single Page Application (SPA) ultra-cepat berbasis **Svelte 5 Runes (Pure JavaScript)** dan **Tailwind CSS v4** dengan kompilasi statis `@sveltejs/adapter-static` tanpa ketergantungan runtime Node.js di server produksi.
 

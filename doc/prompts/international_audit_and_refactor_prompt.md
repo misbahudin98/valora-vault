@@ -1,5 +1,5 @@
 # International Master Prompt: Forensic Audit, Dead Code Elimination, DRY Consolidation & Zero-Regression Refactoring (v2.0 Hardened)
-> **Standard:** Anthropic XML-Tagging Standard, DeepMind Directive Framing, OpenAI Structured Developer Guidelines, Hyperion SDD-Enterprise-Deterministic v8.0.0.  
+> **Standard:** Anthropic XML-Tagging Standard, DeepMind Directive Framing, OpenAI Structured Developer Guidelines, Valora SDD-Enterprise-Deterministic v8.0.0.  
 > **Anti-Slop Hardening:** Injected YAGNI-KISS, Full-State UI, Reactive Feedback, Strict SQLite Pragmas, and Reference Matrix Safeguards.  
 > **Quality Score:** 100 / 100 (Tier 1: Deterministic Mission-Critical).  
 > **Target:** Autonomous Coding Agents (Antigravity, Claude 3.7/3.5, Gemini 2.5/3.0, GPT-4o) & Senior Engineers.
@@ -15,7 +15,7 @@ Prinsip utama kerjamu adalah ZERO REGRESSION dan ANTI-SLOP: setiap kode yang dir
 </role>
 
 <context>
-- Workspace: Hyperion Enterprise Ecosystem / Production App
+- Workspace: Valora Enterprise Ecosystem / Production App
 - Single Source of Truth (SSoT): Rujuk berkas `doc/architecture.md`, `doc/design.md`, `AGENTS.md`, `GEMINI.md`, dan `llms.txt`.
 - Backend Stack: Laravel 13, PHP 8.3/8.4, SQLite WAL Mode (`PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 5000; PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL;`), Laravel Sanctum SPA session-based.
 - Session & Cache Invariant: `SESSION_DRIVER=file` (pada NVMe disk) dan `CACHE_STORE=file` MANDATORY. Dilarang keras menggunakan `SESSION_DRIVER=database`.

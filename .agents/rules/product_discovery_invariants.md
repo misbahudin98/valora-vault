@@ -1,5 +1,5 @@
 # Invariants Sistem: Product Discovery & Requirements Engineering (product_discovery_invariants.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standards:** Marty Cagan (2017), Teresa Torres (2021), Karl Wiegers 3rd Ed (2013), Anthony Ulwick (2016), Eric Evans (DDD), Martin Fowler (PoEAA), Edgar F. Codd (3NF), Markus Winand (SQL Indexing), Jakob Nielsen (NN/g), Don Norman, RFC 7807, WCAG 2.2 AAA  
 > **Target:** Autonomous Coding Agents (Antigravity, Gemini, Claude, Cursor) & Human Engineers  
 > **Trigger Tags:** `@discovery`, `@feature`, `@jtbd` | **Playbook:** [`.agents/skills/discovery-architect/SKILL.md`](../skills/discovery-architect/SKILL.md)

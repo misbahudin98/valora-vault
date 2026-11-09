@@ -1,6 +1,6 @@
 import { authState } from '$lib/state/auth.svelte.js';
 
-const API_URL = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://hyperion-vault.test');
+const API_URL = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://valora-vault.test');
 
 class ApiClient {
   constructor() {
@@ -89,7 +89,7 @@ class ApiClient {
         headers.set('X-XSRF-TOKEN', token);
       }
 
-      const bearer = typeof window !== 'undefined' ? localStorage.getItem('hyperion_token') : null;
+      const bearer = typeof window !== 'undefined' ? localStorage.getItem('valora_token') : null;
       if (bearer && !headers.has('Authorization')) {
         headers.set('Authorization', `Bearer ${bearer}`);
       }

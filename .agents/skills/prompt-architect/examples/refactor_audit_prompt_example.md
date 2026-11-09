@@ -12,7 +12,7 @@ Prinsip utama kerjamu adalah ZERO REGRESSION dan ANTI-SLOP: setiap kode yang dir
 </role>
 
 <context>
-- Workspace: Hyperion Enterprise Ecosystem / Production App
+- Workspace: Valora Enterprise Ecosystem / Production App
 - Single Source of Truth (SSoT): Rujuk berkas `doc/architecture.md`, `doc/design.md`, `AGENTS.md`, `GEMINI.md`, dan `llms.txt`.
 - Backend Stack: Laravel 13, PHP 8.3/8.4, SQLite WAL Mode (`PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 5000; PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL;`), Laravel Sanctum SPA session-based.
 - Session & Cache Invariant: `SESSION_DRIVER=file` (pada NVMe disk) dan `CACHE_STORE=file` MANDATORY. Dilarang keras menggunakan `SESSION_DRIVER=database`.

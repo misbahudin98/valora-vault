@@ -1,6 +1,6 @@
 /**
  * Svelte 5 Pure Runes Toast State Manager
- * Universal, reactive notification bus for Hyperion Vault.
+ * Universal, reactive notification bus for Valora Vault.
  * Supports auto-dismiss, priority stacking, and semantic notifications.
  */
 class ToastManager {

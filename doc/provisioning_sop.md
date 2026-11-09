@@ -1,12 +1,12 @@
 # SOP Universal Repository Provisioning Wizard
 > **Standard:** Specification-Driven Development (SDD) & Enterprise Governance v8.0.0  
-> **Target Scope:** Seluruh Pembuatan Repositori Baru Turunan Hyperion Vault
+> **Target Scope:** Seluruh Pembuatan Repositori Baru Turunan Valora Vault
 
 ---
 
 ## 1. TUJUAN & RUANG LINGKUP
 
-Dokumen Standard Operating Procedure (SOP) ini mengatur tata cara pembuatan repositori baru secara deterministik, bersih, terisolasi, dan langsung mewarisi seluruh standar arsitektur internasional, perlindungan OWASP Top 10, dan kebijakan Anti-Slop Hyperion Vault tanpa konfigurasi manual yang rawan kesalahan (*human error*).
+Dokumen Standard Operating Procedure (SOP) ini mengatur tata cara pembuatan repositori baru secara deterministik, bersih, terisolasi, dan langsung mewarisi seluruh standar arsitektur internasional, perlindungan OWASP Top 10, dan kebijakan Anti-Slop Valora Vault tanpa konfigurasi manual yang rawan kesalahan (*human error*).
 
 ---
 
@@ -34,8 +34,8 @@ flowchart TD
 - **Nama Proyek (Slug):** Format `kebab-case` atau `snake_case` (hanya huruf, angka, minus, garis bawah).
 - **Visibilitas:** `private` (default untuk ERP/enterprise) atau `public`.
 - **Alokasi Port Jaringan Terisolasi:**
-  - **Port Frontend (Vite):** Disetel `5174` (atau port unik lain) agar tidak bertabrakan dengan Hyperion Vault (`5173`).
-  - **Port Backend (FastCGI):** Disetel `9005` (atau port unik lain) agar tidak bertabrakan dengan Hyperion Vault (`9003` & `9004`).
+  - **Port Frontend (Vite):** Disetel `5174` (atau port unik lain) agar tidak bertabrakan dengan Valora Vault (`5173`).
+  - **Port Backend (FastCGI):** Disetel `9005` (atau port unik lain) agar tidak bertabrakan dengan Valora Vault (`9003` & `9004`).
 
 ### Tahap 2: GitHub Remote Provisioning
 - Wizard secara otomatis mendeteksi kredensial `gh auth status`.
@@ -43,7 +43,7 @@ flowchart TD
 - Jika `gh` tidak terpasang atau belum login, wizard memberikan peringatan informatif dan melanjutkan pembuatan repositori lokal tanpa menghentikan alur kerja.
 
 ### Tahap 3: Local Template Cloning & Sanitasi Git
-- Fondasi bersih Hyperion Vault disalin ke `D:\laragon\www\<slug>`.
+- Fondasi bersih Valora Vault disalin ke `D:\laragon\www\<slug>`.
 - Berkas yang **DIKECUALIKAN SECARA KETAT** dari penyalinan:
   - Direktori `.git/` lama.
   - Dependensi berat: `backend/vendor/`, `frontend/node_modules/`, `frontend/.svelte-kit/`, `frontend/build/`.
@@ -73,7 +73,7 @@ flowchart TD
 
 ### Jalur A: Eksekusi Perintah CLI 1-Baris
 ```powershell
-cd D:\laragon\www\hyperion-vault
+cd D:\laragon\www\valora-vault
 
 # Jalankan provisioning dengan parameter lengkap:
 php scripts/provision_repo.php --name=proyek-klien --desc="Sistem ERP Proyek Klien" --visibility=private --fe-port=5174 --be-port=9005
@@ -104,6 +104,6 @@ Setelah wizard selesai:
 4. Lakukan Initial Commit:
    ```powershell
    git add .
-   git commit -m "feat: initial repository provisioned from hyperion-vault v8.0.0"
+   git commit -m "feat: initial repository provisioned from valora-vault v8.0.0"
    git push -u origin main
    ```

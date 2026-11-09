@@ -36,7 +36,7 @@
 
 | No | Judul Slide | Pokok Bahasan Utama | Estimasi Durasi |
 |:---|:---|:---|:---:|
-| **01** | **Judul & Pernyataan Visi** | Valora Agency OS v6.31.0, identitas PT Valora Digital Solusindo, ringkasan arsitektur Hyperion Vault. | 1.5 Menit |
+| **01** | **Judul & Pernyataan Visi** | Valora Agency OS v6.31.0, identitas PT Valora Digital Solusindo, ringkasan arsitektur Valora Vault. | 1.5 Menit |
 | **02** | **Latar Belakang & Masalah** | 4 titik kegagalan agensi: Scope creep liar, piutang tertahan, chat reporting tercecer, dan invoice manual tidak standar. | 2.5 Menit |
 | **03** | **Arsitektur Solusi Enterprise** | 3-Tier Enterprise: Laravel 13 SPA, Svelte 5 Native Runes, SQLite WAL, OWASP ASVS L2. | 2.0 Menit |
 | **04** | **Alur #1: Intake Klien** | Registrasi profil, kontrak *Development* vs *Maintenance*, target deadline, dan penunjukan Lead PIC tim. | 2.0 Menit |

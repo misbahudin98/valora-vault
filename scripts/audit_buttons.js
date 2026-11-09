@@ -59,6 +59,6 @@ const pqtm = scanButtonsInDir('D:/laragon/www/yayasan-pqtm/frontend/src');
 console.log('SIM PQTM buttons:', pqtm.totalButtons, 'issues:', pqtm.issues.length);
 if (pqtm.issues.length > 0) console.log(JSON.stringify(pqtm.issues, null, 2));
 
-const hyperion = scanButtonsInDir('D:/laragon/www/hyperion-vault/frontend/src');
-console.log('Hyperion Vault buttons:', hyperion.totalButtons, 'issues:', hyperion.issues.length);
-if (hyperion.issues.length > 0) console.log(JSON.stringify(hyperion.issues, null, 2));
+const valora = scanButtonsInDir('D:/laragon/www/valora-vault/frontend/src');
+console.log('Valora Vault buttons:', valora.totalButtons, 'issues:', valora.issues.length);
+if (valora.issues.length > 0) console.log(JSON.stringify(valora.issues, null, 2));

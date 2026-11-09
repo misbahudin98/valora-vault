@@ -1,5 +1,5 @@
 # Standar Kuartet Penemuan: SEO, AEO, GEO, dan AIO (seo_aeo_geo_aio_standards.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Rujukan:** Princeton University GEO (Aggarwal et al., 2023), Answer.ai llms.txt (Jeremy Howard, 2024), Google Search Central Core Web Vitals (2024/2026), Schema.org W3C Standards.
 
 ---
@@ -147,7 +147,7 @@ Untuk model AI yang membutuhkan dokumentasi lengkap dalam satu berkas bersih:
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Hyperion Vault",
+  "name": "Valora Vault",
   "operatingSystem": "Web, Linux, Windows, macOS",
   "applicationCategory": "BusinessApplication",
   "offers": {

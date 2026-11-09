@@ -62,7 +62,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
 
 ### A. Latar Belakang & Ruang Lingkup Sinkronisasi
 1. **Penyelarasan Standar UI/UX Kelas Dunia Lintas Repositori:**
-   - Menyelaraskan seluruh invarian desain baku (Dieter Rams, Edward Tufte, Adam Wathan/Refactoring UI, Robert Bringhurst, Steven Hoober/Apple HIG, dan Nielsen Norman Group) ke repositori induk `hyperion-vault`.
+   - Menyelaraskan seluruh invarian desain baku (Dieter Rams, Edward Tufte, Adam Wathan/Refactoring UI, Robert Bringhurst, Steven Hoober/Apple HIG, dan Nielsen Norman Group) ke repositori induk `valora-vault`.
    - Mengatasi 5 penyakit antarmuka umum (tampilan terlalu besar/bloated, tampilan terlalu penuh dan sesak, pemuatan elemen asimetris/tidak proporsional, masalah kegagalan responsivitas mobile, dan tampilan kurang estetik/klise visual AI).
 2. **Audit Menyeluruh Keterpaduan Dokumen Tata Kelola (Zero-Overlap & Anti-Regresi):**
    - Melakukan pengecekan ketat pada seluruh berkas `.md`, `llms.txt`, direktori aturan `.agents/rules/`, dan direktori keahlian `.agents/skills/` agar tidak terjadi tumpang tindih (*zero duplicate overlap*), inkonsistensi nomor invarian, atau potensi masalah baru di masa depan.
@@ -129,7 +129,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
    - Memperbarui `doc/software_design_standards.md` (Seksi 5.6), `doc/design.md` (Seksi 22), dan `llms.txt` (Golden Invariant 41 `[INV-UI-05]`).
    - Verifikasi lulus 6/6 skill integritas tanpa broken link via `audit-skills-integrity.ps1`.
 
-### B. Audit Menyeluruh & Refaktorisasi Antarmuka UI (Hyperion Vault)
+### B. Audit Menyeluruh & Refaktorisasi Antarmuka UI (Valora Vault)
 1. **Landing Page (`frontend/src/routes/+page.svelte`):**
    - Menghapus 2 lingkaran orbs raksasa `blur-3xl` (gradasi ungu/biru) yang mengotori viewport latar belakang.
    - Menggantikan dengan latar arsitektural berpola grid halus berpresisi tinggi (`bg-[linear-gradient(to_right,...)]`) dan pendaran radial mikro statis yang elegan.
@@ -165,7 +165,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
    - **Robert Bringhurst & Ellen Lupton (*The Elements of Typographic Style* & *Thinking with Type*):** Menetapkan batas panjang baris ideal (*optimal measure*) 45–75 karakter per baris (CPL), skala modular tipografi, dan kewajiban `font-mono` untuk angka, keuangan, dan data tabular teknis.
    - **W3C WCAG 2.2 AAA & Apple HIG:** Memastikan rasio kontras teks $\ge 4.5:1$ (AA) s/d $7:1$ (AAA), target sentuh ergonomis $\ge 44 \times 44\text{px}$, dan cincin fokus keyboard visual.
    - **Living Industry Benchmarks (Linear.app, Vercel Geist, Stripe Dashboard):** Standar SaaS modern dengan border 1px lembut (*subtle hairline*), bayangan mikro `shadow-2xs`, dan tema obsidian yang tenang.
-2. **Harmonisasi Aturan SSoT di Kedua Repositori (`hyperion-vault` & `yayasan-pqtm`):**
+2. **Harmonisasi Aturan SSoT di Kedua Repositori (`valora-vault` & `yayasan-pqtm`):**
    - Mengadopsi Invarian Sistem `ELEGANT_MINIMALISM_AND_ACCESSIBILITY` pada `AGENTS.md`, Rule 13 pada `GEMINI.md`, Rule 15 pada `.agents/rules/universal_invariants.md`, dan `[INV-UI-04]` pada `llms.txt`.
    - Mengintegrasikan rujukan kanonikal ke `doc/software_design_standards.md` (Seksi 5.5 & Bibliografi), `doc/design.md` (Seksi 21), `doc/prompt.feature.md`, dan matriks evaluasi komponen di `.agents/skills/discovery-architect/`.
 
@@ -215,7 +215,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
    - Mengharuskan setiap pemanggilan komponen `DataTable.svelte` mengimplementasikan 3 snippet lengkap: `{#snippet header()}`, `{#snippet row(item, idx)}`, dan `{#snippet card(item, idx)}`.
    - Menstandarkan anatomi kartu mobile: Hairline border 1px (`border-slate-200/80 dark:border-slate-800/80`), `shadow-2xs`, padding kompak `p-2.5`, micro-actions `min-h-[30px] px-2.5 py-1 text-[11px]`, dan grid metadata 2-kolom.
 
-### B. Implementasi Refaktorisasi Zero-Regression di Hyperion Vault
+### B. Implementasi Refaktorisasi Zero-Regression di Valora Vault
 1. **Modul Pengguna (`frontend/src/routes/admin/users/+page.svelte`):**
    - Menambahkan implementasi `{#snippet card(u, idx)}` lengkap dengan avatar inisial, email, pill status akun, badge multi-role, versi token, dan 4 tombol aksi ibu jari (Edit, Tangguhkan/Aktifkan, Cabut Sesi, Hapus Akun).
 2. **Modul Sesi Aktif (`frontend/src/routes/admin/sessions/+page.svelte`):**
@@ -239,7 +239,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
    - Setiap prompt koding, perbaikan bug, atau refaktorisasi WAJIB menjamin 0 bug baru dan 0 efek samping regresi terhadap fitur yang sedang aktif berjalan.
    - Wajib lolos validasi otomatis 100% pada php artisan test tests/Feature dan npm run build sebelum menyelesaikan setiap giliran kerja.
 
-### B. Harmonisasi Berkas Lintas Arsitektur Hyperion Vault
+### B. Harmonisasi Berkas Lintas Arsitektur Valora Vault
 - Tersinkronisasi penuh pada: AGENTS.md, GEMINI.md, llms.txt, .agents/rules/, .agents/skills/, doc/prompt.feature.md, dan doc/changes.md.
 
 ---
@@ -274,7 +274,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
    - Penambahan komponen `MobileThumbDock.svelte` pada viewport bawah mobile untuk navigasi 0-scroll (*Beranda, Segarkan, Menu*).
 
 ### D. Verifikasi & Pengujian
-- **PHPUnit Tests (`hyperion-vault`):** 21 passed (298 assertions) — 100% Green.
+- **PHPUnit Tests (`valora-vault`):** 21 passed (298 assertions) — 100% Green.
 - **PHPUnit Tests (`yayasan-pqtm`):** 81 passed (1038 assertions) — 100% Green.
 - **Security Posture Audit (`audit-security-posture.ps1`):** 10 / 10 Checkpoints Lulus (100% Score) di kedua repositori.
 - **Skills Integrity Audit (`audit-skills-integrity.ps1`):** 5 / 5 Skills Lolos Validasi (100% Valid) di kedua repositori.
@@ -323,7 +323,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
    - Membersihkan Blueprint Studio (`frontend/src/routes/admin/studio/+page.svelte`) dari tombol hardcoded `Preset Notaris Irwan Baddu`, pemanggil `handleLoadNotarisPreset()`, serta teks subtitle spesifik.
    - Mengembalikan subtitle ke definisi generic enterprise: *"Architect Studio: Analisis brief mentah, kelola CRUD modul & role, simulasikan living mockup sesuai kolom ERD, dan ekspor kontrak SDD."*
 2. **Purifikasi State Scoping Deterministik (`frontend/src/lib/state/scoping.svelte.js`):**
-   - Mengembalikan konfigurasi proyek default ke template murni *Hyperion Enterprise Ecosystem / Hyperion Vault Core Starter Kit*.
+   - Mengembalikan konfigurasi proyek default ke template murni *Valora Enterprise Ecosystem / Valora Vault Core Starter Kit*.
    - Mengembalikan 4 modul inti starter kit (`01 Master Tata Kelola Akun & RBAC`, `02 Audit Forensik Sesi Multi-Perangkat`, `03 Telemetri Sistem & Health Monitor`, `04 Observabilitas Log & Maintenance Mode`).
    - Menghilangkan preset `notaris_ppat` dan menetralkan nama entitas preset yayasan ke nama generik.
 3. **Pembersihan Matriks Hak Akses (`backend/config/permissions.php`):**
@@ -376,13 +376,13 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
    - Mendokumentasikan protokol pada [`.agents/rules/execution_protocol.md`](../.agents/rules/execution_protocol.md).
 
 4. **Fase 4: Multi-Repo Audit, Penyelarasan Aturan & SemVer 2.0.0 Lockstep:**
-   - Menyinkronkan dokumen aturan (`.agents/rules/universal_invariants.md`, `GEMINI.md`, `AGENTS.md`, dan 5 Golden Invariants `llms.txt`) ke seluruh repositori aktif (`hyperion-vault`, `valora-vault`, dan `yayasan-pqtm`).
+   - Menyinkronkan dokumen aturan (`.agents/rules/universal_invariants.md`, `GEMINI.md`, `AGENTS.md`, dan 5 Golden Invariants `llms.txt`) ke seluruh repositori aktif (`valora-vault`, `valora-vault`, dan `yayasan-pqtm`).
    - Menyelaraskan SemVer 2.0.0 lockstep pada 3 repositori:
-     * `hyperion-vault`: v6.31.0 (9 berkas & 5 modul 100% OK).
+     * `valora-vault`: v6.31.0 (9 berkas & 5 modul 100% OK).
      * `valora-vault`: v1.0.0 (9 berkas & 7 modul 100% OK).
      * `yayasan-pqtm`: v6.32.0 (seluruh berkas & 6 modul 100% OK).
    - Memverifikasi pengujian backend & kompilasi frontend bebas cacat:
-     * `hyperion-vault`: PHPUnit 21 passed (298 assertions), Static Build 0 warning a11y.
+     * `valora-vault`: PHPUnit 21 passed (298 assertions), Static Build 0 warning a11y.
      * `valora-vault`: PHPUnit 21 passed (314 assertions).
      * `yayasan-pqtm`: PHPUnit 81 passed (1035 assertions).
 
@@ -442,7 +442,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
      - `frontend/src/lib/data/provinces.json` & `frontend/src/lib/data/regencies.json` (In-memory synchronous bundle)
      - Modul reusable `frontend/src/lib/services/wilayah.js` dan komponen `IndoRegionSelect.svelte` (100% Pure `<select>` untuk seluruh jenjang termasuk Desa).
 2. **Audit Zero Silent Failure & Verification Gates:**
-   - 59 tombol pada antarmuka Hyperion Vault terverifikasi 100% terikat reaktif (`onclick`, `submit`, `reset`), 0 issue.
+   - 59 tombol pada antarmuka Valora Vault terverifikasi 100% terikat reaktif (`onclick`, `submit`, `reset`), 0 issue.
    - PHPUnit Tests: 18/18 feature tests lulus 100% (250 assertions).
    - Frontend Svelte 5 Static Build: Exit code 0, 0 error, 0 a11y warning (@sveltejs/adapter-static).
 
@@ -464,7 +464,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
    - **Sinkronisasi AI Guides & Readme:** Memperbarui [AGENTS.md](../AGENTS.md), `CLAUDE.md`, [backend/README.md](../backend/README.md), dan [frontend/README.md](../frontend/README.md) di seluruh repositori untuk memastikan tidak ada file konfigurasi boilerplate yang tertinggal dan seluruh instruksi selaras.
 
 4. **Kepatuhan Mutlak SemVer 2.0.0:**
-   - Versi `hyperion-vault` dinaikkan secara atomik ke `v6.31.0` pada 9 berkas terkait: `README.md`, `package.json`, `frontend/package.json`, `doc/architecture.md`, `doc/design.md`, `doc/changes.md`, `llms.txt`, `backend/version.json`, dan `backend/app/Providers/AppServiceProvider.php`.
+   - Versi `valora-vault` dinaikkan secara atomik ke `v6.31.0` pada 9 berkas terkait: `README.md`, `package.json`, `frontend/package.json`, `doc/architecture.md`, `doc/design.md`, `doc/changes.md`, `llms.txt`, `backend/version.json`, dan `backend/app/Providers/AppServiceProvider.php`.
 
 5. **Penyelarasan Total `architecture.md` & `design.md` serta Ergonomi Baby Boomer UX:**
    - Menyempurnakan `doc/architecture.md` dan `doc/design.md` dengan standar paritas penuh: Ergonomi Baby Boomer UX (touch targets $\ge 44$px, inputs $\ge 44$px / 16px mobile anti auto-zoom, border 2px solid, callout guidance berikon emoji, badge wajib/opsional eksplisit, dan tombol aksi bawah deskriptif).
@@ -472,7 +472,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
    - Menyelaraskan atribut eksplisit `type="button"`, `aria-label`, dan status `disabled` pada seluruh tombol aksi tabel dan paginasi [DataTable.svelte](../frontend/src/lib/components/ui/DataTable.svelte).
 
 ### B. Quality Gates & Verifikasi
-- **PHPUnit Feature Tests:** 18/18 tests lulus 100% (250 assertions, 0 failures) di `hyperion-vault` dan 77/77 tests lulus 100% (963 assertions, 0 failures) di `yayasan-pqtm`.
+- **PHPUnit Feature Tests:** 18/18 tests lulus 100% (250 assertions, 0 failures) di `valora-vault` dan 77/77 tests lulus 100% (963 assertions, 0 failures) di `yayasan-pqtm`.
 - **Frontend Svelte 5 Static Build:** 100% Clean build (0 error, 0 a11y warning) di kedua repositori.
 - **Zero Silent Failure:** Seluruh event handler tombol terikat reaktif dengan visual feedback, disabling, dan error safeguard.
 
@@ -549,7 +549,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
 
 3. **Audit & Penyelarasan Google SEO Standards 2026:**
    - Menyematkan `<html lang="id">` dan `viewport-fit=cover` pada `app.html`.
-   - Melengkapi Open Graph dengan `og:site_name="Hyperion Vault"` dan `twitter:image`.
+   - Melengkapi Open Graph dengan `og:site_name="Valora Vault"` dan `twitter:image`.
    - Mengamankan seluruh rute internal (`/dashboard`, `/admin/dashboard`, `/admin/sessions`, `/admin/system`, `/admin/users`) dengan `<meta name="robots" content="noindex, nofollow" />` untuk mencegah pengindeksan data sensitif oleh mesin pencari.
    - Memperkaya halaman login (`/login`) dengan meta deskripsi dan `robots: index, follow`.
 
@@ -595,13 +595,13 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
 * **Evaluasi Teknis:** Indikator "FastCGI Online" sebelumnya di pojok kanan atas topbar diuji dan terbukti merupakan **badge statis murni** (tidak mencerminkan metrik koneksi soket real-time).
 * **Keputusan Arsitektur:** Menghapus badge tersebut dari [AppTopbar.svelte](../frontend/src/lib/components/layout/AppTopbar.svelte). Dalam standar enterprise UX, *vanity metrics* yang tidak reaktif dilarang karena memberi ilusi ketersediaan palsu kepada operator. Kesehatan FastCGI dipantau melalui probe monitor server sesungguhnya. Topbar kini bersih, minimalis, dan fungsional.
 
-### G. Mengapa `user@hyperion-vault.test` Sebelumnya Tampak Aktif Terus Menerus? (Q8)
-* **Akar Masalah:** Pada implementasi awal v5.1, [AdminSessionController.php](../backend/app/Http/Controllers/Api/V1/Admin/AdminSessionController.php) mengambil data dengan `User::where('is_active', true)->get()` sebagai placeholder sesi. Akibatnya, setiap user yang berstatus `is_active = true` (termasuk `user@hyperion-vault.test`) langsung ditampilkan di tabel sesi seolah-olah sedang aktif login.
+### G. Mengapa `user@valora-vault.test` Sebelumnya Tampak Aktif Terus Menerus? (Q8)
+* **Akar Masalah:** Pada implementasi awal v5.1, [AdminSessionController.php](../backend/app/Http/Controllers/Api/V1/Admin/AdminSessionController.php) mengambil data dengan `User::where('is_active', true)->get()` sebagai placeholder sesi. Akibatnya, setiap user yang berstatus `is_active = true` (termasuk `user@valora-vault.test`) langsung ditampilkan di tabel sesi seolah-olah sedang aktif login.
 * **Solusi Arsitektur v5.2:**
   1. Dibuat tabel registry sesi perangkat nyata `user_devices` ([migration](../backend/database/migrations/2026_09_24_161716_create_user_devices_table.php)) dan model [UserDevice.php](../backend/app/Models/UserDevice.php).
   2. Record `user_devices` **hanya diciptakan saat pengguna berhasil login** via `AuthController::login()` dan langsung **dihapus saat logout** via `AuthController::logout()`.
   3. Controller `AdminSessionController::index()` kini mengambil data langsung dari `UserDevice::with('user')->get()`.
-  4. Hasilnya: Saat hanya `admin@hyperion-vault.test` yang login, hanya sesi admin yang muncul di tabel. `user@hyperion-vault.test` tidak akan pernah muncul sampai pengguna tersebut benar-benar melakukan login.
+  4. Hasilnya: Saat hanya `admin@valora-vault.test` yang login, hanya sesi admin yang muncul di tabel. `user@valora-vault.test` tidak akan pernah muncul sampai pengguna tersebut benar-benar melakukan login.
 
 ### H. Pencabutan Sesi Spesifik per Device & Data Forensik Lengkap (Q9)
 * **Data Forensik Perangkat:** Setiap sesi yang tersimpan di `user_devices` mencatat rincian lengkap:
@@ -651,7 +651,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
      - `X-Content-Type-Options: nosniff` (mencegah MIME-sniffing exploit).
      - `X-Frame-Options: SAMEORIGIN` (mencegah serangan Clickjacking).
      - `Referrer-Policy: strict-origin-when-cross-origin` (mencegah kebocoran referer sensitif).
-  3. **Pembersihan Cookie Domain RFC 6265:** Fungsi `deleteCookie` di [auth.svelte.js](../frontend/src/lib/state/auth.svelte.js) disempurnakan untuk menghapus cookie baik pada host level maupun domain level (`.hyperion-vault.test` & `hyperion-vault.test`), memastikan tidak ada residu JWT cookie tertinggal saat logout.
+  3. **Pembersihan Cookie Domain RFC 6265:** Fungsi `deleteCookie` di [auth.svelte.js](../frontend/src/lib/state/auth.svelte.js) disempurnakan untuk menghapus cookie baik pada host level maupun domain level (`.valora-vault.test` & `valora-vault.test`), memastikan tidak ada residu JWT cookie tertinggal saat logout.
 * **Peningkatan Kecepatan Akses & Latensi:**
   1. **Zero Database Session I/O:** Mempertahankan `SESSION_DRIVER=file` di media penyimpanan SSD NVMe lokal, memangkas latensi query sesi dari 50ms – 2500ms menjadi **0.2ms – 0.8ms**.
   2. **SQLite WAL Concurrency:** Mode Write-Ahead Logging (`PRAGMA journal_mode = WAL;`) dan `busy_timeout = 5000` memungkinkan konkurensi pembacaan data tanpa terblokir saat terjadi transaksi penulisan.
@@ -660,7 +660,7 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
 
 ### M. Halaman Instalasi & Diagnostik Otomatis `install.php` (Constraint 9)
 * **Desain & Implementasi [install.php](../install.php):**
-  - Beroperasi dalam dua mode: **Antarmuka Web Modern** (`http://hyperion-vault.test/install.php`) dan **CLI Headless** (`php install.php install`).
+  - Beroperasi dalam dua mode: **Antarmuka Web Modern** (`http://valora-vault.test/install.php`) dan **CLI Headless** (`php install.php install`).
   - **Pemeriksaan Prasyarat Otomatis (13 Poin):** Versi PHP (>= 8.2), 7 ekstensi wajib (`pdo_sqlite`, `sqlite3`, `curl`, `mbstring`, `openssl`, `fileinfo`, `json`), 3 izin tulis folder (`storage`, `bootstrap/cache`, `database`), serta keberadaan dependensi `vendor` dan `node_modules`.
   - **Eksekusi Deterministik:** Otomatisasi penyalinan `.env`, pembangkitan `APP_KEY`, pembuatan berkas SQLite `database.sqlite`, eksekusi migrasi & seeding data default, serta pembuatan berkas proteksi `.installed`.
   - Terintegrasi langsung pada gateway [index.php](../index.php).
@@ -815,7 +815,7 @@ Seluruh komponen UI monolitik telah didekomposisi ke folder [src/lib/components/
    - **6 passed, 119 assertions (~1.2s)** di SQLite in-memory (`:memory:`).
    - Meliputi: Lifecycle Sanctum, CSRF 419, multiple roles, integritas JWT HMAC-SHA256, penolakan tampered cookie, role authorization 403, list users, create user, update user, delete user, penolakan hapus akun sendiri, penangguhan status, pencabutan sesi pengguna, pemantauan sesi aktif nyata, pencabutan sesi spesifik per device, auto-cleanup sesi kadaluarsa, dan pencabutan sesi global.
 2. **Playwright UAT Frontend ([auth.uat.spec.js](../frontend/tests/auth.uat.spec.js)):**
-   - **2 passed (47.1s)** di browser live `http://hyperion-vault.test`.
+   - **2 passed (47.1s)** di browser live `http://valora-vault.test`.
    - Meliputi: Validasi input 422, login 200, redirect admin dashboard, multiple roles badge, cookie session HttpOnly & signed JWT cookie, logout cleanup, route guard guest & regular user, standalone layout (tanpa sidebar pada landing page & login), eliminasi menu Beranda di sidebar, tabel data lazy chunking, CRUD pengguna via modal, penangguhan akun, verifikasi sesi aktif hanya menampilkan admin dan tidak menampilkan regular user yang belum login, pencabutan sesi per device, dan tombol auto-remove sesi kadaluarsa.
 3. **Ketersediaan phpMyAdmin:**
    - `http://localhost/phpmyadmin/` -> **HTTP 200 OK**.
@@ -824,12 +824,12 @@ Seluruh komponen UI monolitik telah didekomposisi ke folder [src/lib/components/
 
 ## 6. Audit & Penyempurnaan Lanjutan (Enterprise v5.4.0 Final)
 
-### A. Standarisasi Domain Laragon Default: `hyperion-vault.test` & Repositori `hyperion-vault`
+### A. Standarisasi Domain Laragon Default: `valora-vault.test` & Repositori `valora-vault`
 * **Latar Belakang:** Laragon secara bawaan mengonfigurasi format virtual host `{name}.test`. Menggunakan TLD `.org` sebelumnya menuntut konfigurasi manual tambahan di file `hosts` Windows dan berisiko konflik dengan domain publik nyata.
 * **Perubahan Terlaksana:**
-  1. Repositori GitHub resmi distandarisasi ke: `https://github.com/misbahudin98/hyperion-vault.git`.
-  2. Domain web lokal Nginx diselaraskan ke: `http://hyperion-vault.test` (dengan alias fallback `localhost` dan `127.0.0.1`).
-  3. Konfigurasi virtual host `D:\laragon\etc\nginx\sites-enabled\hyperion-vault.test.conf` diselaraskan untuk mengarah langsung ke `D:\laragon\www\hyperion-vault`.
+  1. Repositori GitHub resmi distandarisasi ke: `https://github.com/misbahudin98/valora-vault.git`.
+  2. Domain web lokal Nginx diselaraskan ke: `http://valora-vault.test` (dengan alias fallback `localhost` dan `127.0.0.1`).
+  3. Konfigurasi virtual host `D:\laragon\etc\nginx\sites-enabled\valora-vault.test.conf` diselaraskan untuk mengarah langsung ke `D:\laragon\www\valora-vault`.
   4. Backend `.env`, `.env.example`, `frontend/.env`, `frontend/.env.example`, `install.php`, `index.php`, dan seluruh test suite diperbarui deterministik.
 
 ### B. Evaluasi Arsitektur CSS Framework & Kompatibilitas Svelte 5
@@ -1009,7 +1009,7 @@ Seluruh komponen UI monolitik telah didekomposisi ke folder [src/lib/components/
   2. **Pencatatan Riwayat Versi (`.installed`):**
      - Berkas `.installed` kini menyimpan metadata versi (`version`), waktu pembaruan (`updated_at`), dan array riwayat `history` yang mencatat setiap pembaruan, versi asal, versi tujuan, eksekutor (CLI/Web), dan status.
   3. **Antarmuka Web Updater:**
-     - Mengakses `http://hyperion-vault.test/install.php` mendeteksi perbedaan versi antara `APP_VERSION` dan berkas `.installed`.
+     - Mengakses `http://valora-vault.test/install.php` mendeteksi perbedaan versi antara `APP_VERSION` dan berkas `.installed`.
      - Menampilkan kartu notifikasi pembaruan dan tombol **"Perbarui Sistem Sekarang (Safe Update)"**.
   4. **Endpoint API Versi (`GET /api/v1/admin/version`):**
      - Menyediakan endpoint terotentikasi bagi administrator untuk menginspeksi versi codebase, versi terpasang, status pembaruan, dan riwayat audit update.
@@ -1114,7 +1114,7 @@ Sesuai mandat penyempurnaan starter kit dari referensi produksi `D:\laragon\www\
 2. **Kinerja Pengiriman Aset Root Gateway:** Root `index.php` dan `.htaccess` diperkuat dengan pre-compressed Brotli (`.br`) & Gzip (`.gz`) delivery, conditional ETag 304, dan perlindungan berkas sensitif (`.env`, `.sqlite`, `.installed`, source code).
 3. **Konkurensi Database SQLite:** Penambahan `busy_timeout = 5000` dan `journal_mode = WAL` untuk mencegah insiden `database is locked` saat kueri konkuren.
 4. **Frontend Core & Aksesibilitas (Zero Silent Failure):** Integrasi sistem toast berbasis Runes (`toastState`), tema universal dual-mode (Daylight & Dark Obsidian) via Tailwind v4 `@custom-variant dark`, deduplikasi *in-flight request* pada API client, serta standarisasi seluruh tombol interaktif dengan atribut eksplisit `type="button"`.
-5. **Batasan Ruang Lingkup:** Seluruh modul domain spesifik milik `yayasan-pqtm` (Santri, Tahfidz, PKBM, Asrama, Rombel, Pegawai) **TIDAK DISALIN**, sehingga Hyperion Vault tetap murni sebagai template starter kit yang dapat digunakan ulang untuk beragam proyek enterprise berikutnya.
+5. **Batasan Ruang Lingkup:** Seluruh modul domain spesifik milik `yayasan-pqtm` (Santri, Tahfidz, PKBM, Asrama, Rombel, Pegawai) **TIDAK DISALIN**, sehingga Valora Vault tetap murni sebagai template starter kit yang dapat digunakan ulang untuk beragam proyek enterprise berikutnya.
 
 ### B. Rincian Pembaruan Teknis v6.30.0
 | Komponen | Berkas Terkait | Rekayasa Teknis & Perbaikan |
@@ -1189,7 +1189,7 @@ Sesuai mandat penyempurnaan starter kit dari referensi produksi `D:\laragon\www\
     ```
 
 ### E. Pemeliharaan Kemurnian Starter Kit
-* Menjaga Hyperion Vault 100% steril dari entitas khusus (non-starter), menjadikannya pondasi siap pakai untuk proyek enterprise apa pun di masa mendatang.
+* Menjaga Valora Vault 100% steril dari entitas khusus (non-starter), menjadikannya pondasi siap pakai untuk proyek enterprise apa pun di masa mendatang.
 
 ---
 
@@ -1204,7 +1204,7 @@ Sesuai mandat penyempurnaan starter kit dari referensi produksi `D:\laragon\www\
 
 ### B. Mesin Deployment SSH Enterprise (`deploy_ssh.sh` & `deploy_ssh.php`)
 * Mengakomodasi kebutuhan deployment jika developer diberikan akses terminal SSH / Cloud VPS:
-  1. **Mode Hardened OWASP (`--split`):** Mengisolasi seluruh kode backend, `.env`, SQLite, dan vendor di luar direktori publik web (`~/apps/hyperion-vault/backend/`). Hanya berkas statis Svelte 5 dan gateway `index.php` yang berada di `~/public_html/`. Kebal total dari celah pembacaan dokumen sensitif via HTTP.
+  1. **Mode Hardened OWASP (`--split`):** Mengisolasi seluruh kode backend, `.env`, SQLite, dan vendor di luar direktori publik web (`~/apps/valora-vault/backend/`). Hanya berkas statis Svelte 5 dan gateway `index.php` yang berada di `~/public_html/`. Kebal total dari celah pembacaan dokumen sensitif via HTTP.
   2. **Mode Standar (`--standard`):** Deployment satu direktori untuk VPS Nginx dedicated.
 * Menyediakan dua alat eksekusi:
   - [`deploy_ssh.sh`](../deploy_ssh.sh): Skrip automasi shell Bash yang dapat dijalankan langsung di server Linux atau disuntikkan via SSH pipeline (`ssh user@server 'bash -s' < deploy_ssh.sh`).

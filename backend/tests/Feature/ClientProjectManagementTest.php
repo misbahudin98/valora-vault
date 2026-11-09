@@ -19,7 +19,7 @@ class ClientProjectManagementTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Config::set('sanctum.stateful', ['valora-vault.test', 'hyperion-vault.test', 'template.org', 'localhost']);
+        Config::set('sanctum.stateful', ['valora-vault.test', 'template.org', 'localhost']);
         Config::set('session.driver', 'file');
     }
 

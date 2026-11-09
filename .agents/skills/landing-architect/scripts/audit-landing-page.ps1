@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Audits a Landing Page file (Svelte, HTML, PHP, MD) against Hyperion Vault 7 Golden Invariants.
+    Audits a Landing Page file (Svelte, HTML, PHP, MD) against Valora Vault 7 Golden Invariants.
 .DESCRIPTION
     Verifies Core Web Vitals readiness, SEO/AEO/GEO/AIO signals, schema.org presence,
     accessibility standards, motion design compliance, and anti-slop rules.
@@ -25,7 +25,7 @@ $content = Get-Content -Path $FilePath -Raw
 $fileName = Split-Path -Leaf $FilePath
 
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "  HYPERION VAULT: LANDING PAGE & GROWTH AUDIT ENGINE      " -ForegroundColor Cyan
+Write-Host "  VALORA VAULT: LANDING PAGE & GROWTH AUDIT ENGINE      " -ForegroundColor Cyan
 Write-Host "  Target File: $fileName                                  " -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 

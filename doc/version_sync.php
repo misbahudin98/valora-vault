@@ -1,6 +1,6 @@
 <?php
 /**
- * HYPERION VAULT — Automated Semantic Versioning & Documentation Sync Engine
+ * VALORA VAULT — Automated Semantic Versioning & Documentation Sync Engine
  *
  * SSoT Version Synchronizer across 8 files:
  * 1. backend/composer.json
@@ -25,7 +25,7 @@ declare(strict_types=1);
 $startTime = microtime(true);
 
 echo "=================================================================\n";
-echo "   🔄 HYPERION VAULT — SEMANTIC VERSION & DOC SYNC ENGINE        \n";
+echo "   🔄 VALORA VAULT — SEMANTIC VERSION & DOC SYNC ENGINE        \n";
 echo "=================================================================\n\n";
 
 $rootDir = dirname(__DIR__);
@@ -138,8 +138,8 @@ $fileDefinitions = [
     ],
     'doc/prompt.feature.md' => [
         'path' => $docPromptPath,
-        'regex' => '/\(Hyperion Vault v([0-9]+\.[0-9]+\.[0-9]+)\)/',
-        'replace' => fn($ver, $c) => preg_replace('/(\(Hyperion Vault v)[0-9]+\.[0-9]+\.[0-9]+(\))/', "\${1}{$ver}\${2}", $c)
+        'regex' => '/\(Valora Vault v([0-9]+\.[0-9]+\.[0-9]+)\)/',
+        'replace' => fn($ver, $c) => preg_replace('/(\(Valora Vault v)[0-9]+\.[0-9]+\.[0-9]+(\))/', "\${1}{$ver}\${2}", $c)
     ],
     'doc/feature.md' => [
         'path' => $docFeaturePath,

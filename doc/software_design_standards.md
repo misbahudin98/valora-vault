@@ -1,5 +1,5 @@
 # Cetak Biru Standar Perancangan Logika Bisnis, Basis Data, & UI/UX (software_design_standards.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Status:** Single Source of Truth (SSoT) — Standar Rekayasa Perangkat Lunak 3-Pilar  
 > **Target Audience:** Solution Architects, Lead Engineers, Database Administrators, UI/UX Engineers, AI Coding Agents
 
@@ -9,7 +9,7 @@
 
 Membangun perangkat lunak skala enterprise yang deterministik dan tahan terhadap regresi membutuhkan keselarasan mutlak antara apa yang dipikirkan pengguna (*mental model*), bagaimana aturan bisnis ditegakkan (*business logic*), dan bagaimana data disimpan secara andal (*persistence model*).
 
-Cetak biru ini menetapkan standar rekayasa perangkat lunak internasional di lingkungan Hyperion Vault dengan menyatukan **3 Pilar Desain Rekayasa**:
+Cetak biru ini menetapkan standar rekayasa perangkat lunak internasional di lingkungan Valora Vault dengan menyatukan **3 Pilar Desain Rekayasa**:
 1. **Pilar Logika Bisnis:** Menjamin bahwa aturan domain institusi dieksekusi secara benar, transaksional, aman dari celah otorisasi (BOLA), dan deterministik.
 2. **Pilar Basis Data:** Menjamin integritas referensial, bebas anomali redundansi (3NF), serta memiliki efisiensi kueri sub-50ms melalui indeks B-Tree yang tepat.
 3. **Pilar UI/UX & Kognisi Pengguna:** Menjamin antarmuka intuitif, mematuhi 10 heuristik Jakob Nielsen, aksesibel penuh (WCAG 2.2 AAA), dan bebas dari beban kognitif yang melelahkan.
@@ -22,7 +22,7 @@ Dokumen ini menjadi rujukan konseptual (*Tier 3*) yang menopang aturan sistem mu
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────┐
-│              SINTESIS STANDAR INTERNASIONAL TRIPLE-PILLAR HYPERION VAULT         │
+│              SINTESIS STANDAR INTERNASIONAL TRIPLE-PILLAR VALORA VAULT         │
 ├──────────────────────────────────────────────────────────────────────────────────┤
 │ 1. DOMAIN & LOGIKA    │ Eric Evans (DDD), Martin Fowler (PoEAA), W3C SCXML / FSM │
 │ 2. MODEL BASIS DATA   │ Edgar F. Codd (3NF), Markus Winand (SQL Indexing), Gray  │
@@ -120,7 +120,7 @@ ORDER BY tanggal DESC;
 ## 5. PILAR 3: ARSITEKTUR UI/UX & KOGNISI INTERAKSI PENGGUNA
 
 ### 5.1 10 Usability Heuristics (Jakob Nielsen / NN/g)
-Setiap antarmuka Svelte 5 di Hyperion Vault wajib diuji terhadap 10 heuristik usabilitas:
+Setiap antarmuka Svelte 5 di Valora Vault wajib diuji terhadap 10 heuristik usabilitas:
 1. **Visibility of System Status:** Indikator visual seketika saat proses berlangsung (Skeleton shimmer saat loading data, spinner ikon dan status `disabled` pada tombol submit).
 2. **Match Between System and Real World:** Bahasa dan ikonografi mencerminkan kegiatan nyata santri/pesantren, bukan nama tabel SQL atau kode error teknis.
 3. **User Control and Freedom:** Dukungan pembatalan aksi modal, penutupan via tombol `Escape` dan klik area luar (*backdrop*).
@@ -194,7 +194,7 @@ Tidak semua interaksi pengguna memerlukan rute halaman mandiri (`+page.svelte`):
    - **Mandat Elevasi Permukaan 3-Tier (L0/L1/L2):** Seluruh antarmuka wajib menerapkan L0 Kanvas teduh (`bg-slate-100/70` / `dark:bg-[#070b12]`), L1 Kartu Makro solid (`bg-white` / `dark:bg-slate-900/90` ber-border 1px presisi & `shadow-2xs`), dan L2 Elemen Mikro tersemat dengan kontras diferensiasi nyata.
    - **Ikon & Pemanis Tanpa Nilai:** Dilarang menempatkan ikon bintang/sparkle atau ornamen dekoratif khas AI generatif yang tidak membawa makna fungsi nyata bagi tugas pengguna.
 2. **Keaslian Karya & Human-Crafted Aesthetic:**
-   - **Palet Tonal Teredam Bermartabat (*Dignified Muted Tonal Palette*):** Utamakan monokrom elegan (Slate/Stone/Obsidian) dengan saturasi tenang yang dikombinasikan dengan tepat 1 warna aksen fungsional berkarakter (Emerald tajam di Yayasan PQTM, Indigo/Emerald di Hyperion Vault).
+   - **Palet Tonal Teredam Bermartabat (*Dignified Muted Tonal Palette*):** Utamakan monokrom elegan (Slate/Stone/Obsidian) dengan saturasi tenang yang dikombinasikan dengan tepat 1 warna aksen fungsional berkarakter (Emerald tajam di Yayasan PQTM, Indigo/Emerald di Valora Vault).
    - **Ritme Tipografi Berbobot (*Editorial Typographic Rhythm*):** Menggabungkan hirarki heading tegas, label mikro terukur, dan `font-mono` untuk seluruh angka, tanggal, dan data teknis.
    - **Tekstur Presisi:** Mengandalkan hairline border 1px yang renyah (`border border-slate-200/80 dark:border-slate-800/80`), micro shadows `shadow-2xs`, dan negative space yang lapang.
 3. **Harmoni Fungsionalitas & Zero Superfluous Elements (Ockham's Razor UI):**

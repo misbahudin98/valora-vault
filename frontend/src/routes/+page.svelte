@@ -38,27 +38,27 @@
 
 <svelte:head>
   <!-- Google SEO Standards 2026 -->
-  <title>Hyperion Vault - Platform Arsitektur Web Skalabilitas Tinggi | Laravel 13 Sanctum & Svelte 5</title>
+  <title>Valora Vault - Platform Arsitektur Web Skalabilitas Tinggi | Laravel 13 Sanctum & Svelte 5</title>
   <meta name="description" content="Platform enterprise fullstack dengan latensi P99 < 150ms, SLO 99.0%, multi-role RBAC, tamper-proof signed JWT cookie, dan optimasi konkurensi SQLite di Hostinger." />
-  <meta name="keywords" content="Hyperion Vault, Enterprise Fullstack, Laravel 13 Sanctum, Svelte 5 Runes, High Performance Web, P99 Latency, Multi-Role RBAC, SQLite Concurrency, Hostinger Premium" />
+  <meta name="keywords" content="Valora Vault, Enterprise Fullstack, Laravel 13 Sanctum, Svelte 5 Runes, High Performance Web, P99 Latency, Multi-Role RBAC, SQLite Concurrency, Hostinger Premium" />
   <meta name="author" content="Enterprise CTO & Engineering Team" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-  <link rel="canonical" href="http://hyperion-vault.test/" />
+  <link rel="canonical" href="http://valora-vault.test/" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="http://hyperion-vault.test/" />
-  <meta property="og:title" content="Hyperion Vault - Platform Arsitektur Web Skalabilitas Tinggi" />
+  <meta property="og:url" content="http://valora-vault.test/" />
+  <meta property="og:title" content="Valora Vault - Platform Arsitektur Web Skalabilitas Tinggi" />
   <meta property="og:description" content="Solusi arsitektur web modern anti-bottleneck dengan latensi P99 < 150ms, eliminasi MySQL connection exhaustion, dan keamanan multi-device." />
-  <meta property="og:image" content="http://hyperion-vault.test/og-cover.png" />
+  <meta property="og:image" content="http://valora-vault.test/og-cover.png" />
   <meta property="og:locale" content="id_ID" />
-  <meta property="og:site_name" content="Hyperion Vault" />
+  <meta property="og:site_name" content="Valora Vault" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Hyperion Vault - High Concurrency Fullstack Architecture" />
+  <meta name="twitter:title" content="Valora Vault - High Concurrency Fullstack Architecture" />
   <meta name="twitter:description" content="Latensi P99 < 150ms, SLO 99.0%, Multi-Role RBAC, Svelte 5 Runes & Laravel 13 Sanctum." />
-  <meta name="twitter:image" content="http://hyperion-vault.test/og-cover.png" />
+  <meta name="twitter:image" content="http://valora-vault.test/og-cover.png" />
 
   <!-- Structured Data JSON-LD (Schema.org Graph: WebApplication, WebSite, Organization, FAQPage for AEO) -->
   {@html `<script type="application/ld+json">
@@ -67,24 +67,24 @@
     "@graph": [
       {
         "@type": "Organization",
-        "@id": "http://hyperion-vault.test/#organization",
-        "name": "Hyperion Vault Engineering",
-        "url": "http://hyperion-vault.test/",
-        "logo": "http://hyperion-vault.test/favicon.svg",
+        "@id": "http://valora-vault.test/#organization",
+        "name": "Valora Vault Engineering",
+        "url": "http://valora-vault.test/",
+        "logo": "http://valora-vault.test/favicon.svg",
         "description": "Pusat Rekayasa Arsitektur Web Skalabilitas Tinggi Berbasis Svelte 5 dan Laravel 13 Sanctum."
       },
       {
         "@type": "WebSite",
-        "@id": "http://hyperion-vault.test/#website",
-        "url": "http://hyperion-vault.test/",
-        "name": "Hyperion Vault",
-        "publisher": { "@id": "http://hyperion-vault.test/#organization" }
+        "@id": "http://valora-vault.test/#website",
+        "url": "http://valora-vault.test/",
+        "name": "Valora Vault",
+        "publisher": { "@id": "http://valora-vault.test/#organization" }
       },
       {
         "@type": "WebApplication",
-        "@id": "http://hyperion-vault.test/#webapp",
-        "name": "Hyperion Vault Enterprise Starter Kit",
-        "url": "http://hyperion-vault.test/",
+        "@id": "http://valora-vault.test/#webapp",
+        "name": "Valora Vault Enterprise Starter Kit",
+        "url": "http://valora-vault.test/",
         "description": "Platform enterprise fullstack performa tinggi berbasis Laravel 13 Sanctum dan Svelte 5 Runes dengan latensi P99 < 150ms.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "All",
@@ -104,19 +104,19 @@
       },
       {
         "@type": "FAQPage",
-        "@id": "http://hyperion-vault.test/#faq",
+        "@id": "http://valora-vault.test/#faq",
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "Bagaimana Hyperion Vault mengatasi insiden MySQL Connection Exhaustion?",
+            "name": "Bagaimana Valora Vault mengatasi insiden MySQL Connection Exhaustion?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Hyperion Vault memisahkan raw session engine menggunakan SESSION_DRIVER=file di NVMe SSD sehingga beban koneksi database untuk sesi menjadi 0%, dan mengisolasi audit perangkat di tabel user_devices hanya saat login/logout."
+              "text": "Valora Vault memisahkan raw session engine menggunakan SESSION_DRIVER=file di NVMe SSD sehingga beban koneksi database untuk sesi menjadi 0%, dan mengisolasi audit perangkat di tabel user_devices hanya saat login/logout."
             }
           },
           {
             "@type": "Question",
-            "name": "Mengapa Hyperion Vault menggunakan Svelte 5 Runes dibandingkan React atau Vue?",
+            "name": "Mengapa Valora Vault menggunakan Svelte 5 Runes dibandingkan React atau Vue?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Svelte 5 Runes menggunakan sistem reaktivitas berbasis sinyal mikro tanpa kompilasi Virtual DOM, menghasilkan ukuran bundle JavaScript di bawah 45 kB dan latensi render sub-milidetik."
@@ -154,7 +154,7 @@
         </div>
         <div class="flex flex-col">
           <div class="flex items-center gap-1.5">
-            <span class="font-bold text-slate-900 dark:text-white text-sm sm:text-base tracking-tight font-display">Hyperion Vault</span>
+            <span class="font-bold text-slate-900 dark:text-white text-sm sm:text-base tracking-tight font-display">Valora Vault</span>
             <span class="text-[9px] px-1.5 py-0.5 rounded font-mono font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-800/60 hidden sm:inline-block">v6.31.0</span>
           </div>
           <span class="text-[10px] text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Enterprise Fullstack Engine</span>
@@ -316,7 +316,7 @@
               <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
             </div>
-            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400">cluster.hyperion-vault.test:80</span>
+            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400">cluster.valora-vault.test:80</span>
             <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 font-mono font-bold border border-emerald-300/80 dark:border-emerald-800/60">LIVE</span>
           </div>
 
@@ -515,7 +515,7 @@
   <footer class="border-t border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-950 py-8 text-center text-xs text-slate-500 dark:text-slate-400 mt-auto">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2">
-        <span class="font-bold text-slate-800 dark:text-slate-200">Hyperion Vault</span>
+        <span class="font-bold text-slate-800 dark:text-slate-200">Valora Vault</span>
         <span>•</span>
         <span>Arsitektur Enterprise CTO Indonesia (v6.31.0)</span>
       </div>

@@ -259,7 +259,7 @@
 </script>
 
 <svelte:head>
-  <title>{isAdmin ? 'Enterprise Dashboard' : 'Dashboard Akun'} — Hyperion Vault</title>
+  <title>{isAdmin ? 'Enterprise Dashboard' : 'Dashboard Akun'} — Valora Vault</title>
   <meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 

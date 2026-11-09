@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Audit Otomatis Kualitas Kode & Anti-Slop Hyperion Vault (Clean Code Auditor).
+    Audit Otomatis Kualitas Kode & Anti-Slop Valora Vault (Clean Code Auditor).
 .DESCRIPTION
     Memeriksa kepatuhan codebase terhadap standar:
     1. Anti-Placeholder: Ketiadaan // TODO, /* rest of code */, atau stub malas.

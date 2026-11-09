@@ -1,8 +1,8 @@
 # Universal Security & Hardening Invariants (.agents/rules/security_invariants.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standar Rujukan:** RFC 7807, RFC 9457, RFC 8725, RFC 6265bis, RFC 8446, RFC 9116, OWASP Top 10 (2021/2025), OWASP ASVS v4.0.3 (Level 2 Enterprise), NIST SP 800-63B, CIS Critical Security Controls v8, ISO/IEC 27001:2022 Annex A.8.
 
-Invarian ini adalah hukum pertahanan mutlak (*mandatory defensive invariants*) yang wajib divalidasi dan dipatuhi oleh seluruh AI agent, pengembang, dan skrip otomatisasi di seluruh repositori ekosistem Hyperion Vault.
+Invarian ini adalah hukum pertahanan mutlak (*mandatory defensive invariants*) yang wajib divalidasi dan dipatuhi oleh seluruh AI agent, pengembang, dan skrip otomatisasi di seluruh repositori ekosistem Valora Vault.
 
 ---
 
@@ -34,7 +34,7 @@ Invarian ini adalah hukum pertahanan mutlak (*mandatory defensive invariants*) y
   - Seluruh respons error HTTP (4xx & 5xx) wajib mematuhi format RFC 7807 / RFC 9457:
     ```json
     {
-      "type": "https://hyperion.vault/errors/validation-failed",
+      "type": "https://valora.vault/errors/validation-failed",
       "title": "Unprocessable Entity",
       "status": 422,
       "detail": "Data masukan formulir tidak memenuhi kriteria validasi.",

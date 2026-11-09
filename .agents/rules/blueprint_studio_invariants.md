@@ -8,7 +8,7 @@
 
 ## 1. PENDAHULUAN & PRINSIP UTAMA
 
-Sistem perancangan perangkat lunak Hyperion Vault mengadopsi metodologi **Specification-Driven Development (SDD)**. Untuk mencegah diskoneksi antara prototipe visual (Living Canvas) dan skema database (ERD), seluruh perancangan dan generasi kode WAJIB tunduk pada aturan sistem berikut.
+Sistem perancangan perangkat lunak Valora Vault mengadopsi metodologi **Specification-Driven Development (SDD)**. Untuk mencegah diskoneksi antara prototipe visual (Living Canvas) dan skema database (ERD), seluruh perancangan dan generasi kode WAJIB tunduk pada aturan sistem berikut.
 
 ```mermaid
 flowchart LR
@@ -63,7 +63,7 @@ Setiap elemen input atau kolom yang ditampilkan pada antarmuka Living Canvas WAJ
 ---
 
 ### [RULE-BP-04] HARMONISASI HUBUNGAN ANTAR MODUL & TABEL DATABASE
-Sistem Hyperion Vault bersifat modular namun terintegrasi erat. Dalam merancang modul dan tabel database baru:
+Sistem Valora Vault bersifat modular namun terintegrasi erat. Dalam merancang modul dan tabel database baru:
 
 1. **Format Hak Akses (RBAC Harmonization):**
    - Setiap aksi modul wajib memiliki permission code yang seragam dengan format: `<modul>.<aksi>` (contoh: `students.view`, `students.create`, `students.edit`, `students.delete`, `students.export`).

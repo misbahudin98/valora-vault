@@ -1,5 +1,5 @@
 # Matriks Audit Desain Fitur 3-Pilar (Triple-Pillar Feature Design Audit Matrix)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standar:** DDD (Evans), PoEAA (Fowler), 3NF (Codd), SQL Indexing (Winand), NN/g (Nielsen), Tidwell / Wroblewski (Mobile First), Hoober (Thumb Zone), WCAG 2.2 AAA  
 > **Status Kelulusan:** Wajib Skor $\ge 90\%$ (Minimal 11/12 Lulus) untuk lolos Review Gate
 

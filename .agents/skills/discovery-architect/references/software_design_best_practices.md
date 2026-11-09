@@ -1,12 +1,12 @@
 # Pedoman Praktik Terbaik Desain Perangkat Lunak Internasional (Software Design Best Practices)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standar Rujukan:** Eric Evans (DDD), Martin Fowler (PoEAA), Edgar F. Codd (3NF), Markus Winand (SQL Indexing), Jakob Nielsen (NN/g 10 Heuristics), Don Norman, Jenifer Tidwell, Luke Wroblewski (Mobile First), Ethan Marcotte (RWD), Steven Hoober (Thumb Zone), WCAG 2.2 AAA
 
 ---
 
 ## 1. PENDAHULUAN & RUANG LINGKUP
 
-Dokumen ini adalah buku panduan operasional (*technical reference manual*) bagi AI agent dan engineer di Hyperion Vault untuk merancang, memvalidasi, dan mengaudit spesifikasi fitur dari sudut pandang **3 Pilar Rekayasa Perangkat Lunak Modern**:
+Dokumen ini adalah buku panduan operasional (*technical reference manual*) bagi AI agent dan engineer di Valora Vault untuk merancang, memvalidasi, dan mengaudit spesifikasi fitur dari sudut pandang **3 Pilar Rekayasa Perangkat Lunak Modern**:
 1. **Pilar Logika Bisnis (Business Logic & Domain Architecture)**
 2. **Pilar Basis Data (Database Design & Relational Modeling)**
 3. **Pilar Antarmuka Pengguna (UI/UX Usability & Interaction Architecture)**

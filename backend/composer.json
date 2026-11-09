@@ -1,9 +1,9 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "hyperion-vault/backend",
+    "name": "valora-vault/backend",
     "version": "6.31.0",
     "type": "project",
-    "description": "Enterprise Fullstack High-Concurrency Architecture Template (Laravel 13 Sanctum & Svelte 5)",
+    "description": "Valora Vault - Digital Agency Operating System & Invoicing Platform (Laravel 13 & Svelte 5)",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {

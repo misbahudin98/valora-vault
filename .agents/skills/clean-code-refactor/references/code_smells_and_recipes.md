@@ -1,12 +1,12 @@
 # Katalog Code Smells & Resep Refaktor Modern (code_smells_and_recipes.md)
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standar Rujukan:** Martin Fowler (2nd Ed, Modern JS/Functional), Kent Beck (*Tidy First?* 2023), Sandi Metz (*99 Bottles of OOP* 2nd Ed 2020), Vlad Khononov (*Learning DDD* 2021)
 
 ---
 
 ## 1. TUJUAN & FILOSOFI REFAKTORISASI
 
-Refaktorisasi di Hyperion Vault bukan tentang menulis ulang seluruh sistem dari nol, melainkan **langkah-langkah mikro terukur (*empirical micro-steps*)** untuk memperbaiki struktur internal tanpa mengubah perilaku eksternal (*Zero-Regression*).
+Refaktorisasi di Valora Vault bukan tentang menulis ulang seluruh sistem dari nol, melainkan **langkah-langkah mikro terukur (*empirical micro-steps*)** untuk memperbaiki struktur internal tanpa mengubah perilaku eksternal (*Zero-Regression*).
 
 ```mermaid
 flowchart TD

@@ -16,14 +16,14 @@ class AdminStudioTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Config::set('sanctum.stateful', ['valora-vault.test', 'hyperion-vault.test', 'template.org', 'localhost']);
+        Config::set('sanctum.stateful', ['valora-vault.test', 'template.org', 'localhost']);
         Config::set('session.driver', 'file');
     }
 
     public function test_admin_can_list_existing_feature_specs(): void
     {
         $admin = User::factory()->create([
-            'email' => 'admin@hyperion-vault.test',
+            'email' => 'admin@valora-vault.test',
             'role' => ['admin'],
             'is_active' => true,
         ]);
@@ -42,7 +42,7 @@ class AdminStudioTest extends TestCase
     public function test_non_admin_cannot_access_studio(): void
     {
         $user = User::factory()->create([
-            'email' => 'user@hyperion-vault.test',
+            'email' => 'user@valora-vault.test',
             'role' => ['user'],
             'is_active' => true,
         ]);
@@ -55,7 +55,7 @@ class AdminStudioTest extends TestCase
     public function test_admin_can_generate_and_save_spec_atomically(): void
     {
         $admin = User::factory()->create([
-            'email' => 'admin@hyperion-vault.test',
+            'email' => 'admin@valora-vault.test',
             'role' => ['admin'],
             'is_active' => true,
         ]);
@@ -101,7 +101,7 @@ class AdminStudioTest extends TestCase
     public function test_blueprint_studio_form_request_validations(): void
     {
         $admin = User::factory()->create([
-            'email' => 'studio_validator@hyperion-vault.test',
+            'email' => 'studio_validator@valora-vault.test',
             'role' => ['admin'],
             'is_active' => true,
         ]);

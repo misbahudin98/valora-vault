@@ -176,7 +176,7 @@
 </script>
 
 <svelte:head>
-  <title>Manajemen Sesi & Perangkat — Hyperion Vault</title>
+  <title>Manajemen Sesi & Perangkat — Valora Vault</title>
   <meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 

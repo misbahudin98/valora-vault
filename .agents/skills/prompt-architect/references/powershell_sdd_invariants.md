@@ -1,5 +1,5 @@
 # Distilasi Pembelajaran Siklus PowerShell & Invariant SDD
-> **Sumber:** Rekaman Eksekusi Bersama, Evaluasi PowerShell Terminal, dan Invariant Engine Hyperion Vault v8.0.0.
+> **Sumber:** Rekaman Eksekusi Bersama, Evaluasi PowerShell Terminal, dan Invariant Engine Valora Vault v8.0.0.
 
 ---
 

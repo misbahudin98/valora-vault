@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Valora Vault'),
+    'seed_demo_clients' => env('SEED_DEMO_CLIENTS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +53,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://valora-vault.test'),
 
     /*
     |--------------------------------------------------------------------------

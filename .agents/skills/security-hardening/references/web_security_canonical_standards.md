@@ -1,5 +1,5 @@
 # Kompendium Standar Keamanan Web Kanonikal Internasional
-> **Engine:** Hyperion Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
+> **Engine:** Valora Vault v6.31.0 / v8.0.0 SDD-Enterprise-Deterministic  
 > **Standar Rujukan:** IETF RFCs (7807, 8725, 6265bis, 8446, 9116, 9457), OWASP Top 10 (2021/2025), OWASP ASVS v4.0.3, NIST SP 800-63B, CIS Critical Security Controls v8, ISO/IEC 27001:2022 Annex A.8, SOC 2 Type II.
 
 ---
@@ -14,7 +14,7 @@
   Content-Type: application/problem+json
 
   {
-    "type": "https://hyperion.vault/errors/forbidden-access",
+    "type": "https://valora.vault/errors/forbidden-access",
     "title": "Forbidden",
     "status": 403,
     "detail": "Anda tidak memiliki wewenang otorisasi Policy untuk mengakses sumber daya ini.",
@@ -61,20 +61,20 @@
 ### 1.5 RFC 9116: A File Format to Aid in Security Vulnerability Disclosure (security.txt)
 - Setiap sistem produksi wajib menempatkan berkas teks pada path `/.well-known/security.txt`:
   ```text
-  Contact: mailto:security@hyperion-vault.test
+  Contact: mailto:security@valora-vault.test
   Expires: 2027-12-31T23:59:59.000Z
   Preferred-Languages: id, en
-  Canonical: http://hyperion-vault.test/.well-known/security.txt
-  Policy: http://hyperion-vault.test/security-policy
+  Canonical: http://valora-vault.test/.well-known/security.txt
+  Policy: http://valora-vault.test/security-policy
   ```
 
 ---
 
 ## 2. OWASP ASVS (APPLICATION SECURITY VERIFICATION STANDARD) LEVEL 2
 
-Hyperion Vault menargetkan kepatuhan **Level 2 (Applications that handle sensitive transactions / PII)**:
+Valora Vault menargetkan kepatuhan **Level 2 (Applications that handle sensitive transactions / PII)**:
 
-| Domain Verifikasi ASVS | Kontrol Kunci | Implementasi di Hyperion Vault |
+| Domain Verifikasi ASVS | Kontrol Kunci | Implementasi di Valora Vault |
 | :--- | :--- | :--- |
 | **V1: Architecture** | Pembagian zona kepercayaan dan kontrol BOLA | Laravel Middleware (`auth:sanctum`, `EnsureRole`, `EnsurePermission`) + Laravel Policy |
 | **V2: Authentication** | Ketahanan sandi, rate limiting, anti brute-force | Argon2id hashing, throttle middleware 5 req/min, account lockout |
