@@ -1,5 +1,5 @@
-# Hyperion Vault - Master Feature Index (v6.31.0)
-> **Master Ringkasan Fitur Inti Starter Kit & Indeks Spesifikasi Modular.**  
+# Valora Vault / Valora Agency OS - Master Feature Index (v6.31.0)
+> **Master Ringkasan Fitur Inti Valora Agency OS & Indeks Spesifikasi Modular.**  
 > Detail spesifikasi mendalam per domain fungsional tersimpan terstruktur di folder [`doc/features/*.md`](features/).  
 > Panduan praktis inisiasi dan spawning proyek baru tersedia di [`doc/developer_quickstart_guide.md`](developer_quickstart_guide.md).
 
@@ -23,7 +23,10 @@
 
 ## 1. PRODUCT REQUIREMENTS DOCUMENT (PRD) & OBJEKTIF BISNIS
 
-Hyperion Vault adalah *enterprise fullstack starter kit* siap produksi yang dibangun untuk memecahkan tiga tantangan utama aplikasi web modern di lingkungan shared hosting dan VPS:
+**Valora Vault** adalah sistem operasi agensi perangkat lunak (*Enterprise Agency Operating System*) siap produksi milik **PT Valora Digital Solusindo**, dibangun di atas arsitektur performa tinggi Hyperion Vault. Platform ini memadukan otomasi intake proyek klien, estimasi valuasi kontrak dinamis, pelacakan progres modular 12 kapabilitas, penagihan invoice & kuitansi pembayaran resmi, serta penyelesaian 3 tantangan utama aplikasi web modern:
+1. **Eliminasi MySQL Connection Exhaustion (Error 1040):** Memindahkan penyimpanan session mentah dari database ke NVMe file (`SESSION_DRIVER=file`), menyisakan 0% beban koneksi database untuk siklus request sesi.
+2. **Keamanan Sesi Multi-Perangkat & POIN Defense:** Menyediakan audit forensik perangkat fisik (`user_devices`), isolasi sesi multi-device dengan kuota aman (maksimal 3 perangkat), penangkal pemalsuan token via Signed HMAC-SHA256 JWT, serta penghancuran fisik file sesi (`@unlink`) untuk mencegah serangan *PHP Object Injection* (POIN).
+3. **Reaktivitas UI Sub-Milidetik:** Menggabungkan kompilasi statis Svelte 5 Runes (`@sveltejs/adapter-static`), *in-flight request collapsing*, memori cache 30 detik pada API client, serta penyaringan instan di memori peramban tanpa query server per ketikan tombol (*zero keystroke latency*).
 1. **Eliminasi MySQL Connection Exhaustion (Error 1040):** Memindahkan penyimpanan session mentah dari database ke NVMe file (`SESSION_DRIVER=file`), menyisakan 0% beban koneksi database untuk siklus request sesi.
 2. **Keamanan Sesi Multi-Perangkat & POIN Defense:** Menyediakan audit forensik perangkat fisik (`user_devices`), isolasi sesi multi-device dengan kuota aman (maksimal 3 perangkat), penangkal pemalsuan token via Signed HMAC-SHA256 JWT, serta penghancuran fisik file sesi (`@unlink`) untuk mencegah serangan *PHP Object Injection* (POIN).
 3. **Reaktivitas UI Sub-Milidetik:** Menggabungkan kompilasi statis Svelte 5 Runes (`@sveltejs/adapter-static`), *in-flight request collapsing*, memori cache 30 detik pada API client, serta penyaringan instan di memori peramban tanpa query server per ketikan tombol (*zero keystroke latency*).

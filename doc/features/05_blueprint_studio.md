@@ -168,7 +168,7 @@ erDiagram
 ---
 
 ## 7. TEST CONTRACT (PHPUNIT 100% PASS)
-- **File Uji:** [`backend/tests/Feature/AdminStudioTest.php`](file:///D:/laragon/www/hyperion-vault/backend/tests/Feature/AdminStudioTest.php)
+- **File Uji:** [`backend/tests/Feature/AdminStudioTest.php`](../../backend/tests/Feature/AdminStudioTest.php)
 - **Skenario Uji:**
   1. `test_admin_can_list_existing_feature_specs` $\implies$ HTTP 200.
   2. `test_non_admin_cannot_access_studio` $\implies$ HTTP 403 Forbidden.

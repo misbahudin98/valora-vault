@@ -163,7 +163,7 @@ Landing page Hyperion Vault bukan sekadar halaman statis, melainkan representasi
 ```
 
 ### C. Maskot AI Interaktif 'Volt'
-Komponen [`frontend/src/lib/components/features/mascot/ArchitectMascot.svelte`](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/features/mascot/ArchitectMascot.svelte) berfungsi sebagai pemandu interaktif yang memanusiakan sistem enterprise:
+Komponen [`frontend/src/lib/components/features/mascot/ArchitectMascot.svelte`](../frontend/src/lib/components/features/mascot/ArchitectMascot.svelte) berfungsi sebagai pemandu interaktif yang memanusiakan sistem enterprise:
 - **Konstruksi Murni Vektor:** Dibuat 100% menggunakan SVG inline dan animasi CSS `@keyframes` (nol aset gambar raster eksternal, 0 KB beban HTTP request tambahan).
 - **4 Ekspresi Reaktif:**
   - `happy`: Kondisi istirahat santai, antena berdenyut lembut.
@@ -186,10 +186,10 @@ Landing page wajib mengimplementasikan struktur semantik HTML5 murni:
 Gunakan panduan teknis berikut untuk menyesuaikan tampilan sistem sesuai identitas visual klien atau brand korporat Anda:
 
 ### A. Kustomisasi Tampilan Wizard Instalasi (`install.php`)
-File [`install.php`](file:///D:/laragon/www/hyperion-vault/install.php) adalah wizard instalasi & pembaruan mandiri (*self-contained*). Seluruh styling terkapsulasi di dalamnya tanpa dependensi CSS luar.
+File [`install.php`](../install.php) adalah wizard instalasi & pembaruan mandiri (*self-contained*). Seluruh styling terkapsulasi di dalamnya tanpa dependensi CSS luar.
 
 1. **Mengubah Tema Warna Installer (CSS Variables):**
-   Buka [`install.php`](file:///D:/laragon/www/hyperion-vault/install.php) baris 396–412 pada blok `<style>`:
+   Buka [`install.php`](../install.php) baris 396–412 pada blok `<style>`:
    ```css
    :root {
        --bg: #090d16;                  /* Ganti latar belakang, misal: #0a1128 (Midnight Navy) */
@@ -201,13 +201,13 @@ File [`install.php`](file:///D:/laragon/www/hyperion-vault/install.php) adalah w
    }
    ```
 2. **Mengganti Logo & Ikon Header Installer:**
-   - Cari blok `.logo-box` di [`install.php`](file:///D:/laragon/www/hyperion-vault/install.php) sekitar baris 445–455.
+   - Cari blok `.logo-box` di [`install.php`](../install.php) sekitar baris 445–455.
    - Ganti elemen `<svg>` dengan logo vektor SVG perusahaan Anda.
 3. **Mengubah Judul & Teks Sambutan:**
    - Buka baris 393 untuk `<title>`.
    - Buka baris 452 untuk tag `<h1>Hyperion Vault Setup Wizard</h1>` dan subteks deskripsi di bawahnya.
 4. **Menambah Pemeriksaan Diagnostik Kustom:**
-   - Pada method `runDiagnostics()` di [`install.php`](file:///D:/laragon/www/hyperion-vault/install.php), tambahkan dependensi PHP atau modul kustom klien:
+   - Pada method `runDiagnostics()` di [`install.php`](../install.php), tambahkan dependensi PHP atau modul kustom klien:
      ```php
      $requiredExtensions['gd'] = 'Manipulasi Gambar & Avatar';
      $requiredExtensions['curl'] = 'Integrasi Payment Gateway';
@@ -215,14 +215,14 @@ File [`install.php`](file:///D:/laragon/www/hyperion-vault/install.php) adalah w
 
 ### B. Kustomisasi Tampilan Landing Page (`frontend/src/routes/+page.svelte`)
 1. **Mengadopsi Salah Satu dari 5 Preset Desain:**
-   Jika klien menginginkan tema visual tertentu, sesuaikan kelas latar belakang dan warna di [`frontend/src/routes/+page.svelte`](file:///D:/laragon/www/hyperion-vault/frontend/src/routes/+page.svelte):
+   Jika klien menginginkan tema visual tertentu, sesuaikan kelas latar belakang dan warna di [`frontend/src/routes/+page.svelte`](../frontend/src/routes/+page.svelte):
    - **Preset 1 (Neo-Enterprise Dark - Default):** `bg-[#090d16] text-slate-100`, aksen Indigo `#4f46e5` & Cyan `#06b6d4`.
    - **Preset 2 (Clean Fintech Light):** `bg-slate-50 text-slate-900`, kartu `bg-white border-slate-200`, aksen Cobalt Blue `#1d4ed8` & Emerald `#059669`.
    - **Preset 3 (Swiss Monochrome):** `bg-white text-black`, kartu `bg-white border-black`, font editorial minimalis tanpa gradien warna.
    - **Preset 4 (Cyberpunk DevTool):** `bg-[#080c14] text-emerald-400`, aksen Terminal Green `#10b981` & Amber `#f59e0b`.
    - **Preset 5 (Midnight Navy):** `bg-[#0a1128] text-slate-100`, kartu `bg-[#101b3b]`, aksen Sapphire Blue `#3b82f6` & Gold `#f59e0b`.
 2. **Mengganti Maskot AI Volt dengan Mockup Produk:**
-   - Pada [`frontend/src/routes/+page.svelte`](file:///D:/laragon/www/hyperion-vault/frontend/src/routes/+page.svelte), cari tag `<ArchitectMascot />`.
+   - Pada [`frontend/src/routes/+page.svelte`](../frontend/src/routes/+page.svelte), cari tag `<ArchitectMascot />`.
    - Jika ingin diganti dengan gambar tangkapan layar antarmuka dashboard, gantikan dengan:
      ```svelte
      <div class="relative rounded-2xl border border-slate-700/60 overflow-hidden shadow-2xl">
@@ -233,10 +233,10 @@ File [`install.php`](file:///D:/laragon/www/hyperion-vault/install.php) adalah w
    - Ubah teks headline, sub-headline, label metrik, dan 6 kartu bento grid sesuai spesifikasi bisnis klien.
 
 ### C. Kustomisasi Komponen Dashboard (`frontend/src/lib/components/`)
-1. **Sidebar Navigation ([`AppSidebar.svelte`](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/layout/AppSidebar.svelte)):**
+1. **Sidebar Navigation ([`AppSidebar.svelte`](../frontend/src/lib/components/layout/AppSidebar.svelte)):**
    - Tambahkan menu navigasi baru dengan ikon SVG inline.
    - Hak akses menu dapat dikontrol secara reaktif dengan `$derived.by(() => auth.hasPermission('menu.name'))`.
-2. **Status & Role Badges ([`Badge.svelte`](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/Badge.svelte)):**
+2. **Status & Role Badges ([`Badge.svelte`](../frontend/src/lib/components/ui/Badge.svelte)):**
    - Mendukung varian status: `active`, `suspended`, `pending`, `admin`, `manager`, `staff`, `user`.
    - Kustomisasi skema warna badge baru cukup dengan menambahkan mapping kelas Tailwind di properti komponen.
 
@@ -280,7 +280,7 @@ Untuk memastikan antarmuka mudah digunakan oleh operator korporat, manajer senio
 ### A. Pola Sticky Header Tabs (`headerTabs` Snippet)
 1. **Penyematan di Header Modal:**
    - Navigasi sub-tab **DILARANG** diletakkan di dalam area konten yang tergulir (*body*).
-   - Seluruh bilah tab dan indikator langkah wajib disematkan ke dalam snippet `headerTabs` pada komponen [`Modal.svelte`](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/Modal.svelte).
+   - Seluruh bilah tab dan indikator langkah wajib disematkan ke dalam snippet `headerTabs` pada komponen [`Modal.svelte`](../frontend/src/lib/components/ui/Modal.svelte).
    - Kontainer header terkunci (*pinned/sticky*) di bagian atas dialog dengan latar `backdrop-blur-sm bg-slate-50/95 dark:bg-slate-900/95` dan batas bawah tegas (`border-b`).
 2. **Invarian Keterlihatan:**
    - Saat pengguna menggulir formulir panjang ke bawah, bilah tab tidak pernah hilang dari layar.
@@ -348,7 +348,7 @@ Untuk memberikan umpan balik status penyimpanan formulir yang instan, jelas, dan
 
 ### A. Arsitektur Toast Component & Runes State Bus
 1. **State Bus Terpusat (`toastState`):**
-   - Berkas: [`frontend/src/lib/state/toast.svelte.js`](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/state/toast.svelte.js)
+   - Berkas: [`frontend/src/lib/state/toast.svelte.js`](../frontend/src/lib/state/toast.svelte.js)
    - Menggunakan pure Svelte 5 runes (`$state` array `toasts = $state([])`).
    - Menyediakan API ramah pengembang:
      - `toastState.success(message, title?, duration?)`
@@ -357,8 +357,8 @@ Untuk memberikan umpan balik status penyimpanan formulir yang instan, jelas, dan
      - `toastState.info(message, title?, duration?)`
      - `toastState.remove(id)` & `toastState.clear()`
 2. **Komponen Visual Reusable (`Toast.svelte`):**
-   - Berkas: [`frontend/src/lib/components/ui/Toast.svelte`](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/Toast.svelte)
-   - **Moda Melayang Tengah Atas (Top-Center Floating Bus - Default):** Dipasang di [`+layout.svelte`](file:///D:/laragon/www/hyperion-vault/frontend/src/routes/+layout.svelte) (`<Toast />`) sebagai floating toast stack melayang di **tengah atas layar** (`fixed top-4 left-1/2 -translate-x-1/2 z-[9999] max-w-sm sm:max-w-md w-[calc(100%-2rem)]`), langsung berada di garis pandang sentral pengguna.
+   - Berkas: [`frontend/src/lib/components/ui/Toast.svelte`](../frontend/src/lib/components/ui/Toast.svelte)
+   - **Moda Melayang Tengah Atas (Top-Center Floating Bus - Default):** Dipasang di [`+layout.svelte`](../frontend/src/routes/+layout.svelte) (`<Toast />`) sebagai floating toast stack melayang di **tengah atas layar** (`fixed top-4 left-1/2 -translate-x-1/2 z-[9999] max-w-sm sm:max-w-md w-[calc(100%-2rem)]`), langsung berada di garis pandang sentral pengguna.
    - **Moda Inline Form Component:** Dapat disematkan langsung di dalam formulir spesifik (`<Toast inline={true} message={statusMsg} type="error" />`).
 
 ### B. Matriks Token Semantik Toast (High-Contrast Daylight & Dark)
@@ -385,7 +385,7 @@ Saat mengedit entitas data yang telah ada:
 ## 11. STANDAR TIPOGRAFI SKALA REM & LAYOUT PROPORSIONAL ENTERPRISE (v6.31.0)
 
 ### A. Root Rem Scaling (14px Base)
-Pada [`frontend/src/routes/layout.css`](file:///D:/laragon/www/hyperion-vault/frontend/src/routes/layout.css):
+Pada [`frontend/src/routes/layout.css`](../frontend/src/routes/layout.css):
 ```css
 :root {
   font-size: 14px;

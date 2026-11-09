@@ -1,6 +1,6 @@
-# Hyperion Vault - Backend Architecture (Laravel 13 Sanctum)
+# Valora Vault - Backend Architecture (Laravel 13 Sanctum)
 
-Backend API berkinerja tinggi untuk arsitektur fullstack enterprise dengan latensi P99 < 150ms dan perlindungan *Zero MySQL Connection Exhaustion* di shared hosting maupun VPS.
+Backend API berkinerja tinggi untuk arsitektur Valora Agency OS dengan latensi P99 < 150ms dan perlindungan *Zero MySQL Connection Exhaustion* di shared hosting maupun VPS.
 
 ---
 
@@ -15,7 +15,7 @@ Backend API berkinerja tinggi untuk arsitektur fullstack enterprise dengan laten
 3. **Registry Sesi & Device Granular (`user_devices`)**:
    - Audit real-time multi-device (IP, User-Agent, Device, OS, Expiry).
    - Pencabutan instan per-device, per-user (+1 `token_version`), atau darurat global.
-4. **Dynamic RBAC Matrix ([`config/permissions.php`](file:///D:/laragon/www/hyperion-vault/backend/config/permissions.php))**:
+4. **Dynamic RBAC Matrix ([`config/permissions.php`](config/permissions.php))**:
    - 5 Peran kanonikal resmi: `admin`, `manager`, `staff`, `auditor`, `user`.
    - Multi-role disimpan native via array JSON. Dilarang keras konsolidasi atau aliasing.
    - Proteksi route: `Route::middleware('role:admin,manager')` dan `Route::middleware('permission:reports.export')`.
@@ -32,4 +32,4 @@ Backend API berkinerja tinggi untuk arsitektur fullstack enterprise dengan laten
 ```bash
 php artisan test
 ```
-Semua 18 tests (250 assertions) wajib lulus 100% green.
+Semua 73 tests (768 assertions) wajib lulus 100% green.

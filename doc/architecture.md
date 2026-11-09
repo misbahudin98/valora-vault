@@ -100,7 +100,7 @@ Formula Little's Law: $L = \lambda \times W$ (di mana $L$ = konkurensi koneksi, 
    - Atomic Session Purge: Metode `UserDevice::purgeStaleSessions()` menghapus sesi kadaluarsa atau sesi ber-token lawas via single atomic SQL delete tanpa disk locking.
    - Stateless Invalidation: Kolom `token_version` pada database. Menaikkan nilai ini seketika membatalkan semua sesi perangkat aktif tanpa query scan session table.
 6. **Separation of Concerns Admin:**
-   - Halaman [Manajemen Pengguna](file:///D:/laragon/www/hyperion-vault/frontend/src/routes/admin/users/+page.svelte) terpisah dari [Manajemen Sesi](file:///D:/laragon/www/hyperion-vault/frontend/src/routes/admin/sessions/+page.svelte).
+   - Halaman [Manajemen Pengguna](../frontend/src/routes/admin/users/+page.svelte) terpisah dari [Manajemen Sesi](../frontend/src/routes/admin/sessions/+page.svelte).
 7. **Clean Minimalist Layout:**
    - Menu "Beranda" ditiadakan dari sidebar navigasi.
    - Tidak ada duplikasi profil pengguna atau tombol logout di topbar.
@@ -108,12 +108,12 @@ Formula Little's Law: $L = \lambda \times W$ (di mana $L$ = konkurensi koneksi, 
    - Metrik pill SLO/P99 dihapus dari sidebar.
    - Sidebar disembunyikan sepenuhnya pada landing page (`/`) dan login (`/login`).
 8. **Zero Nginx Hack:**
-   - Menggunakan gateway perantara [index.php](file:///D:/laragon/www/hyperion-vault/index.php) pada root proyek. Menjaga auto-vhost Laragon (`http://hyperion-vault.test`) dan [phpMyAdmin](file:///D:/laragon/etc/nginx/alias/phpmyadmin.conf) tetap bekerja tanpa modifikasi konfigurasi Nginx.
+   - Menggunakan gateway perantara [index.php](../index.php) pada root proyek. Menjaga auto-vhost Laragon (`http://valora-vault.test`) dan konfigurasi Nginx alias phpMyAdmin tetap bekerja tanpa modifikasi konfigurasi Nginx manual.
 9. **Brand Identity & AI Indexability:**
    - Favicon vektor SVG (`favicon.svg`) berpadu serasi dengan lambang lightning bolt sidebar.
-   - Indeks agen AI komprehensif tersedia di [llms.txt](file:///D:/laragon/www/hyperion-vault/llms.txt) pada root proyek.
+   - Indeks agen AI komprehensif tersedia di [llms.txt](../llms.txt) pada root proyek.
 10. **Automated Diagnostic Installer & 1-Step Dependency Engine:**
-   - Setup pasca-clone diotomatisasi penuh melalui [install.php](file:///D:/laragon/www/hyperion-vault/install.php) (Web & CLI) dengan verifikasi 13 parameter prasyarat.
+   - Setup pasca-clone diotomatisasi penuh melalui [install.php](../install.php) (Web & CLI) dengan verifikasi 13 parameter prasyarat.
    - Mendukung resolusi dependensi otomatis (`composer install` & `npm install`) jika belum terpasang, serta konfigurasi domain dan nama proyek dinamis berbasis nama direktori.
    - Lockfile `.installed` secara otomatis memblokir eksekusi ulang untuk melindungi database dan kunci enkripsi di production.
 11. **9000+ Records Scalability & Memory Guard:**
@@ -127,7 +127,7 @@ Formula Little's Law: $L = \lambda \times W$ (di mana $L$ = konkurensi koneksi, 
     - Diterapkan secara konsisten di `backend/composer.json`, `frontend/package.json`, konstanta `APP_VERSION` pada `install.php`, badge `AppSidebar.svelte`, dan landing page `+page.svelte`.
     - Peningkatan versi wajib mengikuti aturan: Bumping PATCH untuk bug fix/optimasi; MINOR untuk fitur baru non-breaking; MAJOR untuk perombakan arsitektur atau breaking API change.
 14. **Browser-Only Instant Search & Client Chunking (Zero Database Connections on Search):**
-    - Filtrasi dan pencarian data tabel dieksekusi 100% pada memori browser via Svelte 5 `$derived.by()` di komponen [DataTable.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/DataTable.svelte).
+    - Filtrasi dan pencarian data tabel dieksekusi 100% pada memori browser via Svelte 5 `$derived.by()` di komponen [DataTable.svelte](../frontend/src/lib/components/ui/DataTable.svelte).
     - Menghilangkan *keystroke-debounce network trips* ke server API dan memangkas waktu tanggap pencarian menjadi < 0.1 ms tanpa mengonsumsi pool 25 koneksi database MySQL Hostinger.
     - DOM rendering di-chunk 10 baris per halaman untuk menjamin render latency < 16ms (60 FPS) pada ribuan entitas data.
     - **Dynamic Page Size & Mobile Card Stack:** Menyediakan pemilih jumlah baris data per halaman dinamis (`10`, `25`, `50`, `100`), serta otomatis bertransformasi menjadi susunan kartu mandiri berstandar Pro-Grade Compact (`{#snippet card}`) di mobile (< 768px) guna mengeliminasi kelelahan scroll horizontal.
@@ -136,8 +136,8 @@ Formula Little's Law: $L = \lambda \times W$ (di mana $L$ = konkurensi koneksi, 
     - Operasi Create, Update, Delete, Toggle Status, dan Revoke Session langsung memutasi state lokal array pengguna/sesi di browser secara instan pasca mendapat respons 200 OK dari server (`users[idx] = updatedUser`, `users = [newUser, ...users]`, `users = users.filter(...)`).
     - Mengeliminasi panggilan jaringan penuh `loadUsers()` / `loadSessions()` pasca-mutasi, memangkas latensi alur E2E sebesar ~39% dan menghilangkan beban koneksi sekunder.
 16. **Auto-Reject Shield Against Document Preview Leaks:**
-    - Pada [+layout.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/routes/+layout.svelte), hak akses rute diverifikasi secara sinkron melalui `$derived(canAccessPath($page.url.pathname, authState))`.
-    - Jika pengguna (guest atau non-admin) mencoba membuka rute terlarang (misal `/admin/users`), sistem merender **Auto-Reject Shield** dengan [ElementLoader.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/ElementLoader.svelte) dan segera memicu pengalihan via `goto()`, tanpa pernah merender isi `{@render children()}`. Hal ini mencegah *document preview leak* atau kedipan konten rahasia sebelum pengalihan selesai.
+    - Pada [+layout.svelte](../frontend/src/routes/+layout.svelte), hak akses rute diverifikasi secara sinkron melalui `$derived(canAccessPath($page.url.pathname, authState))`.
+    - Jika pengguna (guest atau non-admin) mencoba membuka rute terlarang (misal `/admin/users`), sistem merender **Auto-Reject Shield** dengan [ElementLoader.svelte](../frontend/src/lib/components/ui/ElementLoader.svelte) dan segera memicu pengalihan via `goto()`, tanpa pernah merender isi `{@render children()}`. Hal ini mencegah *document preview leak* atau kedipan konten rahasia sebelum pengalihan selesai.
 17. **Reusable Micro Element Loader (`ElementLoader.svelte`):**
     - Komponen animasi pemuat independen murni CSS keyframes dan SVG tanpa dependensi eksternal.
     - Mendukung mode `spinner`, `pulse`, dan `dots` dengan variasi ukuran (`xs`, `sm`, `md`, `lg`) serta warna aksen tema. Digunakan pada button submission state, cell tables, card skeletons, dan auto-reject shields.
@@ -161,17 +161,17 @@ Formula Little's Law: $L = \lambda \times W$ (di mana $L$ = konkurensi koneksi, 
     - `src/app.html` dilengkapi `dns-prefetch` font Google, atribut `data-sveltekit-preload-code="hover"`, serta inline CSS background anti-FOUC (Flash of Unstyled Content) saat transisi tema daylight/nocturnal.
     - Seluruh dependensi Node.js dijamin kompatibel lintas versi melalui `frontend/.npmrc` (`engine-strict=false`, `legacy-peer-deps=true`).
 21. **Universal Password Visibility Toggle (Eye Icon Standard):**
-    - Seluruh elemen input kata sandi pada aplikasi (baik pada formulir login [LoginForm.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/features/auth/LoginForm.svelte) maupun modal manajemen pengguna [+page.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/routes/admin/users/+page.svelte)) diwajibkan memiliki tombol pengalih visibilitas interaktif dengan ikon SVG mata terbuka dan mata tercoret.
+    - Seluruh elemen input kata sandi pada aplikasi (baik pada formulir login [LoginForm.svelte](../frontend/src/lib/components/features/auth/LoginForm.svelte) maupun modal manajemen pengguna [+page.svelte](../frontend/src/routes/admin/users/+page.svelte)) diwajibkan memiliki tombol pengalih visibilitas interaktif dengan ikon SVG mata terbuka dan mata tercoret.
     - State visibilitas dikelola menggunakan Svelte 5 `$state(false)` secara independen per modal/form dengan reset otomatis saat modal dibuka, dilengkapi atribut `aria-label` dinamis untuk kepatuhan aksesibilitas peramban dan pembaca layar (WCAG), serta divalidasi secara deterministik dalam suite pengujian E2E Playwright UAT.
-22. **Konsep Desain Visual & Landing Page ([doc/design.md](file:///D:/laragon/www/hyperion-vault/doc/design.md)):**
+22. **Konsep Desain Visual & Landing Page ([doc/design.md](../doc/design.md)):**
     - Kanvas Deep Obsidian `#090d16` dengan kontras rasio WCAG AAA 14.8:1 terhadap teks `#f8fafc`.
     - Tipografi 3-Font Internasional: `Outfit` (Heading/Display), `Inter` (Body/UI), `JetBrains Mono` (Data/Code/Hash/Metrics).
     - Grid spasial 8-point standar industri (`gap-4`, `p-6`, `rounded-2xl`, min 44x44px touch targets).
     - Standar kustomisasi tampilan wizard instalasi (`install.php`) dan landing page terintegrasi.
-23. **Autonomous Dual-Track Feature Engine ([doc/prompt.feature.md](file:///D:/laragon/www/hyperion-vault/doc/prompt.feature.md)):**
+23. **Autonomous Dual-Track Feature Engine ([doc/prompt.feature.md](../doc/prompt.feature.md)):**
     - Track A: Mengonversi input bisnis mentah (*Raw Business Input*) menjadi PRD, skema 3NF MySQL berindeks komposit, diagram Mermaid ERD & Sequence, kontrak API Sanctum, dan komponen CRUD Svelte 5.
     - Track B: Menyesuaikan gaya visual landing page dan tema UI sesuai studi kasus bisnis (5 Preset: *Neo-Enterprise Dark*, *Clean Fintech Light*, *Swiss Monochrome*, *Cyberpunk DevTool*, *Midnight Navy*).
-24. **Single-Span Accessible Badge Standard ([Badge.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/Badge.svelte)):**
+24. **Single-Span Accessible Badge Standard ([Badge.svelte](../frontend/src/lib/components/ui/Badge.svelte)):**
     - Elemen teks dalam badge dirender langsung tanpa pembungkus `<span>` bersarang di dalamnya (`<span>{value}</span>`), mencegah pelanggaran mode ketat Playwright E2E (`strict mode violation: span:has-text() resolved to multiple elements`).
 25. **Explicit Easy-to-Understand Action Bar:**
     - Tombol logout di sidebar berlabel eksplisit **"Keluar Sesi Ini"** (`#logout-btn`) dengan tooltip informatif dan ikon SVG pintu keluar.
@@ -185,11 +185,11 @@ Formula Little's Law: $L = \lambda \times W$ (di mana $L$ = konkurensi koneksi, 
     - Sistem menyediakan perintah `php install.php update` dan antarmuka web updater yang mengeksekusi `artisan optimize:clear`, migrasi aman non-destructive `artisan migrate --force` (DILARANG `migrate:fresh` di production), dan kompilasi ulang SPA.
     - Berkas `.installed` mencatat versi terpasang, tanggal pembaruan, dan riwayat audit `history` secara permanen.
 27. **Client-Customizable RBAC & Dynamic Permission Matrix:**
-    - Peran pengguna dan izin granular dikonfigurasi melalui [backend/config/permissions.php](file:///D:/laragon/www/hyperion-vault/backend/config/permissions.php).
+    - Peran pengguna dan izin granular dikonfigurasi melalui [backend/config/permissions.php](../backend/config/permissions.php).
     - Klien dapat menambahkan peran baru (misal: `doctor`, `pharmacist`, `auditor`, `staff`) tanpa alterasi skema database.
     - Dilindungi oleh middleware `permission:...`, helper `User::hasPermission()`, dan Svelte 5 `$derived(authState.hasPermission())`.
 28. **System Element Customization & White-Labeling Standards:**
-    - Panduan terstandarisasi untuk kustomisasi installer (`install.php`), kustomisasi landing page & maskot, dan 5 preset gaya desain visual di [design.md](file:///D:/laragon/www/hyperion-vault/doc/design.md) dan [prompt.feature.md](file:///D:/laragon/www/hyperion-vault/doc/prompt.feature.md).
+    - Panduan terstandarisasi untuk kustomisasi installer (`install.php`), kustomisasi landing page & maskot, dan 5 preset gaya desain visual di [design.md](../doc/design.md) dan [prompt.feature.md](../doc/prompt.feature.md).
 29. **Zero-Overhead Public Telemetry & Local Browser Clock Engine:**
     - Endpoint publik telemetri di-cache via disk lokal NVMe SSD (`CACHE_STORE=file`) dengan header HTTP `Cache-Control: public, max-age=60, s-maxage=300, stale-while-revalidate=120`.
     - Landing page memanggil endpoint ini secara terisolasi tanpa polling berkala ke server.
@@ -227,7 +227,7 @@ Formula Little's Law: $L = \lambda \times W$ (di mana $L$ = konkurensi koneksi, 
 38. **Zero Role Consolidation & Strict RBAC Matrix Invariant (Zero Aliasing):**
     - Seluruh peran pengguna diakui, disimpan, dan diuji secara mandiri tanpa aliasing runtime atau normalisasi mutatif (`consolidation_map`, `aliases`, `normalizeRoles`, `expandRoleAliases`).
     - Penyimpanan multi-peran dikelola secara transparan dan murni via JSON array di basis data. Multi-role assignment didukung native.
-39. **Controlled Modal Lifecycle & Sticky Header Tabs ([`Modal.svelte`](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/Modal.svelte)):**
+39. **Controlled Modal Lifecycle & Sticky Header Tabs ([`Modal.svelte`](../frontend/src/lib/components/ui/Modal.svelte)):**
     - Komponen `Modal.svelte` wajib default `show = true` untuk menjamin render seketika dalam blok kondisional `{#if showModal}<Modal>`.
     - Seluruh formulir modal multi-langkah wajib meletakkan bilah navigasi tab di dalam snippet `{#snippet headerTabs()}` pada header modal terkunci (*sticky*), mencegah navigasi tab hilang saat menggulir formulir panjang.
 40. **Zero Silent Failure & Reactive Button State (A11y Standard):**
@@ -890,7 +890,7 @@ Mekanisme resmi untuk mendistribusikan tata kelola AI, aturan invarian, skill re
    - **Warna Tema:** Ubah variabel CSS `:root` (`--bg`, `--card-bg`, `--indigo`, `--cyan`, `--green`, `--amber`).
    - **Prasyarat Kustom:** Tambahkan item pemeriksaan baru pada array `$requiredExtensions` dalam fungsi `runDiagnostics()`.
 2. **Kustomisasi Landing Page (`frontend/src/routes/+page.svelte`):**
-   - Rujuk katalog 5 preset desain di [doc/prompt.feature.md](file:///D:/laragon/www/hyperion-vault/doc/prompt.feature.md) (Track B).
+   - Rujuk katalog 5 preset desain di [doc/prompt.feature.md](../doc/prompt.feature.md) (Track B).
    - Penggantian maskot Volt dengan mockup/banner produk klien cukup dengan menyunting seksi hero.
 3. **Kustomisasi Hak Akses Klien (`backend/config/permissions.php`):**
    - Definisikan peran bisnis klien (misal: `doctor`, `pharmacist`, `auditor`, `cashier`) dan petakan izin granularnya.
@@ -907,39 +907,39 @@ Mekanisme resmi untuk mendistribusikan tata kelola AI, aturan invarian, skill re
 * Penyediaan fungsi `hasRole(...roles)`, `hasPermission(...perms)`, derived getter `isAdmin`, serta derived array `permissions`.
 
 ### 6.2. Komponen UI Modular (`frontend/src/lib/components/ui/`)
-1. **[DataTable.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/DataTable.svelte):**
+1. **[DataTable.svelte](../frontend/src/lib/components/ui/DataTable.svelte):**
    - Live search multi-kolom instan 100% pada memori browser via Svelte 5 `$derived.by()` (< 0.1 ms latency, 0 konsumsi slot koneksi database).
    - Paginasi lazy-load berbasis chunking (default 10 baris) dengan tombol navigasi dinamis dan rendering DOM ringan.
-   - Pemuat terintegrasi menggunakan [ElementLoader.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/ElementLoader.svelte) saat `loading = true`.
+   - Pemuat terintegrasi menggunakan [ElementLoader.svelte](../frontend/src/lib/components/ui/ElementLoader.svelte) saat `loading = true`.
    - Menggunakan Svelte 5 snippets (`{#snippet header()}`, `{#snippet row(item)}`).
-2. **[Modal.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/Modal.svelte):**
+2. **[Modal.svelte](../frontend/src/lib/components/ui/Modal.svelte):**
    - Dialog modal dengan penutupan via tombol Esc, backdrop click, dan snippet `footer`.
-3. **[Badge.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/Badge.svelte):**
+3. **[Badge.svelte](../frontend/src/lib/components/ui/Badge.svelte):**
    - Indikator status (`Aktif` / `Ditangguhkan`) dan peran pengguna multi-role.
-4. **[PageLoader.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/PageLoader.svelte):**
+4. **[PageLoader.svelte](../frontend/src/lib/components/ui/PageLoader.svelte):**
    - Komponen pemuat halaman ringan murni CSS + SVG tanpa dependensi eksternal.
    - Dual glowing spinning rings dengan lambang lightning bolt pusat.
    - Parameter: `fullscreen` (boolean), `size` (`sm`|`md`|`lg`|`xl`), `text` (keterangan status), `variant` (`primary`|`cyan`|`indigo`), dan `backdrop`.
-   - Terintegrasi di [+layout.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/routes/+layout.svelte) saat alur logout.
-5. **[ElementLoader.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/ElementLoader.svelte):**
+   - Terintegrasi di [+layout.svelte](../frontend/src/routes/+layout.svelte) saat alur logout.
+5. **[ElementLoader.svelte](../frontend/src/lib/components/ui/ElementLoader.svelte):**
    - Micro element loader murni CSS keyframes + SVG (`spinner`, `pulse`, `dots`) dengan varian ukuran (`xs`, `sm`, `md`, `lg`) dan warna tema.
    - Digunakan pada tabel data, tombol aksi mutasi, dan Auto-Reject Shield.
 
 ### 6.3. Komponen Fitur & Maskot Interaktif
-1. **[ArchitectMascot.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/features/mascot/ArchitectMascot.svelte):**
+1. **[ArchitectMascot.svelte](../frontend/src/lib/components/features/mascot/ArchitectMascot.svelte):**
    - Maskot AI Enterprise Architect "Volt".
    - Pure SVG + CSS animation, responsif, floating aura, partikel thruster, mata reaktif 4 mood (`happy`, `excited`, `thinking`, `super`).
    - Tur interaktif 6 topik arsitektur (*FastCGI Dual-Worker*, *Zero-DB Session*, *Svelte 5 Runes*, *Signed JWT & Sanctum*, *Skalabilitas 9000+ Data*, dan *Auto-Detect Setup*).
-   - Tersemat langsung pada landing page [+page.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/routes/+page.svelte).
+   - Tersemat langsung pada landing page [+page.svelte](../frontend/src/routes/+page.svelte).
 
 ### 6.4. Komponen Layout & Navigasi
-1. **[AppSidebar.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/layout/AppSidebar.svelte):**
+1. **[AppSidebar.svelte](../frontend/src/lib/components/layout/AppSidebar.svelte):**
    - Menu navigasi bersih: Menu "Beranda" ditiadakan, indikator pill SLO/P99 dihapus, badge versi SemVer `v5.4.0`.
    - Unit tunggal profil pengguna dan tombol logout di footer sidebar.
-2. **[AppTopbar.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/layout/AppTopbar.svelte):**
+2. **[AppTopbar.svelte](../frontend/src/lib/components/layout/AppTopbar.svelte):**
    - Hamburger mobile toggle dan breadcrumbs rute aktif tanpa duplikasi profil/logout.
    - Eliminasi badge statis FastCGI Online untuk menyajikan UI yang bersih dan jujur tanpa vanity metric palsu.
-3. **[+layout.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/routes/+layout.svelte):**
+3. **[+layout.svelte](../frontend/src/routes/+layout.svelte):**
    - Boolean derived `isStandalonePage`: Sidebar disembunyikan 100% pada landing page (`/`) dan login (`/login`).
    - Integrasi `<PageLoader fullscreen={true} />` saat `loggingOut` dengan reset state pasca navigasi login.
    - **Auto-Reject Shield (Zero Document Preview Leak):** Otorisasi rute dihitung secara sinkron via `$derived(canAccessPath($page.url.pathname, authState))`. Jika tidak sah, merender shield peringatan akses terbatas dengan `ElementLoader` dan memicu pengalihan via `goto()`, tanpa pernah merender `{@render children()}`.
@@ -960,7 +960,7 @@ Mekanisme resmi untuk mendistribusikan tata kelola AI, aturan invarian, skill re
   - **Toggle Status:** `users[idx] = { ...users[idx], is_active: !users[idx].is_active }`.
   - **Revoke Sessions:** `users[idx] = { ...users[idx], token_version: users[idx].token_version + 1 }`.
 * Menghilangkan permintaan jaringan sekunder `loadUsers()`, memangkas durasi eksekusi pengujian E2E sebesar ~39% dan mencegah lonjakan koneksi database.
-* Terintegrasi dengan dialog modal ([Modal.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/Modal.svelte)) untuk Tambah Pengguna Baru, Edit Pengguna, Penangguhan status (`Tangguhkan` / `Aktifkan`), dan Pencabutan sesi darurat pengguna.
+* Terintegrasi dengan dialog modal ([Modal.svelte](../frontend/src/lib/components/ui/Modal.svelte)) untuk Tambah Pengguna Baru, Edit Pengguna, Penangguhan status (`Tangguhkan` / `Aktifkan`), dan Pencabutan sesi darurat pengguna.
 
 ---
 
@@ -997,11 +997,11 @@ Bagian ini dirancang agar setiap insinyur tingkat pemula (junior programmer) ata
 1. **Frontend (Svelte 5 Runes SPA):**
    - Berjalan 100% di browser klien. Tidak membutuhkan server Node.js di production (dibangun statis via `@sveltejs/adapter-static` ke `frontend/build/index.html`).
    - Reaktivitas menggunakan runes (`$state`, `$derived`, `$props`). Tidak ada Virtual DOM overhead.
-   - Pencarian dan filter tabel dieksekusi 100% di RAM browser via `$derived.by()` di [DataTable.svelte](file:///D:/laragon/www/hyperion-vault/frontend/src/lib/components/ui/DataTable.svelte). Keystroke pengetikan **tidak pernah** mengirim query ke server!
-2. **Gateway Universal ([index.php](file:///D:/laragon/www/hyperion-vault/index.php)):**
+   - Pencarian dan filter tabel dieksekusi 100% di RAM browser via `$derived.by()` di [DataTable.svelte](../frontend/src/lib/components/ui/DataTable.svelte). Keystroke pengetikan **tidak pernah** mengirim query ke server!
+2. **Gateway Universal ([index.php](../index.php)):**
    - Menjembatani auto-vhost Laragon (`http://hyperion-vault.test`) dan phpMyAdmin tanpa modifikasi konfigurasi Nginx.
-   - Otomatis mengarahkan ke [install.php](file:///D:/laragon/www/hyperion-vault/install.php) jika aplikasi belum terpasang.
-3. **Backend & Sesi ([Laravel 13 Sanctum](file:///D:/laragon/www/hyperion-vault/backend/routes/api.php)):**
+   - Otomatis mengarahkan ke [install.php](../install.php) jika aplikasi belum terpasang.
+3. **Backend & Sesi ([Laravel 13 Sanctum](../backend/routes/api.php)):**
    - **Kunci Anti-Crash:** `SESSION_DRIVER=file` menyimpan sesi di disk NVMe (0 query database). Sesi tidak pernah memakan kuota 25 koneksi MySQL Hostinger.
    - Tabel `user_devices` hanyalah buku tamu (audit registry) yang mencatat IP, Browser, dan masa kadaluarsa hanya saat login/logout.
    - Dual Worker FastCGI (port 9003 & 9004) dengan `PHP_FCGI_MAX_REQUESTS=0` menjamin PHP di Windows tidak pernah mati mendadak (mencegah error 502).
@@ -1040,11 +1040,11 @@ Atau buka peramban di `http://hyperion-vault.test/install.php` dan klik tombol *
 
 ### 8.2. Alur Menambah Fitur Baru Menggunakan `prompt.feature.md`
 Untuk menghasilkan kode dan arsitektur fitur baru yang 100% konsisten:
-1. Buka berkas [doc/prompt.feature.md](file:///D:/laragon/www/hyperion-vault/doc/prompt.feature.md).
+1. Buka berkas [doc/prompt.feature.md](../doc/prompt.feature.md).
 2. **Pilih Jalur:**
    - **Track A (Fitur Fungsional):** Tempelkan keinginan mentah klien ke template *Raw Business Input*. AI akan otomatis menghasilkan `feature.md` yang memuat PRD, skema 3NF dengan indeks B-Tree, diagram Mermaid ERD & Sequence, kontrak API Sanctum, serta kode Svelte 5 CRUD.
    - **Track B (Landing Page & Desain):** Gunakan template penyesuaian gaya visual dan pilih salah satu dari 5 preset tema enterprise yang tersedia.
-3. Selalu patuhi standar palet, tipografi 3-font, dan grid 8pt di [doc/design.md](file:///D:/laragon/www/hyperion-vault/doc/design.md).
+3. Selalu patuhi standar palet, tipografi 3-font, dan grid 8pt di [doc/design.md](../doc/design.md).
 
 ### 8.3. Checklist Anti-Melanggar Arsitektur (Bagi Junior & AI)
 - [ ] DILARANG mengubah `SESSION_DRIVER` ke `database` (Memicu 1040 Too Many Connections).
@@ -1139,7 +1139,7 @@ cd D:\laragon\www\hyperion-vault\frontend && npx playwright test
 #### B. Mekanisme Jalur B: SSH OWASP Hardened Architecture (`deploy_ssh.sh` & `deploy_ssh.php`)
 - **Pola Pemisahan Direktori (Hardened Security):**
   - Folder `backend/` diletakkan **DI LUAR** direktori publik web (`/home/username/apps/hyperion-vault/backend/`). Berkas `.env`, `database.sqlite`, dan `storage/` kebal 100% dari celah HTTP langsung.
-  - Direktori publik (`/home/username/public_html/`) **HANYA** memuat aset statis hasil kompilasi Vite (`_app/`, `favicon.svg`) dan gateway pintu masuk [`index.php`](file:///D:/laragon/www/hyperion-vault/index.php).
+  - Direktori publik (`/home/username/public_html/`) **HANYA** memuat aset statis hasil kompilasi Vite (`_app/`, `favicon.svg`) dan gateway pintu masuk [`index.php`](../index.php).
 - **Automasi 1-Perintah:**
   - Developer lokal cukup mengeksekusi `php deploy_ssh.php` untuk memicu pipeline SSH jarak jauh.
   - Server administrator dapat menjalankan `bash deploy_ssh.sh --split` secara langsung di terminal Linux/VPS.

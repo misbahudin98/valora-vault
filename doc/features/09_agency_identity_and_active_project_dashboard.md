@@ -66,7 +66,7 @@ Profil agensi tersinkronisasi secara otomatis pada seluruh media output:
 
 ## 5. DASHBOARD MINI PROYEK AKTIF (SIDEBAR WIDGET)
 
-Tersemat pada bagian bawah [`AppSidebar.svelte`](file:///D:/laragon/www/valora-vault/frontend/src/lib/components/layout/AppSidebar.svelte):
+Tersemat pada bagian bawah [`AppSidebar.svelte`](../../frontend/src/lib/components/layout/AppSidebar.svelte):
 1. **Filter Khusus Proyek Aktif:** Mengambil data proyek dengan `status: 'Aktif'` via `/api/v1/admin/clients?status=Aktif&limit=50`.
 2. **Carousel Switcher:** Kontrol navigasi `< 1/N >` untuk beralih antar proyek aktif secara instan.
 3. **Few/Tufte Bullet Progress Bar:** Rasio penyelesaian modul (`done/total Modul Selesai`) dengan progress bar gradien emerald-to-cyan.

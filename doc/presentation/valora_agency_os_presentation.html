@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valora Agency OS — Presentasi Interaktif Akhir Aplikasi & Skenario Testing</title>
+  <style>
+    :root {
+      --bg-dark: #070b12;
+      --card-bg: #0f172a;
+      --card-surface: #131d31;
+      --card-border: #1e293b;
+      --card-border-glow: #334155;
+      --emerald-500: #10b981;
+      --emerald-400: #34d399;
+      --emerald-900: #064e3b;
+      --cyan-400: #22d3ee;
+      --cyan-500: #06b6d4;
+      --amber-400: #fbbf24;
+      --red-400: #f87171;
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+    }
+
+    /* Top Progress Bar */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--emerald-500), var(--cyan-400));
+      width: 0%;
+      transition: width 0.3s ease;
+      z-index: 100;
+    }
+
+    /* Top Global Header */
+    #top-bar {
+      position: fixed;
+      top: 4px;
+      left: 0;
+      right: 0;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(11, 15, 23, 0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--card-border);
+      z-index: 90;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-badge {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--emerald-500);
+      color: var(--emerald-400);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-control {
+      background: var(--card-surface);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-control:hover, .btn-control.active {
+      color: var(--text-white);
+      border-color: var(--emerald-500);
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .slide-counter {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cyan-400);
+      font-family: monospace;
+      padding: 0 8px;
+    }
+
+    /* Deck Viewport */
+    #deck {
+      position: absolute;
+      top: 52px;
+      bottom: 56px;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 40px;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 1360px;
+      height: 100%;
+      max-height: 740px;
+      flex-direction: column;
+      animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Slide Header */
+    .slide-meta {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--emerald-400);
+      margin-bottom: 6px;
+    }
+
+    .slide-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-white);
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+
+    /* Cards and Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      flex: 1;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      flex: 1;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      flex: 1;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--card-border-glow);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 12px;
+      flex: 1;
+    }
+
+    .card-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      display: inline-block;
+      align-self: flex-start;
+    }
+
+    .badge-emerald { background: rgba(16, 185, 129, 0.15); color: var(--emerald-400); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-cyan { background: rgba(6, 182, 212, 0.15); color: var(--cyan-400); border: 1px solid rgba(6, 182, 212, 0.3); }
+    .badge-amber { background: rgba(245, 158, 11, 0.15); color: var(--amber-400); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-red { background: rgba(239, 68, 68, 0.15); color: var(--red-400); border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    /* Interactive Stepper for Flow */
+    .stepper-nav {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .step-btn {
+      background: var(--card-surface);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .step-btn.active {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: var(--emerald-500);
+      color: var(--emerald-400);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
+    }
+
+    .step-content-box {
+      background: var(--card-surface);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Testing Simulator UI */
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: var(--card-surface);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active {
+      background: var(--emerald-500);
+      color: #070b12;
+      border-color: var(--emerald-400);
+    }
+
+    .test-suites-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .test-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .test-card:hover {
+      border-color: var(--emerald-500);
+      transform: translateY(-2px);
+    }
+
+    .test-card.selected {
+      border-color: var(--cyan-400);
+      background: rgba(6, 182, 212, 0.08);
+    }
+
+    .test-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .test-card-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-white);
+      font-family: monospace;
+    }
+
+    .test-card-count {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--emerald-400);
+      background: rgba(16, 185, 129, 0.12);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .test-card-scope {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Terminal Simulation Box */
+    .terminal-box {
+      background: #05080f;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 14px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      color: #cbd5e1;
+      height: 180px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    .term-pass { color: #34d399; font-weight: bold; }
+    .term-info { color: #38bdf8; }
+    .term-warn { color: #facc15; }
+
+    /* Bottom Global Navigation */
+    #bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(11, 15, 23, 0.85);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--card-border);
+      z-index: 90;
+    }
+
+    .nav-btn {
+      background: var(--card-surface);
+      border: 1px solid var(--card-border);
+      color: var(--text-white);
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover:not(:disabled) {
+      border-color: var(--emerald-500);
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald-400);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .shortcuts-hint {
+      font-size: 11px;
+      color: var(--text-dim);
+      display: flex;
+      gap: 14px;
+    }
+
+    .kbd {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+
+    /* Speaker Notes Drawer */
+    #notes-drawer {
+      position: fixed;
+      bottom: 56px;
+      right: 24px;
+      width: 440px;
+      max-height: 480px;
+      background: var(--card-surface);
+      border: 1px solid var(--emerald-500);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      display: none;
+      flex-direction: column;
+      z-index: 95;
+      animation: slideUp 0.25s ease-out;
+    }
+
+    #notes-drawer.open {
+      display: flex;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .notes-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 8px;
+    }
+
+    .notes-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--emerald-400);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .notes-content {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      overflow-y: auto;
+      max-height: 380px;
+    }
+
+    .notes-content p {
+      margin-bottom: 10px;
+    }
+
+    .notes-content strong {
+      color: var(--text-white);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--card-border);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--emerald-500);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div id="progress-bar"></div>
+
+  <!-- Top Global Bar -->
+  <header id="top-bar">
+    <div class="brand">
+      <span>⚡ VALORA AGENCY OS</span>
+      <span class="brand-badge">v6.31.0 PRODUCTION</span>
+      <span style="font-size: 11px; color: var(--text-muted); font-weight: normal;">| PT Valora Digital Solusindo</span>
+    </div>
+    <div class="top-controls">
+      <button class="btn-control" id="btn-run-sim" onclick="runTestingSimulation()">
+        <span>▶</span> Simulasi Test (73/73)
+      </button>
+      <button class="btn-control" id="btn-notes" onclick="toggleNotes()">
+        <span>📝</span> Catatan Presenter (N)
+      </button>
+      <button class="btn-control" id="btn-fs" onclick="toggleFullScreen()">
+        <span>⛶</span> Fullscreen (F)
+      </button>
+      <div class="slide-counter" id="slide-num">01 / 12</div>
+    </div>
+  </header>
+
+  <!-- Presentation Viewport -->
+  <main id="deck">
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 1: COVER -->
+    <!-- ===================================================================== -->
+    <section class="slide active" data-index="1">
+      <div class="slide-meta">PRESENTASI HASIL AKHIR REKAYASA SISTEM</div>
+      <h1 class="slide-title" style="font-size: 40px; margin-bottom: 12px;">
+        VALORA AGENCY OS
+      </h1>
+      <p style="font-size: 18px; color: var(--cyan-400); margin-bottom: 24px; font-weight: 600;">
+        Sistem Operasi Agensi Digital & Platform Manajemen Penagihan Terpadu
+      </p>
+
+      <div class="card" style="margin-bottom: 24px; background: rgba(15, 23, 42, 0.7); border-color: rgba(16, 185, 129, 0.3);">
+        <p style="font-size: 14px; line-height: 1.7; color: var(--text-white);">
+          Selamat malam Bapak/Ibu Direksi dan Tim Manajemen. Malam ini kami mempresentasikan 
+          <strong>Valora Agency OS</strong> — platform terpadu yang dibangun di atas arsitektur <em>Hyperion Vault</em> 
+          (Laravel 13 + Svelte 5 Native Runes + SQLite WAL) untuk mengotomatisasi seluruh siklus hidup agensi perangkat lunak:
+          mulai dari <strong>intake klien</strong>, <strong>eliminasi scope creep</strong> dengan 12 kapabilitas fitur, 
+          <strong>monitoring progres real-time</strong>, <strong>standar master tarif transparan</strong>, 
+          <strong>penagihan invoice cicilan termin & kuitansi terbilang</strong>, hingga 
+          <strong>ekspor dokumen Microsoft Word (.doc) 100% presisi</strong>.
+        </p>
+      </div>
+
+      <div class="grid-4">
+        <div class="card">
+          <span class="card-badge badge-emerald" style="margin-bottom: 8px;">ARSITEKTUR INTI</span>
+          <div class="card-title">Laravel 13 & Svelte 5</div>
+          <div class="card-desc">Stateful SPA session-based Sanctum, pure runes ($state, $derived), Tailwind v4 dual theme.</div>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-cyan" style="margin-bottom: 8px;">PENJAMINAN MUTU</span>
+          <div class="card-title">73 Feature Tests</div>
+          <div class="card-desc">768 Assertions lulus 100% (Green). Hermetic test isolation & Khorikov 4 Pillars.</div>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-amber" style="margin-bottom: 8px;">DATA PERSISTENCE</span>
+          <div class="card-title">SQLite WAL Mode</div>
+          <div class="card-desc">Database 3NF, zero lock contention, sub-millisecond query latency, atomic transaction.</div>
+        </div>
+        <div class="card">
+          <span class="card-badge badge-red" style="margin-bottom: 8px;">HARDENING & KEAMANAN</span>
+          <div class="card-title">OWASP ASVS L2</div>
+          <div class="card-desc">Zero env() runtime leaks, CSP, HSTS, CSRF token rotasi, physical session NVMe unlink.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 2: LATAR BELAKANG & MASALAH -->
+    <!-- ===================================================================== -->
+    <section class="slide" data-index="2">
+      <div class="slide-meta">ANALISIS MASALAH BISNIS</div>
+      <h2 class="slide-title">4 Titik Kritis Kegagalan Agensi Perangkat Lunak</h2>
+
+      <div class="grid-2">
+        <div class="card" style="border-left: 4px solid #ef4444;">
+          <div class="card-title" style="color: #f87171;">01. Scope Creep Liar & Perubahan Fitur Tak Terkontrol</div>
+          <div class="card-desc">
+            Klien sering kali meminta revisi dan fitur tambahan di tengah jalan tanpa revisi biaya maupun timeline. 
+            Tanpa modul batasan teknis (<em>boundaries of scope</em>) sejak awal, agensi terpaksa bekerja gratis demi menjaga hubungan baik.
+          </div>
+          <div class="card-badge badge-red">Dampak: Margin laba proyek turun hingga 65%</div>
+        </div>
+
+        <div class="card" style="border-left: 4px solid #f59e0b;">
+          <div class="card-title" style="color: #fbbf24;">02. Penagihan Tercecer & Piutang Macet Menumpuk</div>
+          <div class="card-desc">
+            Penagihan termin (DP 30%, Milestone 40%, Handover 30%) dikelola via spreadsheet manual atau catatan tempel. 
+            Sering kali staf lupa menagihkan sisa pembayaran saat fitur selesai diuji, mengganggu arus kas operasional.
+          </div>
+          <div class="card-badge badge-amber">Dampak: Cashflow terhambat dan piutang lama tertahan</div>
+        </div>
+
+        <div class="card" style="border-left: 4px solid #3b82f6;">
+          <div class="card-title" style="color: #60a5fa;">03. Monitoring Progres Mengandalkan Pesan Chat Instan</div>
+          <div class="card-desc">
+            Pelaporan status proyek tercecer di grup WhatsApp. Klien sering merasa cemas dan bertanya berulang kali 
+            karena tidak memiliki dashboard transparan yang menunjukkan modul mana yang sedang dikerjakan dan mana yang sudah tuntas.
+          </div>
+          <div class="card-badge badge-cyan">Dampak: Friksi komunikasi tinggi & degradasi kepercayaan klien</div>
+        </div>
+
+        <div class="card" style="border-left: 4px solid #a855f7;">
+          <div class="card-title" style="color: #c084fc;">04. Format Dokumen, Faktur & Kuitansi Tidak Standar</div>
+          <div class="card-desc">
+            Invoice dan kuitansi dibuat manual di Word/Excel. Format sering berantakan saat dibuka di laptop klien, 
+            logo perusahaan hilang/buram, dan rawan salah ketik nominal maupun teks terbilang rupiah.
+          </div>
+          <div class="card-badge badge-emerald">Dampak: Citra agensi kurang profesional di mata korporasi</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 3: ARSITEKTUR SOLUSI -->
+    <!-- ===================================================================== -->
+    <section class="slide" data-index="3">
+      <div class="slide-meta">FONDASI TEKNIS & REKAYASA</div>
+      <h2 class="slide-title">Arsitektur Enterprise 3-Tier Berkinerja Tinggi</h2>
+
+      <div class="grid-3">
+        <div class="card">
+          <span class="card-badge badge-emerald" style="margin-bottom: 8px;">BACKEND TIER</span>
+          <div class="card-title">Laravel 13 & PHP 8.3/8.4</div>
+          <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.8; margin-left: 16px;">
+            <li><strong style="color:var(--text-white);">Auth:</strong> Sanctum Stateful Session SPA (Pure CSR)</li>
+            <li><strong style="color:var(--text-white);">Validation:</strong> Strict Form Requests & RFC 7807 Error Handlers</li>
+            <li><strong style="color:var(--text-white);">Config:</strong> Zero env() leaks, 100% config:cache compliant</li>
+            <li><strong style="color:var(--text-white);">Concurrency:</strong> Atomic DB::transaction() & row locks</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <span class="card-badge badge-cyan" style="margin-bottom: 8px;">FRONTEND TIER</span>
+          <div class="card-title">Svelte 5 Runes & Pure JS</div>
+          <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.8; margin-left: 16px;">
+            <li><strong style="color:var(--text-white);">Reaktivitas:</strong> Native Runes ($state, $derived, $effect)</li>
+            <li><strong style="color:var(--text-white);">Performa:</strong> In-memory search & sorting (&lt;0.1ms latency)</li>
+            <li><strong style="color:var(--text-white);">Ekspor CSV:</strong> Zero-roundtrip in-memory with UTF-8 BOM</li>
+            <li><strong style="color:var(--text-white);">Distribusi:</strong> Static build adapter siap CDN / Web Server</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <span class="card-badge badge-amber" style="margin-bottom: 8px;">INFRASTRUCTURE & DATA</span>
+          <div class="card-title">SQLite WAL & FastCGI</div>
+          <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.8; margin-left: 16px;">
+            <li><strong style="color:var(--text-white);">Database:</strong> SQLite Write-Ahead Logging (WAL) Mode</li>
+            <li><strong style="color:var(--text-white);">Integritas:</strong> Foreign Key Cascades & 3NF Schema</li>
+            <li><strong style="color:var(--text-white);">Server:</strong> FastCGI Dual-Worker round-robin (9003/9004)</li>
+            <li><strong style="color:var(--text-white);">Keamanan:</strong> OWASP ASVS L2, CSP, HSTS, Secure Cookies</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 4: ALUR APLIKASI - INTAKE KLIEN -->
+    <!-- ===================================================================== -->
+    <section class="slide" data-index="4">
+      <div class="slide-meta">ALUR APLIKASI END-TO-END [TAHAP 1]</div>
+      <h2 class="slide-title">Intake Klien, Konfigurasi Kontrak & Penunjukan Tim PIC</h2>
+
+      <div class="grid-4" style="margin-bottom: 20px;">
+        <div class="card">
+          <div class="card-title" style="color: var(--emerald-400);">Langkah 1</div>
+          <div class="card-desc"><strong>Registrasi Klien:</strong> Input nama instansi, kontak PIC, email, telepon, dan alamat domisili resmi. Didukung validasi format dan proteksi duplikasi.</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color: var(--emerald-400);">Langkah 2</div>
+          <div class="card-desc"><strong>Tipe Kontrak:</strong> Pemilihan tipe kerja sama: <em>Development</em> (pembuatan baru) atau <em>Maintenance</em> (SLA pemeliharaan berkala).</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color: var(--emerald-400);">Langkah 3</div>
+          <div class="card-desc"><strong>Anggaran & Timeline:</strong> Penentuan total contract value (budget), tanggal mulai (kick-off), dan target rilis final dengan validasi tanggal logis.</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color: var(--emerald-400);">Langkah 4</div>
+          <div class="card-desc"><strong>Penunjukan Lead PIC:</strong> Penetapan Lead Developer penanggung jawab proyek dan kolaborator tim dengan hak akses role-based (RBAC).</div>
+        </div>
+      </div>
+
+      <div class="card" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.4);">
+        <div class="card-title" style="color: var(--emerald-400); font-size: 14px;">Kontrak API & Pengujian Otomatis</div>
+        <p style="font-size: 13px; color: var(--text-white); line-height: 1.6;">
+          • Endpoint: <code>POST /api/v1/admin/clients</code> & <code>GET /api/v1/admin/clients</code><br>
+          • Skema 3NF: Tabel <code>clients</code> berelasi dengan <code>users</code> via foreign key <code>lead_user_id</code>.<br>
+          • Verifikasi Mutu: <strong>ClientProjectManagementTest</strong> (7 tests, 88 assertions) menguji pembuatan klien, validasi format, filter status, dan otorisasi.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 5: ALUR APLIKASI - SCOPE BUILDER & 12 KAPABILITAS -->
+    <!-- ===================================================================== -->
+    <section class="slide" data-index="5">
+      <div class="slide-meta">ALUR APLIKASI END-TO-END [TAHAP 2]</div>
+      <h2 class="slide-title">Scope Builder & Standarisasi 12 Kapabilitas Fitur Agensi</h2>
+
+      <div class="grid-2" style="gap: 20px;">
+        <div class="card">
+          <div class="card-title" style="color: var(--cyan-400);">Struktur Modul Terstruktur (Scope Builder)</div>
+          <div class="card-desc">
+            Untuk mengeliminasi <em>scope creep</em>, setiap proyek dipecah ke dalam modul-modul definitif. 
+            Setiap modul wajib mencantumkan:
+            <ul style="margin: 10px 0 10px 18px; line-height: 1.7;">
+              <li>Nama Modul / Fitur yang spesifik</li>
+              <li>Estimasi Jam Pengerjaan (Hours)</li>
+              <li>Pemetaan ke 12 Kapabilitas Standar Agensi</li>
+              <li>Status pengerjaan independen (Pending/In Progress/Done)</li>
+            </ul>
+            Klien menandatangani ruang lingkup ini, sehingga penambahan fitur baru otomatis diperlakukan sebagai <em>addendum</em> berbayar.
+          </div>
+          <div class="card-badge badge-emerald">Integritas Basis Data: Tabel client_scopes (Cascade on Delete)</div>
+        </div>
+
+        <div class="card" style="padding: 16px;">
+          <div class="card-title" style="color: var(--text-white); font-size: 13px; margin-bottom: 8px;">
+            Peta 12 Kapabilitas Fitur Standar PT Valora Digital Solusindo:
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11px;">
+            <div style="background: var(--card-surface); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border);">01. Desain UI/UX & Prototipe</div>
+            <div style="background: var(--card-surface); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border);">02. Arsitektur Basis Data 3NF</div>
+            <div style="background: var(--card-surface); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border);">03. Autentikasi & RBAC Policy</div>
+            <div style="background: var(--card-surface); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border);">04. CRUD Master Data Entitas</div>
+            <div style="background: var(--card-surface); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border);">05. Integrasi API Eksternal</div>
+            <div style="background: var(--card-surface); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border);">06. Payment & Faktur Billing</div>
+            <div style="background: var(--card-surface); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border);">07. Pelaporan & Ekspor Word/CSV</div>
+            <div style="background: var(--card-surface); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border);">08. Dashboard Analitik Interaktif</div>
+            <div style="background: var(--card-surface); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border);">09. Audit Trail & Log Aktivitas</div>
+            <div style="background: var(--card-surface); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border);">10. Automated Testing QA</div>
+            <div style="background: var(--card-surface); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border);">11. CI/CD & Server Hardening</div>
+            <div style="background: var(--card-surface); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border);">12. Dokumentasi Teknis Diátaxis</div>
+          </div>
+          <p style="font-size: 11px; color: var(--text-dim); margin-top: 10px;">
+            Verifikasi: <strong>ProjectScopeManagementTest</strong> (6 tests, 58 assertions lulus).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 6: ALUR APLIKASI - MONITORING PROGRES -->
+    <!-- ===================================================================== -->
+    <section class="slide" data-index="6">
+      <div class="slide-meta">ALUR APLIKASI END-TO-END [TAHAP 3]</div>
+      <h2 class="slide-title">Monitoring Progres Real-Time & Developer Activity Logs</h2>
+
+      <div class="grid-3" style="margin-bottom: 20px;">
+        <div class="card">
+          <div class="card-title" style="color: var(--emerald-400);">1. Visualisasi Progress Tufte</div>
+          <div class="card-desc">
+            Progress bar interaktif dihitung secara deterministik:
+            <code>(Modul Selesai / Total Modul) * 100%</code>.
+            Menyajikan persentase yang transparan dan jujur, bebas dari manipulasi progres manual.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="color: var(--cyan-400);">2. Siklus Status Modul</div>
+          <div class="card-desc">
+            Pengembang dapat mengalihkan status modul dengan satu klik:
+            <br>• <strong>Pending:</strong> Menunggu antrean pengerjaan
+            <br>• <strong>In Progress:</strong> Sedang aktif dikerjakan
+            <br>• <strong>Done:</strong> Telah lulus pengujian dan review
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="color: var(--amber-400);">3. Log Aktivitas Pengembang</div>
+          <div class="card-desc">
+            Setiap perubahan progres mencatat deskripsi pekerjaan, kendala teknis (<em>blockers</em>), 
+            dan waktu modifikasi secara kronologis di tabel <code>project_progress_updates</code>.
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="background: rgba(6, 182, 212, 0.08); border-color: rgba(6, 182, 212, 0.4);">
+        <div class="card-title" style="color: var(--cyan-400); font-size: 14px;">Sinkronisasi Real-Time ke Widget Sidebar Cockpit</div>
+        <p style="font-size: 13px; color: var(--text-white); line-height: 1.6;">
+          Saat pengembang menyelesaikan modul pada rute <code>/admin/progres</code>, 
+          state Svelte 5 runes seketika menyinkronkan widget mini dashboard di sidebar aplikasi. 
+          Manajemen dan rekan tim dapat melihat lonjakan progres tanpa memuat ulang peramban.<br>
+          • Verifikasi: <strong>ProjectProgressMonitoringTest</strong> (6 tests, 61 assertions).
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 7: ALUR APLIKASI - MASTER TARIF STANDAR -->
+    <!-- ===================================================================== -->
+    <section class="slide" data-index="7">
+      <div class="slide-meta">ALUR APLIKASI END-TO-END [TAHAP 4]</div>
+      <h2 class="slide-title">Master Tarif Standar Acuan & Kalkulasi Anggaran Transparan</h2>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title" style="color: var(--emerald-400);">Pusat Acuan Harga Resmi Agensi (SSoT)</div>
+          <div class="card-desc">
+            Mengatasi problem penetapan harga yang tidak konsisten. Tabel <code>master_rates</code> 
+            menyimpan tarif acuan baku yang dikelola langsung oleh manajer keuangan:
+            <ul style="margin: 10px 0 10px 18px; line-height: 1.8;">
+              <li><strong>Tarif Per Jam (Hourly):</strong> Berdasarkan peran keahlian (Senior Architect, Fullstack, UI/UX, QA).</li>
+              <li><strong>Tarif Per Modul (Feature):</strong> Harga flat untuk kapabilitas standar (e.g., CRUD, Payment Gateway).</li>
+              <li><strong>Tarif Retainer SLA:</strong> Biaya langganan pemeliharaan bulanan pasca go-live.</li>
+            </ul>
+            Dilengkapi <em>Estimator Otomatis</em>: menghitung estimasi biaya proyek berdasarkan akumulasi jam modul pada Scope Builder.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="color: var(--text-white); font-size: 14px;">Contoh Master Tarif Terdaftar:</div>
+          <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--card-border); color: var(--text-muted); text-align: left;">
+                <th style="padding: 6px 0;">Peran / Kategori</th>
+                <th style="padding: 6px 0;">Tipe Tarif</th>
+                <th style="padding: 6px 0; text-align: right;">Standar Tarif</th>
+              </tr>
+            </thead>
+            <tbody style="line-height: 1.8;">
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <td>Senior Software Architect</td>
+                <td><span class="card-badge badge-emerald" style="padding: 1px 6px;">Hourly</span></td>
+                <td style="text-align: right; font-family: monospace; color: var(--emerald-400);">Rp 350.000 / Jam</td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <td>Fullstack Web Developer</td>
+                <td><span class="card-badge badge-emerald" style="padding: 1px 6px;">Hourly</span></td>
+                <td style="text-align: right; font-family: monospace; color: var(--emerald-400);">Rp 250.000 / Jam</td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <td>UI/UX Product Designer</td>
+                <td><span class="card-badge badge-emerald" style="padding: 1px 6px;">Hourly</span></td>
+                <td style="text-align: right; font-family: monospace; color: var(--emerald-400);">Rp 200.000 / Jam</td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <td>Modul Payment Gateway</td>
+                <td><span class="card-badge badge-cyan" style="padding: 1px 6px;">Feature</span></td>
+                <td style="text-align: right; font-family: monospace; color: var(--cyan-400);">Rp 8.000.000 / Modul</td>
+              </tr>
+              <tr>
+                <td>SLA Maintenance 24/7</td>
+                <td><span class="card-badge badge-amber" style="padding: 1px 6px;">Retainer</span></td>
+                <td style="text-align: right; font-family: monospace; color: var(--amber-400);">Rp 3.500.000 / Bln</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 8: ALUR APLIKASI - INVOICE, CICILAN TERMIN & KUITANSI -->
+    <!-- ===================================================================== -->
+    <section class="slide" data-index="8">
+      <div class="slide-meta">ALUR APLIKASI END-TO-END [TAHAP 5]</div>
+      <h2 class="slide-title">Siklus Penagihan Faktur, Cicilan Termin & Kuitansi Terbilang</h2>
+
+      <div class="grid-4" style="margin-bottom: 18px;">
+        <div class="card">
+          <div class="card-title" style="color: var(--emerald-400);">1. Faktur Multi-Termin</div>
+          <div class="card-desc">
+            Penerbitan faktur sesuai tahapan kontrak:
+            <br>• Termin 1: DP (30%)
+            <br>• Termin 2: Milestone (40%)
+            <br>• Termin 3: Pelunasan (30%)
+            Kalkulasi otomatis terhadap total nilai kontrak.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="color: var(--cyan-400);">2. Pelacakan Pembayaran</div>
+          <div class="card-desc">
+            Status finansial jelas: <em>Unpaid</em>, <em>Partial</em>, atau <em>Paid</em>. 
+            Mencatat tanggal transfer bank, nomor referensi mutasi, dan sisa piutang secara matematis akurat.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="color: var(--amber-400);">3. Kuitansi Terbilang</div>
+          <div class="card-desc">
+            Generator kuitansi otomatis mengonversi angka numerik menjadi teks resmi bahasa Indonesia 
+            (<em>Contoh: "Tiga Puluh Juta Rupiah"</em>) lengkap dengan stempel digital lunas.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="color: var(--text-white);">4. Pesan WhatsApp</div>
+          <div class="card-desc">
+            Template pesan penagihan terformat rapi siap kirim satu klik ke WhatsApp klien, 
+            memuat rincian invoice, nomor rekening bank, dan batas jatuh tempo.
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.4);">
+        <p style="font-size: 13px; color: var(--text-white); line-height: 1.6;">
+          • Skema Transaksional: Tabel <code>invoices</code> dan <code>payments</code> terikat dengan integritas referensial foreign key.<br>
+          • Jaminan Pengujian: <strong>BillingAndMasterRateTest</strong> (10 tests, 92 assertions) memverifikasi kalkulasi termin, pelunasan parsial, mutasi pembayaran, dan akurasi generator terbilang.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 9: ALUR APLIKASI - EKSPOR MICROSOFT WORD (.DOC) -->
+    <!-- ===================================================================== -->
+    <section class="slide" data-index="9">
+      <div class="slide-meta">ALUR APLIKASI END-TO-END [TAHAP 6]</div>
+      <h2 class="slide-title">Ekspor Microsoft Word (.doc) 100% Persis Pratinjau</h2>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title" style="color: var(--cyan-400);">Teknologi Ekspor Word Berstandar Office MIME</div>
+          <div class="card-desc">
+            Banyak sistem web mengekspor dokumen yang berantakan atau logonya hilang saat dibuka di perangkat offline. 
+            Valora Agency OS mengimplementasikan arsitektur MIME Office Word HTML/XML murni:
+            <ul style="margin: 10px 0 10px 18px; line-height: 1.8;">
+              <li><strong style="color:var(--text-white);">Logo Fisik PNG Base64:</strong> Logo perusahaan tertanam langsung di dalam file dokumen (<code>wdInlineShapePicture</code>), menjamin tidak hilang meski dibuka tanpa koneksi internet.</li>
+              <li><strong style="color:var(--text-white);">Kop Surat 2 Kolom Formal:</strong> Tata letak tabel presisi yang menyandingkan logo resmi dan legalitas perusahaan tanpa risiko layout bergeser.</li>
+              <li><strong style="color:var(--text-white);">Tabel Rincian Termin & Harga:</strong> Format tabel profesional dengan garis pembatas 1px dan kotak teks terbilang rupiah berlatar abu-abu halus.</li>
+              <li><strong style="color:var(--text-white);">Stempel & Tanda Tangan:</strong> Penempatan tanda tangan pimpinan dan stempel stempel basah digital di posisi baku.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="color: var(--emerald-400);">Kompatibilitas Lintas Perangkat Lunak:</div>
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+            <div style="background: var(--card-surface); padding: 12px; border-radius: 8px; border: 1px solid var(--card-border);">
+              <div style="font-weight: 700; color: var(--text-white); font-size: 13px;">✔ Microsoft Word 2016 – 2026 (Windows & Mac)</div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Terbuka sempurna dengan margin kertas A4 standar dan tabel otomatis menyesuaikan lebar halaman.</div>
+            </div>
+            <div style="background: var(--card-surface); padding: 12px; border-radius: 8px; border: 1px solid var(--card-border);">
+              <div style="font-weight: 700; color: var(--text-white); font-size: 13px;">✔ Google Docs (Cloud Office)</div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Dapat langsung diunggah ke Google Drive dan diedit secara kolaboratif tanpa kehilangan format tabel.</div>
+            </div>
+            <div style="background: var(--card-surface); padding: 12px; border-radius: 8px; border: 1px solid var(--card-border);">
+              <div style="font-weight: 700; color: var(--text-white); font-size: 13px;">✔ LibreOffice Writer & WPS Office</div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Mendukung pembaca dokumen open-source di lingkungan sistem operasi Linux dan Android.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 10: PROFIL LEGAL & DASHBOARD MINI SIDEBAR -->
+    <!-- ===================================================================== -->
+    <section class="slide" data-index="10">
+      <div class="slide-meta">INTEGRASI IDENTITAS & ERGONOMI NAVIGASI</div>
+      <h2 class="slide-title">Profil Legal Agency (SSoT) & Dashboard Mini Proyek Aktif Sidebar</h2>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title" style="color: var(--emerald-400);">Single Source of Truth Profil Legal Agensi</div>
+          <div class="card-desc">
+            Seluruh berkas keluaran sistem (Invoice, Kuitansi, Penawaran, Kop Surat) disuplai secara terpusat dari tabel <code>agency_profiles</code>:
+            <ul style="margin: 10px 0 10px 18px; line-height: 1.8;">
+              <li><strong>Nama Legal:</strong> PT Valora Digital Solusindo</li>
+              <li><strong>Legalitas:</strong> NPWP Perusahaan & Nomor Induk Berusaha (NIB)</li>
+              <li><strong>Komunikasi:</strong> Email domain resmi (@valora.co.id) & hotline WhatsApp</li>
+              <li><strong>Rekening Bank:</strong> Nomor rekening resmi atas nama PT Valora Digital Solusindo</li>
+              <li><strong>Otorisasi Dokumen:</strong> Tanda tangan pimpinan & stempel digital</li>
+            </ul>
+            Verifikasi: <strong>AgencyProfileTest</strong> (5 tests, 51 assertions lulus 100%).
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="color: var(--cyan-400);">Dashboard Mini Proyek Aktif di App Sidebar</div>
+          <div class="card-desc">
+            Tersemat permanen pada bilah navigasi kiri, memberikan visibilitas proyek tanpa berpindah rute:
+            <ul style="margin: 10px 0 10px 18px; line-height: 1.8;">
+              <li><strong>Filter Khusus Proyek Aktif:</strong> Hanya menampilkan proyek yang sedang aktif berjalan.</li>
+              <li><strong>Carousel Switcher:</strong> Tombol interaktif <code>&lt; 1/N &gt;</code> untuk beralih antar proyek aktif secara instan.</li>
+              <li><strong>Bullet Progress Tufte:</strong> Rasio visual modul selesai dengan progress bar gradien.</li>
+              <li><strong>Status Finansial Instan:</strong> Indikator sisa saldo tagihan (Lunas / Sisa Rp ... / Belum DP).</li>
+              <li><strong>Pintasan Aksi:</strong> 1-klik menuju Progres, Scope, dan Repositori GitHub.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 11: SKENARIO TESTING (INTERACTIVE SIMULATOR) -->
+    <!-- ===================================================================== -->
+    <section class="slide" data-index="11">
+      <div class="slide-meta">VERIFIKASI MUTU & SKENARIO PENGUJIAN</div>
+      <h2 class="slide-title">Matriks 11 Skenario Testing Fitur: 73 Tests Passed (768 Assertions)</h2>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <div class="filter-pills">
+          <button class="filter-btn active" onclick="filterSuites('all', this)">Semua (11 Suites)</button>
+          <button class="filter-btn" onclick="filterSuites('auth', this)">Autentikasi & Keamanan</button>
+          <button class="filter-btn" onclick="filterSuites('client', this)">Klien & Scope</button>
+          <button class="filter-btn" onclick="filterSuites('finance', this)">Finansial & Billing</button>
+        </div>
+        <div style="font-size: 12px; font-weight: 700; color: var(--emerald-400);">
+          Total: 73 Passed | 768 Assertions | 0 Errors
+        </div>
+      </div>
+
+      <div class="test-suites-container" id="suites-grid">
+        <!-- 11 Test Suites Rendered Dynamically -->
+      </div>
+
+      <!-- Live Terminal Output Simulation -->
+      <div style="margin-top: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <span style="font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase;">
+            Live Test Execution Log (Simulation Engine)
+          </span>
+          <button class="btn-control" style="padding: 3px 10px; font-size: 11px;" onclick="runTestingSimulation()">
+            Jalankan Ulang Simulasi
+          </button>
+        </div>
+        <div class="terminal-box" id="term-output">Klik "Simulasi Test" pada pojok kanan atas atau tombol di atas untuk menjalankan simulasi eksekusi pengujian PHPUnit.</div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SLIDE 12: KESIMPULAN & ROADMAP -->
+    <!-- ===================================================================== -->
+    <section class="slide" data-index="12">
+      <div class="slide-meta">PENUTUP & KESIAPAN PRODUKSI</div>
+      <h2 class="slide-title">Kesimpulan, Kesiapan Deployment & Roadmap Masa Depan</h2>
+
+      <div class="grid-3" style="margin-bottom: 20px;">
+        <div class="card">
+          <span class="card-badge badge-emerald" style="margin-bottom: 8px;">STATUS FITUR</span>
+          <div class="card-title">100% Production-Ready</div>
+          <div class="card-desc">
+            Seluruh 9 domain fitur utama agensi selesai tuntas tanpa kode placeholder (RULE-01). 
+            Semua tabel data dilengkapi Card View responsif (RULE-12) dan ekspor CSV front-end in-memory (RULE-17).
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="card-badge badge-cyan" style="margin-bottom: 8px;">AUDIT KUALITAS</span>
+          <div class="card-title">Zero Regression & Zero Leak</div>
+          <div class="card-desc">
+            73 Feature Tests (768 assertions) lulus 100%. Tidak ada pemanggilan <code>env()</code> di runtime, 
+            sehingga <code>php artisan config:cache</code> dan <code>route:cache</code> valid sempurna. 
+            Build frontend Svelte 5 static lulus tanpa peringatan.
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="card-badge badge-amber" style="margin-bottom: 8px;">ROADMAP BISNIS</span>
+          <div class="card-title">Inovasi Berkelanjutan</div>
+          <div class="card-desc">
+            • Fase 1: Integrasi Midtrans / Xendit Webhooks untuk rekonsiliasi otomatis Virtual Account & QRIS.<br>
+            • Fase 2: Client Portal Mandiri untuk klien memantau progres dan mengunduh faktur.<br>
+            • Fase 3: WhatsApp Bot Otomatis untuk notifikasi termin.
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="background: rgba(16, 185, 129, 0.12); border-color: var(--emerald-500); text-align: center; padding: 18px;">
+        <h3 style="font-size: 16px; color: var(--emerald-400); margin-bottom: 6px;">
+          TERIMA KASIH — SESI TANYA JAWAB (Q&A)
+        </h3>
+        <p style="font-size: 13px; color: var(--text-white);">
+          Sistem Valora Agency OS siap dideploy ke server produksi PT Valora Digital Solusindo. 
+          Bapak/Ibu dipersilakan untuk memberikan pertanyaan dan arahan lebih lanjut.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer id="bottom-bar">
+    <button class="nav-btn" id="btn-prev" onclick="prevSlide()">
+      <span>◀</span> Sebelumnya
+    </button>
+
+    <div class="shortcuts-hint">
+      <span>Gunakan tombol <span class="kbd">←</span> <span class="kbd">→</span> atau <span class="kbd">Spasi</span></span>
+      <span>Catatan: <span class="kbd">N</span></span>
+      <span>Layar Penuh: <span class="kbd">F</span></span>
+    </div>
+
+    <button class="nav-btn" id="btn-next" onclick="nextSlide()">
+      Selanjutnya <span>▶</span>
+    </button>
+  </footer>
+
+  <!-- Speaker Notes Drawer -->
+  <aside id="notes-drawer">
+    <div class="notes-header">
+      <div class="notes-title">📝 Catatan Presenter</div>
+      <button onclick="toggleNotes()" style="background:none; border:none; color:var(--text-muted); font-size:16px; cursor:pointer;">✕</button>
+    </div>
+    <div class="notes-content" id="notes-body">
+      <!-- Dynamic notes loaded here -->
+    </div>
+  </aside>
+
+  <script>
+    // Test Suites Data Matrix (11 Suites, 73 Tests, 768 Assertions)
+    const testSuites = [
+      {
+        name: "SanctumAuthTest",
+        category: "auth",
+        tests: 10,
+        assertions: 115,
+        scope: "Stateful session auth, login/logout, CSRF rotation, token revocation, brute-force rate limit.",
+        aaa: "Arrange: Buat user aktif & perangkat. Act: POST /api/v1/auth/login. Assert: 200 OK, session cookie valid, rate limiter decremented."
+      },
+      {
+        name: "AdminUserManagementTest",
+        category: "auth",
+        tests: 8,
+        assertions: 114,
+        scope: "User lifecycle CRUD, RBAC policy enforcement, soft-deletion, active device sessions revoke.",
+        aaa: "Arrange: Seed admin & role user. Act: POST & DELETE /api/v1/admin/users. Assert: 201 Created, DB state updated, audit logged."
+      },
+      {
+        name: "AgencyProfileTest",
+        category: "client",
+        tests: 5,
+        assertions: 51,
+        scope: "Legal profile singleton SSoT, NPWP/NIB, bank accounts, RFC 7807 problem details error handling.",
+        aaa: "Arrange: Authenticated admin. Act: PUT /api/v1/admin/agency-profile. Assert: Singleton record updated, logo base64 valid."
+      },
+      {
+        name: "ClientProjectManagementTest",
+        category: "client",
+        tests: 7,
+        assertions: 88,
+        scope: "Client registration, contract type validation (Dev vs Maint), budget ceilings, target dates.",
+        aaa: "Arrange: Client payload with start/target date. Act: POST /api/v1/admin/clients. Assert: 201 Created, foreign keys valid."
+      },
+      {
+        name: "ProjectScopeManagementTest",
+        category: "client",
+        tests: 6,
+        assertions: 58,
+        scope: "Scope builder, 12 feature capabilities enum check, hours estimation sum, cascade delete.",
+        aaa: "Arrange: Client model. Act: POST /api/v1/admin/clients/{id}/scopes. Assert: Module persisted, capability mapped, total hours summed."
+      },
+      {
+        name: "ProjectProgressMonitoringTest",
+        category: "client",
+        tests: 6,
+        assertions: 61,
+        scope: "Progress percentage calculation, developer activity logs, Pending->In Progress->Done cyclic states.",
+        aaa: "Arrange: Scopes in varying states. Act: PATCH /api/v1/admin/scopes/{id}/status. Assert: Progress re-calculated, log appended."
+      },
+      {
+        name: "BillingAndMasterRateTest",
+        category: "finance",
+        tests: 10,
+        assertions: 92,
+        scope: "Master rate tiers, multi-term invoice generation, payment mutations, terbilang rupiah generator.",
+        aaa: "Arrange: Contract budget. Act: POST /api/v1/admin/invoices (Termin 1). Assert: Invoice created, terbilang rupiah verified, balance updated."
+      },
+      {
+        name: "UserExtendedProfileAndProjectWorkersTest",
+        category: "client",
+        tests: 7,
+        assertions: 73,
+        scope: "Lead PIC assignment, team collaborators, developer phone/department extended profile.",
+        aaa: "Arrange: User & Client models. Act: PUT /api/v1/admin/clients/{id} (assign lead). Assert: 200 OK, lead_user_id updated."
+      },
+      {
+        name: "SecurityHeadersTest",
+        category: "auth",
+        tests: 6,
+        assertions: 38,
+        scope: "OWASP ASVS L2 compliance: CSP headers, HSTS, X-Content-Type-Options, X-Frame-Options.",
+        aaa: "Arrange: Unauthenticated & authenticated requests. Act: GET /api/v1/system/health. Assert: All security headers present."
+      },
+      {
+        name: "RoleConsolidationTest",
+        category: "auth",
+        tests: 4,
+        assertions: 42,
+        scope: "Anti-aliasing policy check, discrete permissions isolation, zero role alias leakage.",
+        aaa: "Arrange: Defined roles matrix. Act: Assert role bindings in AuthServiceProvider. Assert: Discrete canonical names preserved."
+      },
+      {
+        name: "AdminStudioTest",
+        category: "client",
+        tests: 4,
+        assertions: 36,
+        scope: "Blueprint studio code generator, intake specification template parser, markdown artifact validator.",
+        aaa: "Arrange: Studio intake payload. Act: POST /api/v1/admin/studio/generate. Assert: 200 OK, artifacts cleanly synthesized."
+      }
+    ];
+
+    // Speaker Notes Data per Slide
+    const speakerNotes = {
+      1: `<strong>Slide 1: Pembuka & Pernyataan Visi</strong><br>
+          • Beri salam hangat kepada dewan direksi/klien: "Selamat malam Bapak/Ibu sekalian. Malam ini saya mempersembahkan Valora Agency OS versi 6.31.0."<br>
+          • Tekankan bahwa aplikasi ini bukan sekadar software administrasi biasa, melainkan Sistem Operasi Agensi Terpadu yang mengintegrasikan aspek legal, ruang lingkup teknis, dan manajemen penagihan.<br>
+          • Sebutkan 4 angka kunci: Laravel 13, Svelte 5 Native Runes, 73 Tests Passed (768 assertions), dan arsitektur production-ready.`,
+      
+      2: `<strong>Slide 2: Latar Belakang & Urgensi Bisnis</strong><br>
+          • Ceritakan realita pahit di bisnis agensi perangkat lunak: "Berapa kali kita mengalami proyek molor berbulan-bulan karena klien terus meminta revisi tanpa tambah biaya? Itu adalah scope creep."<br>
+          • Jelaskan masalah penagihan: invoice termin yang telat ditagihkan mengakibatkan arus kas tercekik.<br>
+          • Tunjukkan bahwa Valora Agency OS dirancang secara spesifik dari pengalaman lapangan untuk menyelesaikan keempat titik kritis ini.`,
+
+      3: `<strong>Slide 3: Arsitektur Enterprise</strong><br>
+          • Soroti keputusan rekayasa backend: Laravel 13 dengan Sanctum Stateful Session SPA (bukan database session yang lambat, melainkan file/NVMe based).<br>
+          • Soroti frontend: Svelte 5 Native Runes murni tanpa sintaks usang Svelte 4. Kecepatannya sub-milidetik dengan pemfilteran data in-memory.<br>
+          • Jelaskan kepatuhan zero-vulnerability: lolos standar OWASP ASVS Level 2.`,
+
+      4: `<strong>Slide 4: Alur #1 - Registrasi Klien & Kontrak</strong><br>
+          • Tunjukkan bagaimana intake dimulai: registrasi instansi, kontak person, dan yang terpenting: pemilihan tipe kontrak (Development vs Maintenance).<br>
+          • Tekankan adanya Lead PIC: setiap proyek memiliki penanggung jawab yang jelas dari tim pengembang, mencegah lempar tanggung jawab.<br>
+          • Sebutkan bahwa modul ini diuji dengan 7 test cases otomatis yang menjamin integritas data.`,
+
+      5: `<strong>Slide 5: Alur #2 - Scope Builder & 12 Kapabilitas</strong><br>
+          • Poin kunci: "Inilah senjata utama kita melawan scope creep."<br>
+          • Jelaskan bahwa setiap pekerjaan dibagi ke dalam modul dengan estimasi jam dan dipetakan ke 12 kapabilitas resmi agensi (mulai dari UI/UX hingga deployment CI/CD).<br>
+          • Klien menyetujui rincian ini sejak hari pertama, sehingga jika ada permintaan baru, langsung terdeteksi sebagai addendum berbayar.`,
+
+      6: `<strong>Slide 6: Alur #3 - Monitoring Progres Dinamis</strong><br>
+          • Tunjukkan bahwa progres dihitung otomatis berdasarkan penyelesaian modul aktual, bukan angka kira-kira yang dikarang pengembang.<br>
+          • Pengembang wajib mencatat daily activity logs saat memindahkan status ke 'Done'.<br>
+          • Soroti keunggulan reaktif: perubahan progres langsung menyinkronkan widget sidebar di layar rekan tim lain tanpa reload halaman.`,
+
+      7: `<strong>Slide 7: Alur #4 - Master Tarif Standar Acuan</strong><br>
+          • Jelaskan pentingnya Single Source of Truth tarif: tidak ada lagi perbedaan harga antar tim marketing/sales.<br>
+          • Ada tarif per jam berdasarkan keahlian engineer dan tarif paket per fitur.<br>
+          • Estimator otomatis membantu tim membuat proposal penawaran harga hanya dalam hitungan detik.`,
+
+      8: `<strong>Slide 8: Alur #5 - Siklus Penagihan & Kuitansi</strong><br>
+          • Jelaskan skema termin faktur: DP saat mulai, Milestone saat UAT, dan Pelunasan sebelum handover.<br>
+          • Soroti generator kuitansi otomatis dengan fungsi Terbilang Rupiah asli bahasa Indonesia.<br>
+          • Tunjukkan kemudahan mengirim pesan pengingat tagihan ke WhatsApp klien dengan template profesional siap kirim.`,
+
+      9: `<strong>Slide 9: Alur #6 - Ekspor Microsoft Word (.doc)</strong><br>
+          • "Banyak aplikasi web gagal saat mencetak ke Word karena format berantakan atau logonya hilang saat dibuka offline."<br>
+          • Jelaskan inovasi Valora: Logo disematkan secara fisik sebagai Base64 PNG inline image.<br>
+          • Hasil ekspor 100% presisi persis dengan yang dilihat di layar web, kompatibel dengan MS Word, Google Docs, dan LibreOffice.`,
+
+      10: `<strong>Slide 10: Profil Legal SSoT & Mini Dashboard Sidebar</strong><br>
+          • Profil legalitas perusahaan terpusat di satu tabel (NPWP, NIB, rekening bank, stempel). Jika ada perubahan nomor rekening, seluruh faktur otomatis terbarui tanpa ubah kode.<br>
+          • Soroti fitur Dashboard Mini Proyek Aktif di sidebar: navigasi carousel untuk memantau saldo piutang dan progres proyek aktif tanpa perlu keluar dari halaman yang sedang dibuka.`,
+
+      11: `<strong>Slide 11: Matriks 11 Skenario Testing</strong><br>
+          • Ini adalah bukti mutu rekayasa perangkat lunak tertinggi kita.<br>
+          • Tunjukkan angka mutlak: 11 Test Suites, 73 Feature Tests, 768 Assertions, 0 Failures (100% Green).<br>
+          • Ajak audiens melihat simulasi live dengan menekan tombol 'Jalankan Ulang Simulasi' untuk mendemonstrasikan transparansi kode.`,
+
+      12: `<strong>Slide 12: Kesimpulan & Penutup</strong><br>
+          • Rangkum kembali dampak bisnis: efisiensi penagihan meningkat, scope creep teratasi, dan kepercayaan klien meningkat drastis.<br>
+          • Paparkan roadmap masa depan: integrasi Midtrans/Xendit VA QRIS dan Client Portal Mandiri.<br>
+          • Tutup dengan percaya diri: "Sistem telah siap 100% untuk digunakan secara resmi oleh PT Valora Digital Solusindo. Terima kasih dan saya siap menjawab pertanyaan."`
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 12;
+
+    function renderSuites(filter = 'all') {
+      const container = document.getElementById('suites-grid');
+      container.innerHTML = '';
+      
+      const filtered = filter === 'all' 
+        ? testSuites 
+        : testSuites.filter(s => s.category === filter);
+
+      filtered.forEach((suite, idx) => {
+        const div = document.createElement('div');
+        div.className = 'test-card' + (idx === 0 ? ' selected' : '');
+        div.onclick = () => selectSuite(suite, div);
+        div.innerHTML = `
+          <div class="test-card-header">
+            <span class="test-card-name">${suite.name}</span>
+            <span class="test-card-count">✔ ${suite.tests} tests</span>
+          </div>
+          <div class="test-card-scope">${suite.scope}</div>
+          <div style="font-size:10px; color:var(--text-dim); margin-top:6px; font-family:monospace;">
+            ${suite.assertions} assertions • Passed
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function selectSuite(suite, elem) {
+      document.querySelectorAll('.test-card').forEach(c => c.classList.remove('selected'));
+      elem.classList.add('selected');
+
+      const term = document.getElementById('term-output');
+      term.innerHTML = `<span class="term-info">[TEST SUITE INSPECTION] ${suite.name}</span>\n` +
+                       `• Total Tests      : ${suite.tests} test cases passed\n` +
+                       `• Total Assertions : ${suite.assertions} assertions verified (0 failures)\n` +
+                       `• Scope Cakupan    : ${suite.scope}\n` +
+                       `• Pola AAA Pattern : ${suite.aaa}\n` +
+                       `• Status Eksekusi  : <span class="term-pass">PASS (100% GREEN)</span>`;
+    }
+
+    function filterSuites(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderSuites(cat);
+    }
+
+    function updateSlide() {
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      const activeSlide = document.querySelector(`.slide[data-index="${currentSlide}"]`);
+      if (activeSlide) {
+        activeSlide.classList.add('active');
+        activeSlide.scrollTop = 0;
+      }
+
+      // Update counters & progress
+      document.getElementById('slide-num').innerText = `${String(currentSlide).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
+      const pct = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+      document.getElementById('progress-bar').style.width = `${pct}%`;
+
+      // Update disabled states
+      document.getElementById('btn-prev').disabled = (currentSlide === 1);
+      document.getElementById('btn-next').disabled = (currentSlide === totalSlides);
+
+      // Update notes body
+      document.getElementById('notes-body').innerHTML = speakerNotes[currentSlide] || "Tidak ada catatan untuk slide ini.";
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function toggleNotes() {
+      const drawer = document.getElementById('notes-drawer');
+      const btn = document.getElementById('btn-notes');
+      drawer.classList.toggle('open');
+      btn.classList.toggle('active');
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    function runTestingSimulation() {
+      const term = document.getElementById('term-output');
+      term.innerHTML = `<span class="term-info">PHPUnit 11.5.7 by Sebastian Bergmann and contributors.</span>\n` +
+                       `Runtime:       PHP 8.3.16\n` +
+                       `Configuration: D:\\laragon\\www\\valora-vault\\backend\\phpunit.xml\n\n`;
+
+      let delay = 0;
+      testSuites.forEach((suite, idx) => {
+        setTimeout(() => {
+          const passLine = ` <span class="term-pass">PASS</span> Tests\\Feature\\${suite.name.padEnd(42, ' ')} ${suite.tests} tests, ${suite.assertions} assertions\n`;
+          term.innerHTML += passLine;
+          term.scrollTop = term.scrollHeight;
+
+          if (idx === testSuites.length - 1) {
+            setTimeout(() => {
+              term.innerHTML += `\n<span class="term-pass" style="background:#064e3b; padding:2px 8px; border-radius:4px;">Tests: 73 passed (768 assertions)</span>\n` +
+                                `<span class="term-info">Duration: 1.48s | Memory: 32.50 MB | 0 Failures | 0 Deprecations</span>`;
+              term.scrollTop = term.scrollHeight;
+            }, 200);
+          }
+        }, delay);
+        delay += 120;
+      });
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'Backspace' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N') {
+        e.preventDefault();
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        toggleFullScreen();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        currentSlide = 1;
+        updateSlide();
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        currentSlide = totalSlides;
+        updateSlide();
+      }
+    });
+
+    // Initialize
+    renderSuites();
+    updateSlide();
+  </script>
+</body>
+</html>

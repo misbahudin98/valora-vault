@@ -1,5 +1,5 @@
-# Hyperion Vault - AI Fast Index & Token Optimizer (v6.31.0)
-> Target: Laravel 13 Sanctum + SQLite/MySQL + Svelte 5 Runes on Windows Laragon / Hostinger Shared Hosting. Synchronized with PQTM enterprise production standard.
+# Valora Vault (Hyperion Engine) - AI Fast Index & Token Optimizer (v6.31.0)
+> Target: Valora Agency OS (Laravel 13 Sanctum + SQLite/MySQL + Svelte 5 Runes) on Windows Laragon / Hostinger Shared Hosting. Synchronized with PQTM enterprise production standard.
 
 ```yaml
 version: "6.31.0" # SemVer 2.0.0 (MAJOR.MINOR.PATCH)
@@ -8,7 +8,7 @@ backend: "Laravel 13 (PHP 8.3/8.4), Sanctum Session Auth, SQLite WAL / MySQL"
 frontend: "Svelte 5 (Pure JS Runes: $state, $derived, $props), Tailwind CSS v4"
 web_server: "Nginx Laragon (Zero-Config Universal Gateway: index.php + .htaccess Brotli/Gzip delivery)"
 installer_updater: "install.php (Web / CLI wizard, smart git ship 'php install.php ship', skill synchronizer 'php install.php sync-skills', project spawner 'php install.php spawn <target>', safe in-place updater 'php install.php update', .installed lock & history log)"
-domain: "http://hyperion-vault.test (aliases: localhost, 127.0.0.1)"
+domain: "http://valora-vault.test (aliases: localhost, 127.0.0.1, hyperion-vault.test)"
 scale_profile: "Indexed for 9000+ records (B-Tree composite indexes + 1000 item safe limit ceiling)"
 workers: "FastCGI 127.0.0.1:9003 & 9004 (PHP_FCGI_MAX_REQUESTS=0)"
 session_driver: "file (NVMe SSD I/O, ZERO MySQL connection overhead + physical unlink GC)"
@@ -17,7 +17,7 @@ rbac_engine: "Dynamic Role-Permission Matrix (backend/config/permissions.php + E
 css_engine: "Tailwind CSS v4 (@tailwindcss/vite: Rust LightningCSS engine, sub-ms build, 0 runtime)"
 slo: "99.0% Uptime, Latency P99 < 150ms (Actual: ~65ms), MySQL conns <= 0.16 / 25"
 security_profile: "Sanctum CSRF + HMAC-SHA256 JWT + Security Headers + POIN Defense + .installed Lock"
-test_status: "PHPUnit: 29 passed (376 assertions, 100% green) | Static Build: 0 warning a11y (100% Green)"
+test_status: "PHPUnit: 73 passed (768 assertions, 100% green) | Static Build: 0 errors (100% Green)"
 design_spec: "doc/design.md (Universal Dual-Theme: Daylight & Dark Obsidian, 2-Font Plus Jakarta/Inter, WCAG AAA)"
 feature_engine: "doc/prompt.feature.md (Track A Feature Synthesis, Track B Landing/Style, Track C Zero-Regression Refactoring)"
 ```
@@ -71,6 +71,10 @@ feature_engine: "doc/prompt.feature.md (Track A Feature Synthesis, Track B Landi
 | **Design Tokens & UI Branding** | `doc/design.md`<br>`frontend/src/app.html`<br>`frontend/src/routes/layout.css` | `backend/`, `install.php`, `index.php` |
 | **Desain, Warna, Kontras, Spasial & Animasi (GSAP)** | `doc/design.md`<br>`.agents/skills/landing-architect/references/ui_ux_motion_matrix.md`<br>`.agents/skills/discovery-architect/references/ui_ux_component_decision_matrix.md` | `backend/` |
 | **Dokumentasi Proyek & Panduan Multi-Persona** | `doc/project_documentation_standards.md` | `backend/tests/` |
+| **Klien & Proyek (Valora Agency OS)** | `doc/features/06_client_project_intake.md`<br>`backend/app/Http/Controllers/Api/V1/Admin/ClientProjectController.php`<br>`frontend/src/routes/admin/clients/` | `backend/database/factories/` |
+| **Progress Monitoring & Scope Checklist** | `doc/features/07_progress_monitoring.md`<br>`backend/app/Http/Controllers/Api/V1/Admin/ProjectScopeController.php`<br>`frontend/src/routes/admin/progres/` | `install.php` |
+| **Billing, Invoice, Payment & Master Rates** | `doc/features/08_billing_and_rates.md`<br>`backend/app/Http/Controllers/Api/V1/Admin/ClientProjectBillingController.php`<br>`backend/app/Http/Controllers/Api/V1/Admin/MasterBillingRateController.php`<br>`frontend/src/routes/admin/tagihan/` | `install.php` |
+| **Profil Agency & Active Project Cockpit** | `doc/features/09_agency_identity_and_active_project_dashboard.md`<br>`backend/app/Http/Controllers/Api/V1/Admin/AgencyProfileController.php`<br>`frontend/src/lib/components/layout/AppSidebar.svelte` | `install.php` |
 | **API Route / Controller** | `backend/routes/api.php`<br>`backend/app/Http/Controllers/Api/V1/` | `frontend/`, `install.php`, `index.php` |
 | **Mode Maintenance & Log Viewer** | `backend/app/Http/Controllers/Api/V1/Admin/AdminSystemController.php`<br>`frontend/src/routes/admin/system/`<br>`backend/app/Http/Controllers/Api/V1/TelemetryController.php` | `backend/database/factories/`, `install.php` |
 | **Auth, Sesi & Token** | `backend/app/Http/Controllers/Api/V1/Auth/AuthController.php`<br>`backend/app/Http/Middleware/CheckUserActive.php`<br>`frontend/src/lib/state/auth.svelte.js` | `frontend/src/routes/admin/`, `backend/database/factories/` |

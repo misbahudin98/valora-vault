@@ -132,6 +132,22 @@ public function test_kalkulasi_domain_service_menghasilkan_nilai_presisi(): void
   3. **RFC 7807 Problem Details:** Setiap respons error sistem (4xx/5xx) wajib memiliki struktur terstandar (`type`, `title`, `status`, `detail`).
   4. **Database Transaction Rollback:** Kegagalan pada langkah mutasi kedua wajib membatalkan seluruh operasi multi-tabel (`DB::transaction`).
 
+### C. Katalog 11 Suite Uji Fitur Backend Valora Vault (73 Tests / 768 Assertions)
+| No | Test Suite (`backend/tests/Feature/`) | Fokus Pengujian & Skenario Perilaku | Metrik |
+|---|---|---|---|
+| **1** | `AdminStudioTest.php` | Pengujian Feature Blueprint Studio, isolasi markdown SDD, validasi slug & form request. | 4 tests |
+| **2** | `AdminUserManagementTest.php` | Pengujian CRUD user lengkap, toggle status aktif/tangguh, session revocation, dan middleware `CheckUserActive`. | 5 tests |
+| **3** | `AgencyProfileTest.php` | Pengujian master profil legal agensi (Singleton ID 1), policy gate otorisasi admin, dan pembaruan identitas. | 4 tests |
+| **4** | `BillingAndMasterRateTest.php` | Pengujian 6 tarif standar inti, proteksi tarif sistem dari penghapusan, audit log riwayat perubahan, dan kalkulasi invoice. | 7 tests |
+| **5** | `ClientProjectManagementTest.php` | Pengujian intake klien baru/lama, sanitasi formula injection CWE-1236 pada CSV, dan proteksi hapus proyek berbayar. | 7 tests |
+| **6** | `ProjectProgressMonitoringTest.php` | Pengujian formula agregat rasio progres pengerjaan modul, checklist interaktif, dan pencatatan tanggal selesai/PIC. | 6 tests |
+| **7** | `ProjectScopeManagementTest.php` | Pengujian builder peran dinamis, menu modul 12 kapabilitas, penambahan skema tabel DB, dan auto-recalculate grand total. | 10 tests |
+| **8** | `RoleConsolidationTest.php` | Pengujian jaminan *zero unauthorized consolidation*, integritas multi-role, dan pemanggilan peran kanonikal. | 4 tests |
+| **9** | `SanctumAuthTest.php` | Pengujian autentikasi Sanctum, issue JWT cookie, registrasi device fisik, batasan konkurensi (max 3), dan unlink sesi. | 10 tests |
+| **10** | `SecurityHeadersTest.php` | Pengujian OWASP ASVS HTTP headers, CSP, X-Frame-Options, X-Content-Type-Options, dan respon RFC 7807. | 8 tests |
+| **11** | `UserExtendedProfileAndProjectWorkersTest.php` | Pengujian profil staf agensi, penugasan pekerja proyek (`client_project_workers`), dan relasi `pic_user_id`. | 8 tests |
+| **TOTAL** | **11 Feature Test Suites** | **100% Hermetic Isolation, SQLite WAL In-Memory, AAA Pattern, Zero Flaky Tests** | **73 Passed (768 Assertions)** |
+
 ---
 
 ## 7. ARSITEKTUR PENGUJIAN FRONTEND (SVELTE 5 RUNES & ACCESSIBILITY)
