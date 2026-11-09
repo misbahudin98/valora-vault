@@ -51,7 +51,7 @@ class SessionManagementService
         $meta = [
             'total_tracked' => $devices->count(),
             'active_users' => $devices->pluck('user_id')->unique()->count(),
-            'max_devices_cap' => (int) env('AUTH_MAX_CONCURRENT_DEVICES', 3),
+            'max_devices_cap' => (int) config('auth.max_concurrent_devices', 3),
             'disk_sessions_count' => UserDevice::countDiskSessions(),
         ];
 

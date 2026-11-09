@@ -20,7 +20,7 @@ Modul **Monitoring Progres Project** menyediakan:
    - *Total Modul Selesai:* Akumulasi menu ter-checklist bertanggal vs total menu.
 3. **Interactive Progress Checklist Modal:**
    - Dialog interaktif menampilkan seluruh menu aplikasi yang dikelompokkan berdasarkan Role (`Admin Utama`, `Manager`, dll.).
-   - Setiap menu menampilkan status penyelesaian, tanggal selesai, nama teknisi pengerja, dan indikator 10 kapabilitas fitur (`C`, `R`, `U`, `D`, `Grafik`, `Box`, `Import`, `Export`, `Filter`, `Print`).
+   - Setiap menu menampilkan status penyelesaian, tanggal selesai, nama teknisi pengerja, dan indikator 12 kapabilitas fitur (`C`, `R`, `U`, `D`, `Grafik`, `Box`, `Import`, `Export`, `Filter`, `Print`, `Notif`, `Logika Kustom`).
    - Ceklis interaktif: Mengklik menu yang belum selesai membuka dialog penetapan tanggal selesai dan PIC teknisi; mengklik menu yang sudah selesai membatalkan status selesai seketika.
 4. **Segmented Filter Tabs & Card View Mobile:**
    - Tab penyaring: *Semua*, *Development*, *Maintenance*, *100% Selesai*, dan *Dalam Pengerjaan*.
@@ -77,6 +77,8 @@ erDiagram
         boolean has_export
         boolean has_filter
         boolean has_print
+        boolean has_notification
+        boolean has_custom_logic
     }
 ```
 

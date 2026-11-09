@@ -89,7 +89,7 @@ class AuthSessionService
         UserDevice::purgeStaleSessions($user->id);
 
         // 2. Enforce maximum concurrent devices cap
-        $maxDevices = (int) env('AUTH_MAX_CONCURRENT_DEVICES', 3);
+        $maxDevices = (int) config('auth.max_concurrent_devices', 3);
         $activeCount = UserDevice::where('user_id', $user->id)->count();
 
         if ($activeCount >= $maxDevices) {
@@ -110,7 +110,7 @@ class AuthSessionService
         }
 
         // 3. Register current device session
-        $lifetimeMinutes = (int) env('AUTH_TOKEN_TTL_MINUTES', config('session.lifetime', 120));
+        $lifetimeMinutes = (int) config('auth.token_ttl_minutes', config('session.lifetime', 120));
         $deviceMeta = UserDevice::parseDeviceMetadata($request->userAgent());
 
         $device = UserDevice::create([
@@ -140,8 +140,8 @@ class AuthSessionService
      */
     public function createAuthCookies(User $user, int $lifetimeMinutes): array
     {
-        $jwtCookieName = env('AUTH_JWT_COOKIE_NAME', 'auth_jwt');
-        $roleCookieName = env('AUTH_ROLE_COOKIE_NAME', 'user_role');
+        $jwtCookieName = (string) config('auth.jwt_cookie_name', 'auth_jwt');
+        $roleCookieName = (string) config('auth.role_cookie_name', 'user_role');
         $ttlSeconds = $lifetimeMinutes * 60;
 
         $jwt = JwtService::createToken([

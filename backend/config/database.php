@@ -19,6 +19,8 @@ return [
 
     'default' => env('DB_CONNECTION', 'sqlite'),
 
+    'max_connections' => (int) env('DB_MAX_CONNECTIONS', 25),
+
     /*
     |--------------------------------------------------------------------------
     | Database Connections

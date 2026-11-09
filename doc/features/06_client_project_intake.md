@@ -12,9 +12,10 @@ Modul Manajemen Klien & Intake Proyek adalah inti operasional dari **PT Valora D
 
 ## 2. SKEMA BASIS DATA RELASIONAL 3NF
 - **`clients`**: Master data entitas klien/instansi mitra (`id`, `name`, `contact_person`, `phone`, `email`, `address`, `industry`, `timestamps`).
-- **`client_projects`**: Entitas proyek/aplikasi yang dipesan (`id`, `client_id`, `project_name`, `app_name`, `project_type`, `lead_pic`, `github_url`, `app_desc`, `use_landing`, `use_login`, `use_register`, `landing_price`, `login_price`, `register_price`, `status`, `grand_total`, `paid_amount`, `timestamps`).
+- **`client_projects`**: Entitas proyek/aplikasi yang dipesan (`id`, `client_id`, `project_name`, `app_name`, `project_type`, `lead_pic`, `lead_pic_id`, `github_url`, `app_desc`, `use_landing`, `use_login`, `use_register`, `landing_price`, `login_price`, `register_price`, `landing_capabilities`, `login_capabilities`, `register_capabilities`, `status`, `grand_total`, `paid_amount`, `timestamps`).
+- **`client_project_workers`**: Tabel pivot penugasan staf engineer/pekerja (`id`, `project_id`, `user_id`, `role_in_project`, `timestamps`).
 - **`project_roles`**: Konfigurasi peran dinamis per proyek (`id`, `project_id`, `role_name`, `sort_order`, `timestamps`).
-- **`project_menus`**: Modul/fitur per role dengan penugasan PIC fleksibel dan 10 checklist kapabilitas teknis (`id`, `project_role_id`, `menu_name`, `menu_desc`, `pic`, `price`, `is_done`, `completed_date`, `has_create`, `has_read`, `has_update`, `has_delete`, `has_grafik`, `has_box_dashboard`, `has_import`, `has_export`, `has_filter`, `has_print`, `sort_order`, `timestamps`).
+- **`project_menus`**: Modul/fitur per role dengan penugasan PIC fleksibel dan 12 checklist kapabilitas teknis (`id`, `project_role_id`, `menu_name`, `menu_desc`, `pic`, `pic_user_id`, `price`, `is_done`, `completed_date`, `has_create`, `has_read`, `has_update`, `has_delete`, `has_grafik`, `has_box_dashboard`, `has_import`, `has_export`, `has_filter`, `has_print`, `has_notification`, `has_custom_logic`, `sort_order`, `timestamps`).
 - **`project_database_tables`**: Skema tabel basis data proyek (@Rp 100.000) (`id`, `project_id`, `table_name`, `price`, `is_done`, `timestamps`).
 
 ---

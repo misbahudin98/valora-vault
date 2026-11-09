@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\AgencyProfile;
 use App\Models\Client;
 use App\Models\ClientProject;
 use App\Models\MasterBillingRate;
 use App\Models\User;
 use App\Models\UserDevice;
+use App\Policies\AgencyProfilePolicy;
 use App\Policies\ClientPolicy;
 use App\Policies\ClientProjectPolicy;
 use App\Policies\MasterBillingRatePolicy;
@@ -37,5 +39,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Client::class, ClientPolicy::class);
         Gate::policy(ClientProject::class, ClientProjectPolicy::class);
         Gate::policy(MasterBillingRate::class, MasterBillingRatePolicy::class);
+        Gate::policy(AgencyProfile::class, AgencyProfilePolicy::class);
     }
 }

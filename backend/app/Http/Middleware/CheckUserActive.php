@@ -49,8 +49,8 @@ class CheckUserActive
                 return response()->json([
                     'message' => 'Akun dinonaktifkan atau ditangguhkan oleh pengelola sistem.'
                 ], 403)
-                    ->withCookie(cookie()->forget(env('AUTH_JWT_COOKIE_NAME', 'auth_jwt'), '/', config('session.domain')))
-                    ->withCookie(cookie()->forget(env('AUTH_ROLE_COOKIE_NAME', 'user_role'), '/', config('session.domain')))
+                    ->withCookie(cookie()->forget(config('auth.jwt_cookie_name', 'auth_jwt'), '/', config('session.domain')))
+                    ->withCookie(cookie()->forget(config('auth.role_cookie_name', 'user_role'), '/', config('session.domain')))
                     ->withCookie(cookie()->forget(config('session.cookie'), '/', config('session.domain')))
                     ->withCookie(cookie()->forget('XSRF-TOKEN', '/', config('session.domain')));
             }
@@ -92,8 +92,8 @@ class CheckUserActive
                 return response()->json([
                     'message' => 'Akses ditolak: Peran akun tidak valid atau belum dikonfigurasi.'
                 ], 403)
-                    ->withCookie(cookie()->forget(env('AUTH_JWT_COOKIE_NAME', 'auth_jwt'), '/', config('session.domain')))
-                    ->withCookie(cookie()->forget(env('AUTH_ROLE_COOKIE_NAME', 'user_role'), '/', config('session.domain')))
+                    ->withCookie(cookie()->forget(config('auth.jwt_cookie_name', 'auth_jwt'), '/', config('session.domain')))
+                    ->withCookie(cookie()->forget(config('auth.role_cookie_name', 'user_role'), '/', config('session.domain')))
                     ->withCookie(cookie()->forget(config('session.cookie'), '/', config('session.domain')))
                     ->withCookie(cookie()->forget('XSRF-TOKEN', '/', config('session.domain')));
             }
@@ -141,8 +141,8 @@ class CheckUserActive
                     return response()->json([
                         'message' => 'Sesi perangkat telah dicabut. Silakan login kembali.'
                     ], 401)
-                        ->withCookie(cookie()->forget(env('AUTH_JWT_COOKIE_NAME', 'auth_jwt'), '/', config('session.domain')))
-                        ->withCookie(cookie()->forget(env('AUTH_ROLE_COOKIE_NAME', 'user_role'), '/', config('session.domain')))
+                        ->withCookie(cookie()->forget(config('auth.jwt_cookie_name', 'auth_jwt'), '/', config('session.domain')))
+                        ->withCookie(cookie()->forget(config('auth.role_cookie_name', 'user_role'), '/', config('session.domain')))
                         ->withCookie(cookie()->forget(config('session.cookie'), '/', config('session.domain')))
                         ->withCookie(cookie()->forget('XSRF-TOKEN', '/', config('session.domain')));
                 }

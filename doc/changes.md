@@ -4,6 +4,35 @@ Dokumen ini mencatat seluruh temuan teknis, akar masalah, audit sistem, dan reka
 
 ---
 
+## 000016. VALORA AGENCY OS INTEGRATION, ENTERPRISE ZERO-REGRESSION REFACTORING & DEPLOYMENT HARDENING (09 November 2026 - v6.31.0)
+
+### A. Latar Belakang & Ruang Lingkup Refactoring Menyeluruh
+1. **Integrasi Ekosistem Valora Agency OS:**
+   - Menyatukan modul manajemen klien & intake proyek digital (`doc/features/06_client_project_intake.md`).
+   - Monitoring kemajuan proyek dengan checklist interaktif dan 12 kapabilitas granular fitur (`doc/features/07_progress_monitoring.md`).
+   - Master settingan tarif acuan standar agensi, audit log riwayat perubahan harga, dan penagihan invoice/pembayaran cicilan termin (`doc/features/08_billing_and_rates.md`).
+   - Profil legal badan usaha agensi, rekening bank, hotline WhatsApp, dan Dashboard Mini Khusus Proyek Aktif pada sidebar navigasi (`doc/features/09_agency_identity_and_active_project_dashboard.md`).
+2. **Kepatuhan Kesiapan Produksi (Zero `env()` Invariant & Config Caching):**
+   - Mengaudit seluruh pemanggilan variabel lingkungan pada direktori `backend/app/` dan memindahkan konfigurasi ke `config/auth.php` dan `config/database.php`.
+   - Mengeliminasi 100% pemanggilan langsung fungsi `env()` pada controllers, middlewares, dan services sehingga eksekusi `php artisan config:cache` tidak lagi mengembalikan nilai `null`.
+3. **Hardening Keamanan & Integritas Data (OWASP & CWE-1236):**
+   - Menambahkan sanitasi formula injection CWE-1236 pada seluruh ekspor CSV (pengguna, klien, dan proyek).
+   - Menyelaraskan seluruh Policy authorization tanpa dependensi trait usang (`HandlesAuthorization`) dan mendaftarkan secara eksplisit ke `AppServiceProvider`.
+   - Memastikan seluruh mutasi multi-tabel dibungkus di dalam `DB::transaction()`.
+   - Menambahkan proteksi penghapusan proyek yang telah memiliki riwayat pembayaran aktif (mengembalikan RFC 7807 422).
+4. **Fidelitas Ekspor Microsoft Word (.doc) 100% Sesuai Pratinjau:**
+   - Menyempurnakan ekspor faktur invoice dan kuitansi pembayaran resmi ke format Microsoft Word (.doc HTML MIME) dengan penanaman logo korporasi berbasis base64, tabel kop surat dua kolom, border presisi, terbilang bahasa Indonesia, dan tanda tangan digital.
+5. **Kompilasi Frontend Statis Svelte 5 Native Runes:**
+   - Menstandarkan konfigurasi `@sveltejs/adapter-static` di `frontend/svelte.config.js` dengan fallback `index.html`.
+   - Menghapus konfigurasi redundan pada `vite.config.js` sehingga `npm run build` berjalan 100% sukses tanpa warning adapter.
+
+### B. Hasil Verifikasi Pengujian & Jaminan Zero-Regression
+- **Backend PHPUnit:** `php artisan test` ➔ **73 passed (768 assertions, 0 failures, 100% green)**.
+- **Frontend Build:** `npm run build` ➔ **100% Success (Done in 25.16s, 0 errors, static build generated)**.
+- **Production Cache:** `php artisan config:cache && php artisan route:cache` ➔ **100% Success**.
+
+---
+
 ## 000015. AUDIT POSTUR KEAMANAN (CVE SYMFONY REMEDIATION), INTEGRITAS SKILLS, PELUNCURAN DEVELOPER QUICKSTART, & HARMONISASI SEMVER v6.31.0 (08 November 2026 - v6.31.0)
 
 ### A. Latar Belakang & Ruang Lingkup Audit

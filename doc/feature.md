@@ -89,3 +89,31 @@ Sistem mengadopsi Dynamic Role-Permission Matrix yang terpusat pada [`backend/co
 | `GET` | `/api/v1/admin/system/client-logs` | `auth:sanctum`, `user.active`, `role:admin` | Baca dan filter telemetri error browser klien (`client.log`) |
 | `POST` | `/api/v1/admin/system/logs/clear` | `auth:sanctum`, `user.active`, `role:admin` | Kosongkan berkas log backend atau frontend secara aman |
 | `POST` | `/api/v1/telemetry/errors` | Public API (`throttle:60,1`) | Ingest telemetri error klien non-blocking dengan PII sanitization |
+| `GET` | `/api/v1/admin/studio/modules` | `auth:sanctum`, `user.active`, `role:admin` | Ambil daftar spesifikasi modular SDD di folder `doc/features/` |
+| `POST` | `/api/v1/admin/studio/generate-spec` | `auth:sanctum`, `user.active`, `role:admin` | Kompilasi & simpan spesifikasi fitur SDD baru ke `doc/features/*.md` |
+| `GET` | `/api/v1/admin/clients` | `auth:sanctum`, `user.active`, `role:admin` | Ambil daftar seluruh klien & proyek terdaftar beserta metrik agregasi |
+| `GET` | `/api/v1/admin/clients/export` | `auth:sanctum`, `user.active`, `role:admin` | Ekspor seluruh proyek klien ke CSV stream O(1) dengan sanitasi CWE-1236 |
+| `GET` | `/api/v1/admin/clients/{id}` | `auth:sanctum`, `user.active`, `role:admin` | Ambil detail satu proyek lengkap (klien, peran, menu, tabel, pekerja) |
+| `POST` | `/api/v1/admin/clients` | `auth:sanctum`, `user.active`, `role:admin` | Pendaftaran proyek klien baru (intake klien baru atau pilih klien lama) |
+| `PUT` | `/api/v1/admin/clients/{id}` | `auth:sanctum`, `user.active`, `role:admin` | Perbarui data proyek klien, pic, pekerja, dan konfigurasi fitur utama |
+| `DELETE` | `/api/v1/admin/clients/{id}` | `auth:sanctum`, `user.active`, `role:admin` | Hapus proyek klien (hanya diizinkan jika belum ada transaksi bayar) |
+| `POST` | `/api/v1/admin/projects/{id}/roles` | `auth:sanctum`, `user.active`, `role:admin` | Tambah peran pengguna (*Project Role*) baru ke dalam ruang lingkup proyek |
+| `DELETE` | `/api/v1/admin/roles/{id}` | `auth:sanctum`, `user.active`, `role:admin` | Hapus peran pengguna beserta seluruh menu modul terkait dari proyek |
+| `POST` | `/api/v1/admin/roles/{id}/menus` | `auth:sanctum`, `user.active`, `role:admin` | Tambah menu modul baru ke dalam peran tertentu (10 kapabilitas & PIC) |
+| `PUT` | `/api/v1/admin/menus/{id}` | `auth:sanctum`, `user.active`, `role:admin` | Perbarui detail menu modul, kapabilitas, harga kustom, dan catatan tarif |
+| `POST` | `/api/v1/admin/menus/{id}/toggle-done` | `auth:sanctum`, `user.active`, `role:admin` | Ubah status pengerjaan menu modul (selesai/belum, PIC, tanggal selesai) |
+| `DELETE` | `/api/v1/admin/menus/{id}` | `auth:sanctum`, `user.active`, `role:admin` | Hapus menu modul dari proyek & otomatis hitung ulang total valuasi |
+| `POST` | `/api/v1/admin/projects/{id}/database-tables` | `auth:sanctum`, `user.active`, `role:admin` | Tambah tabel database ke dalam skema proyek dengan tarif per tabel |
+| `POST` | `/api/v1/admin/database-tables/{id}/toggle-done` | `auth:sanctum`, `user.active`, `role:admin` | Ubah status pengerjaan migrasi tabel database (selesai/belum) |
+| `DELETE` | `/api/v1/admin/database-tables/{id}` | `auth:sanctum`, `user.active`, `role:admin` | Hapus tabel database dari proyek & otomatis hitung ulang total valuasi |
+| `GET` | `/api/v1/admin/billing-rates` | `auth:sanctum`, `user.active`, `role:admin` | Ambil seluruh daftar Master Tarif Standar dan riwayat audit perubahan |
+| `POST` | `/api/v1/admin/billing-rates` | `auth:sanctum`, `user.active`, `role:admin` | Tambah katalog modul menu terdaftar baru ke dalam Master Tarif |
+| `PUT` | `/api/v1/admin/billing-rates/{rateKey}` | `auth:sanctum`, `user.active`, `role:admin` | Perbarui harga tarif standar dengan pencatatan audit log alasan perubahan |
+| `DELETE` | `/api/v1/admin/billing-rates/{rateKey}` | `auth:sanctum`, `user.active`, `role:admin` | Hapus katalog tarif modul kustom (tarif inti sistem diproteksi penuh) |
+| `GET` | `/api/v1/admin/billing/projects` | `auth:sanctum`, `user.active`, `role:admin` | Ambil daftar ringkasan penagihan seluruh proyek (lunas, termin, sisa) |
+| `GET` | `/api/v1/admin/billing/projects/{id}/invoice` | `auth:sanctum`, `user.active`, `role:admin` | Ambil detail rincian tagihan faktur invoice dan riwayat pembayaran |
+| `POST` | `/api/v1/admin/billing/projects/{id}/payments` | `auth:sanctum`, `user.active`, `role:admin` | Catat transaksi pembayaran baru untuk proyek klien (auto-recalculate) |
+| `GET` | `/api/v1/admin/billing/payments/{id}/receipt` | `auth:sanctum`, `user.active`, `role:admin` | Ambil data kuitansi resmi pembayaran (dilengkapi terbilang & identitas) |
+| `DELETE` | `/api/v1/admin/billing/payments/{id}` | `auth:sanctum`, `user.active`, `role:admin` | Hapus catatan transaksi pembayaran & otomatis sinkronkan sisa tagihan |
+| `GET` | `/api/v1/admin/agency-profile` | `auth:sanctum`, `user.active` | Ambil data profil legal agency, logo, rekening bank, dan penandatangan |
+| `PUT` | `/api/v1/admin/agency-profile` | `auth:sanctum`, `user.active`, `role:admin` | Perbarui data profil legal agency, nomor rekening, kontak hotline, dan logo |

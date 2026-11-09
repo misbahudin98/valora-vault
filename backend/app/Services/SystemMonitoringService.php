@@ -93,7 +93,7 @@ class SystemMonitoringService
             $databaseMetrics['mysql'] = [
                 'engine' => 'InnoDB',
                 'version' => $mysqlVersion,
-                'connection_pool_max' => (int) env('DB_MAX_CONNECTIONS', 25),
+                'connection_pool_max' => (int) config('database.max_connections', 25),
                 'innodb_status' => $innodbStatus,
                 'tls_status' => 'Encrypted / TLS',
                 'query_cache' => 'Optimized',

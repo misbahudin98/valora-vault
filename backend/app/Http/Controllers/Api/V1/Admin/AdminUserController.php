@@ -174,19 +174,30 @@ class AdminUserController extends Controller
 
             fputcsv($handle, ['ID', 'Nama', 'Email', 'Jabatan', 'Kontak (HP/WA)', 'Alamat Domisili', 'Spesialisasi Keahlian', 'Peran (Roles)', 'Status Akun', 'Token Version', 'Dibuat Pada']);
 
-            User::orderBy('id', 'asc')->chunk(100, function ($users) use ($handle) {
+            // CWE-1236 Formula Injection Sanitizer
+            $sanitize = function (?string $val): string {
+                if ($val === null || $val === '') {
+                    return '';
+                }
+                if (in_array($val[0], ['=', '+', '-', '@', "\t", "\r"], true)) {
+                    return "'" . $val;
+                }
+                return $val;
+            };
+
+            User::orderBy('id', 'asc')->chunk(100, function ($users) use ($handle, $sanitize) {
                 foreach ($users as $user) {
                     $roles = is_array($user->role) ? implode(', ', $user->role) : (string) $user->role;
                     $skills = is_array($user->skills) ? implode(', ', $user->skills) : (string) ($user->skills ?? '');
                     fputcsv($handle, [
                         $user->id,
-                        $user->name,
-                        $user->email,
-                        $user->jabatan ?? '-',
-                        $user->phone ?? '-',
-                        $user->address ?? '-',
-                        $skills ?: '-',
-                        $roles,
+                        $sanitize($user->name),
+                        $sanitize($user->email),
+                        $sanitize($user->jabatan ?? '-'),
+                        $sanitize($user->phone ?? '-'),
+                        $sanitize($user->address ?? '-'),
+                        $sanitize($skills ?: '-'),
+                        $sanitize($roles),
                         $user->is_active ? 'Aktif' : 'Ditangguhkan',
                         $user->token_version ?? 1,
                         $user->created_at?->format('Y-m-d H:i:s') ?? '-',

@@ -1203,3 +1203,54 @@ Seluruh respons kegagalan API backend (HTTP 4xx dan 5xx) WAJIB mengembalikan pay
    ```
 2. **Kepatuhan ACID:** Jika salah satu langkah gagal, seluruh perubahan di-rollback seketika untuk mencegah status database yang inkonsisten (*partial write corruption*).
 
+---
+
+## BAGIAN 10: ARSITEKTUR VALORA AGENCY OS (CLIENTS, SCOPE, BILLING, PROGRESS & IDENTITY)
+
+### 10.1. Model Domain & Relasi Basis Data 3NF
+Valora Agency OS mengintegrasikan seluruh siklus kerja agensi perangkat lunak melalui model relasional 3NF:
+1. **`Client` ➔ `ClientProject` (1:N):** Klien instansi dapat memiliki beberapa proyek (Development vs Maintenance).
+2. **`ClientProject` ➔ `ProjectRole` (1:N):** Proyek memiliki beberapa peran pengguna dinamis (Super Admin, Manager, Operator, Pelanggan, dll.).
+3. **`ProjectRole` ➔ `ProjectMenu` (1:N):** Setiap peran memiliki hierarki menu modul kerja dengan 12 kapabilitas granular (`has_create`, `has_read`, `has_update`, `has_delete`, `has_grafik`, `has_box_dashboard`, `has_import`, `has_export`, `has_filter`, `has_print`, `has_notification`, `has_custom_logic`), PIC teknisi (`pic`, `pic_user_id`), harga modul kustom, catatan harga, dan status penyelesaian bertanggal (`is_done`, `completed_date`).
+4. **`ClientProject` ➔ `ProjectDatabaseTable` (1:N):** Skema basis data proyek (@Rp 100.000 / tabel relasional) dengan status penyelesaian migrasi (`is_done`).
+5. **`ClientProject` ➔ `ClientProjectPayment` (1:N):** Riwayat transaksi pembayaran termin/cicilan klien.
+6. **`ClientProject` ➔ `User` (Pivot `client_project_workers` N:M):** Penugasan staf engineer/pekerja ke dalam proyek.
+7. **`MasterBillingRate` ➔ `BillingRateHistory` (1:N):** Katalog tarif standar acuan agensi dengan pencatatan jejak audit (*audit trail*) transparan setiap kali terjadi revisi harga.
+8. **`AgencyProfile` (Singleton Row):** Master profil legal agensi (nama legal, NPWP, hotline WhatsApp, alamat operasional, rekening bank BCA & Mandiri, penandatangan resmi, logo data URI/PNG) sebagai Single Source of Truth (SSoT) identitas korporasi.
+
+### 10.2. Mesin Valuasi Biaya Otomatis & Transparansi Keuangan
+1. **Kalkulasi Nilai Kontrak Dinamis (`recalculateGrandTotal()`):**
+   - Komponen Inti: Landing Page Responsive (`landing_price`), Halaman Login (`login_price`), Halaman Register (`register_price`).
+   - Modul Menu: Akumulasi seluruh harga `price` pada `project_menus` yang terdaftar di proyek.
+   - Tabel Database: Akumulasi seluruh harga `price` pada `project_database_tables`.
+   - Grand Total = Subtotal Komponen Inti + Subtotal Menu Modul + Subtotal Tabel Database.
+2. **Sinkronisasi Saldo Terbayar & Piutang (`recalculatePaidAmount()`):**
+   - `paid_amount` otomatis disinkronkan dari agregat `sum('amount')` pada tabel `client_project_payments`.
+   - Sisa piutang dihitung defensif: `max(0.0, grand_total - paid_amount)`.
+3. **Integritas Transaksi Pembayaran:**
+   - Pembayaran dilarang melebihi sisa tagihan yang belum terbayar (validasi batas wajar RFC 7807 422).
+   - Proyek yang telah lunas 100% diproteksi dari pencatatan pembayaran lebih lanjut.
+   - Proyek dengan riwayat pembayaran aktif DILARANG dihapus dari sistem (mengembalikan RFC 7807 422) guna melindungi integritas pembukuan keuangan.
+
+### 10.3. Master Tarif Standar & Proteksi Tarif Inti
+Katalog tarif standar membedakan dua kategori:
+- **Tarif Sistem Inti (`system_core`):** `landing`, `login`, `register`, `menu_price`, `database_table_price`, dan `maintenance_menu_price`. Tarif-tarif ini diproteksi penuh dan tidak dapat dihapus (`destroy` diblokir) karena merupakan pondasi arsitektur tagihan.
+- **Katalog Modul Terdaftar (`registered_module`):** Modul-modul reusable yang dapat didaftarkan, diedit, atau dihapus oleh administrator.
+- **Transparansi Perubahan:** Setiap pembaruan tarif mewajibkan alasan perubahan minimal 5 karakter yang dicatat permanen di `billing_rate_histories`.
+
+### 10.4. Ekspor Dokumen Resmi & Integritas Visual (100% Preview Fidelity)
+1. **Faktur Invoice & Kuitansi Resmi:**
+   - Dilengkapi konversi angka ke teks terbilang bahasa Indonesia murni (`terbilang.js`) tanpa library eksternal.
+   - Tampilan cetak profesional (*clean print CSS*) bebas navigasi dan tombol aksi.
+2. **Ekspor Microsoft Word (.doc HTML MIME):**
+   - Menghasilkan dokumen Word berformat murni MSO HTML yang kompatibel dengan Microsoft Office Word, WPS Office, dan LibreOffice.
+   - Penanaman logo instansi berbasis base64 langsung ke dalam dokumen Word (`data:image/png;base64,...` dan MSO VML shapes).
+   - Tata letak tabel, kop surat dua kolom, border presisi, rincian biaya, catatan syarat & ketentuan, dan kolom tanda tangan resmi persis 100% sesuai dengan tampilan pratinjau antarmuka web.
+3. **Proteksi Formula Injection CWE-1236 pada Ekspor CSV:**
+   - Seluruh ekspor CSV (data pengguna, proyek klien) menyertakan UTF-8 BOM (`\xEF\xBB\xBF`) dan sanitasi sel string yang diawali `=`, `+`, `-`, atau `@` dengan penambahan prefix petik tunggal (`'`).
+
+### 10.5. Kesiapan Deployment Produksi (Zero `env()` Invariant)
+- **Larangan Pemanggilan `env()` di Direktori `app/`:** Seluruh environment variable (`AUTH_JWT_COOKIE_NAME`, `AUTH_ROLE_COOKIE_NAME`, `AUTH_TOKEN_TTL_MINUTES`, `AUTH_MAX_CONCURRENT_DEVICES`, `DB_MAX_CONNECTIONS`) wajib dipetakan ke berkas konfigurasi `config/auth.php` dan `config/database.php`.
+- **Dukungan Caching Konfigurasi:** Menjamin perintah produksi `php artisan config:cache` dan `php artisan route:cache` berjalan 100% tanpa menyebabkan `env()` mengembalikan nilai `null`.
+- **Kompilasi Frontend Statis:** Konfigurasi SvelteKit adapter static di `frontend/svelte.config.js` menjamin SPA pre-rendering dengan `fallback: 'index.html'` lulus 100% saat dieksekusi via `npm run build`.
+

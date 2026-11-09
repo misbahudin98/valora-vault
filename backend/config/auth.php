@@ -114,4 +114,14 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Valora Custom Authentication & Device Management Settings
+    |--------------------------------------------------------------------------
+    */
+    'jwt_cookie_name' => env('AUTH_JWT_COOKIE_NAME', 'auth_jwt'),
+    'role_cookie_name' => env('AUTH_ROLE_COOKIE_NAME', 'user_role'),
+    'token_ttl_minutes' => (int) env('AUTH_TOKEN_TTL_MINUTES', 120),
+    'max_concurrent_devices' => (int) env('AUTH_MAX_CONCURRENT_DEVICES', 3),
+
 ];

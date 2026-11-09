@@ -5,18 +5,15 @@ declare(strict_types=1);
 namespace App\Policies;
 
 use App\Models\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MasterBillingRatePolicy
 {
-    use HandlesAuthorization;
-
     /**
      * Determine whether the user can view master rates.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermission('billing.view');
+        return $user->isAdmin() || $user->hasPermission('billing.view');
     }
 
     /**
@@ -24,7 +21,7 @@ class MasterBillingRatePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermission('billing.manage');
+        return $user->isAdmin() || $user->hasPermission('billing.manage');
     }
 
     /**
@@ -32,7 +29,7 @@ class MasterBillingRatePolicy
      */
     public function update(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermission('billing.manage');
+        return $user->isAdmin() || $user->hasPermission('billing.manage');
     }
 
     /**
@@ -40,7 +37,7 @@ class MasterBillingRatePolicy
      */
     public function delete(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermission('billing.manage');
+        return $user->isAdmin() || $user->hasPermission('billing.manage');
     }
 
     /**
@@ -48,6 +45,6 @@ class MasterBillingRatePolicy
      */
     public function manage(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasPermission('billing.manage');
+        return $user->isAdmin() || $user->hasPermission('billing.manage');
     }
 }

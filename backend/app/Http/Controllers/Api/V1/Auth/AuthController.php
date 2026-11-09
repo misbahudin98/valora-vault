@@ -48,7 +48,7 @@ class AuthController extends Controller
         }
 
         // Generate signed JWT token and client-readable cookies
-        $lifetimeMinutes = (int) env('AUTH_TOKEN_TTL_MINUTES', config('session.lifetime', 120));
+        $lifetimeMinutes = (int) config('auth.token_ttl_minutes', config('session.lifetime', 120));
         $cookies = $authService->createAuthCookies($user, $lifetimeMinutes);
 
         return response()->json([
@@ -68,8 +68,8 @@ class AuthController extends Controller
     {
         $authService->terminateCurrentSession($request);
 
-        $jwtCookieName = env('AUTH_JWT_COOKIE_NAME', 'auth_jwt');
-        $roleCookieName = env('AUTH_ROLE_COOKIE_NAME', 'user_role');
+        $jwtCookieName = (string) config('auth.jwt_cookie_name', 'auth_jwt');
+        $roleCookieName = (string) config('auth.role_cookie_name', 'user_role');
 
         return response()->noContent()
             ->withCookie(cookie()->forget($jwtCookieName, '/', config('session.domain')))

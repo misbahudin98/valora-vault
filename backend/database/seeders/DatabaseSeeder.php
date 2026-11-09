@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
     {
         UserDevice::query()->delete();
 
-        $appUrl = env('APP_URL', 'http://valora-vault.test');
+        $appUrl = (string) config('app.url', 'http://valora-vault.test');
         $domainHost = parse_url($appUrl, PHP_URL_HOST) ?: 'valora-vault.test';
-        $appName = env('APP_NAME', 'Manajemen Proyek');
+        $appName = (string) config('app.name', 'Manajemen Proyek');
 
         $adminEmail = "admin@{$domainHost}";
 
