@@ -23,7 +23,10 @@ class AdminUserController extends Controller
     {
         Gate::authorize('viewAny', User::class);
 
-        $query = User::select(['id', 'name', 'email', 'role', 'is_active', 'token_version', 'created_at']);
+        $query = User::select([
+            'id', 'name', 'email', 'role', 'is_active', 'token_version', 'created_at',
+            'jabatan', 'phone', 'address', 'github_url', 'linkedin_url', 'skills', 'allowed_features',
+        ]);
 
         // Support sanitized search filter against Wildcard DoS
         if ($search = $request->input('search')) {
@@ -169,15 +172,20 @@ class AdminUserController extends Controller
             // UTF-8 BOM for Microsoft Excel compatibility
             fprintf($handle, chr(0xEF).chr(0xBB).chr(0xBF));
 
-            fputcsv($handle, ['ID', 'Nama', 'Email', 'Peran (Roles)', 'Status Akun', 'Token Version', 'Dibuat Pada']);
+            fputcsv($handle, ['ID', 'Nama', 'Email', 'Jabatan', 'Kontak (HP/WA)', 'Alamat Domisili', 'Spesialisasi Keahlian', 'Peran (Roles)', 'Status Akun', 'Token Version', 'Dibuat Pada']);
 
             User::orderBy('id', 'asc')->chunk(100, function ($users) use ($handle) {
                 foreach ($users as $user) {
                     $roles = is_array($user->role) ? implode(', ', $user->role) : (string) $user->role;
+                    $skills = is_array($user->skills) ? implode(', ', $user->skills) : (string) ($user->skills ?? '');
                     fputcsv($handle, [
                         $user->id,
                         $user->name,
                         $user->email,
+                        $user->jabatan ?? '-',
+                        $user->phone ?? '-',
+                        $user->address ?? '-',
+                        $skills ?: '-',
                         $roles,
                         $user->is_active ? 'Aktif' : 'Ditangguhkan',
                         $user->token_version ?? 1,

@@ -27,6 +27,13 @@ class UserManagementService
                 'role' => $roles,
                 'is_active' => $isActive,
                 'token_version' => 1,
+                'jabatan' => $data['jabatan'] ?? null,
+                'phone' => $data['phone'] ?? null,
+                'address' => $data['address'] ?? null,
+                'github_url' => $data['github_url'] ?? null,
+                'linkedin_url' => $data['linkedin_url'] ?? null,
+                'skills' => $data['skills'] ?? null,
+                'allowed_features' => $data['allowed_features'] ?? null,
             ]);
         });
     }
@@ -57,6 +64,28 @@ class UserManagementService
                     $targetUser->token_version = (int) $targetUser->token_version + 1;
                 }
                 $targetUser->is_active = $isActive;
+            }
+
+            if (array_key_exists('jabatan', $data)) {
+                $targetUser->jabatan = $data['jabatan'];
+            }
+            if (array_key_exists('phone', $data)) {
+                $targetUser->phone = $data['phone'];
+            }
+            if (array_key_exists('address', $data)) {
+                $targetUser->address = $data['address'];
+            }
+            if (array_key_exists('github_url', $data)) {
+                $targetUser->github_url = $data['github_url'];
+            }
+            if (array_key_exists('linkedin_url', $data)) {
+                $targetUser->linkedin_url = $data['linkedin_url'];
+            }
+            if (array_key_exists('skills', $data)) {
+                $targetUser->skills = $data['skills'];
+            }
+            if (array_key_exists('allowed_features', $data)) {
+                $targetUser->allowed_features = $data['allowed_features'];
             }
 
             $targetUser->save();

@@ -372,7 +372,7 @@ class SanctumAuthTest extends TestCase {
         $this->assertStringContainsString('attachment; filename="users_export_', $res->headers->get('Content-Disposition'));
         
         $content = $res->streamedContent();
-        $this->assertStringContainsString('ID,Nama,Email,"Peran (Roles)","Status Akun","Token Version","Dibuat Pada"', $content);
+        $this->assertStringContainsString('ID,Nama,Email,Jabatan,"Kontak (HP/WA)","Alamat Domisili","Spesialisasi Keahlian","Peran (Roles)","Status Akun","Token Version","Dibuat Pada"', $content);
         $this->assertStringContainsString('exportadmin@hyperion-vault.test', $content);
         $this->assertStringContainsString('regular@hyperion-vault.test', $content);
     }

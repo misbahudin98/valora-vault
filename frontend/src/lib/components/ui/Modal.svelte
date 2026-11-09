@@ -3,12 +3,27 @@
     show = true,
     title = '',
     subtitle = '',
-    maxWidth = 'max-w-lg',
+    size = 'md',
+    maxWidth = '',
+    zIndex = 'z-50',
     onclose = () => {},
     children,
     footer,
     headerTabs
   } = $props();
+
+  const sizeMap = {
+    sm: 'max-w-sm',
+    md: 'max-w-md',
+    lg: 'max-w-lg',
+    xl: 'max-w-3xl',
+    '2xl': 'max-w-5xl',
+    '3xl': 'max-w-6xl',
+    '4xl': 'max-w-7xl',
+    full: 'max-w-[95vw]'
+  };
+
+  let resolvedMaxWidth = $derived(maxWidth || sizeMap[size] || 'max-w-lg');
 
   function handleKeydown(e) {
     if (e.key === 'Escape' && show) {
@@ -20,7 +35,7 @@
 <svelte:window onkeydown={handleKeydown} />
 
 {#if show}
-  <div class="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 md:p-6 bg-black/60 dark:bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
+  <div class="fixed inset-0 {zIndex} flex items-center justify-center p-2.5 sm:p-4 md:p-6 bg-black/60 dark:bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
     <!-- Click outside backdrop -->
     <button
       type="button"
@@ -31,7 +46,7 @@
 
     <!-- Modal Box (Apple Spatial Glassmorphism & Specular Chamfer) -->
     <div 
-      class="relative z-10 w-full {maxWidth} max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-3rem)] flex flex-col bg-white/95 dark:bg-[#090d16]/95 backdrop-blur-2xl border border-white/50 dark:border-white/10 rounded-xl sm:rounded-2xl shadow-2xl shadow-slate-950/20 dark:shadow-black/70 overflow-hidden before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/50 dark:before:via-white/20 before:to-transparent before:z-30 animate-in zoom-in-95 duration-200"
+      class="relative z-10 w-full {resolvedMaxWidth} max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-3rem)] flex flex-col bg-white/95 dark:bg-[#090d16]/95 backdrop-blur-2xl border border-white/50 dark:border-white/10 rounded-xl sm:rounded-2xl shadow-2xl shadow-slate-950/20 dark:shadow-black/70 overflow-hidden before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/50 dark:before:via-white/20 before:to-transparent before:z-30 animate-in zoom-in-95 duration-200"
       role="dialog"
       aria-modal="true"
     >

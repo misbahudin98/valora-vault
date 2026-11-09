@@ -10,8 +10,9 @@
 
 <!-- Mobile Floating Thumb Dock (Ergonomic Thumb Zone Navigation - Apple Spatial Glass) -->
 <nav
+  id="mobile-thumb-dock"
   aria-label="Navigasi Cepat Jempol Mobile"
-  class="fixed bottom-3.5 left-1/2 -translate-x-1/2 z-30 md:hidden flex items-center gap-1 p-1 rounded-full bg-white/80 dark:bg-[#090d16]/85 backdrop-blur-xl border border-white/50 dark:border-white/15 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:rounded-full before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent shadow-xl shadow-slate-950/20 dark:shadow-black/70 select-none transition-all duration-200 animate-in fade-in slide-in-from-bottom-2"
+  class="mobile-thumb-dock print-hide fixed bottom-3.5 left-1/2 -translate-x-1/2 z-30 md:hidden flex items-center gap-1 p-1 rounded-full bg-white/80 dark:bg-[#090d16]/85 backdrop-blur-xl border border-white/50 dark:border-white/15 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:rounded-full before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent shadow-xl shadow-slate-950/20 dark:shadow-black/70 select-none transition-all duration-200 animate-in fade-in slide-in-from-bottom-2"
 >
   <!-- 1. Beranda / Dashboard Quick Action -->
   <a

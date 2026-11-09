@@ -31,6 +31,15 @@ class StoreUserRequest extends FormRequest
             'password' => ['required', 'string', 'min:8'],
             'role' => ['nullable'],
             'is_active' => ['nullable', 'boolean'],
+            'jabatan' => ['nullable', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:50'],
+            'address' => ['nullable', 'string', 'max:1000'],
+            'github_url' => ['nullable', 'string', 'max:255'],
+            'linkedin_url' => ['nullable', 'string', 'max:255'],
+            'skills' => ['nullable', 'array'],
+            'skills.*' => ['string', 'max:100'],
+            'allowed_features' => ['nullable', 'array'],
+            'allowed_features.*' => ['string', 'max:100'],
         ];
     }
 

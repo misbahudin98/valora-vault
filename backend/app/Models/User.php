@@ -13,7 +13,21 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['name', 'email', 'password', 'role', 'is_active', 'token_version'])]
+#[Fillable([
+    'name',
+    'email',
+    'password',
+    'role',
+    'is_active',
+    'token_version',
+    'jabatan',
+    'phone',
+    'address',
+    'github_url',
+    'linkedin_url',
+    'skills',
+    'allowed_features',
+])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -39,6 +53,8 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_active' => 'boolean',
             'token_version' => 'integer',
+            'skills' => 'array',
+            'allowed_features' => 'array',
         ];
     }
 
@@ -173,5 +189,48 @@ class User extends Authenticatable
     public function devices(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserDevice::class);
+    }
+
+    /**
+     * Projects where this user is assigned as Lead PIC.
+     */
+    public function ledProjects(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ClientProject::class, 'lead_pic_id');
+    }
+
+    /**
+     * Projects where this user is assigned as a worker / team member.
+     */
+    public function assignedProjects(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(ClientProject::class, 'client_project_workers', 'user_id', 'project_id')
+            ->withPivot('role_in_project')
+            ->withTimestamps();
+    }
+
+    /**
+     * Menu tasks assigned to this user as PIC.
+     */
+    public function assignedMenus(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ProjectMenu::class, 'pic_user_id');
+    }
+
+    /**
+     * Check if user is allowed to view a specific application feature / route ID.
+     */
+    public function canViewFeature(string $featureId): bool
+    {
+        if ($this->isAdmin()) {
+            return true;
+        }
+
+        $allowed = $this->allowed_features;
+        if (empty($allowed) || in_array('*', $allowed, true)) {
+            return true;
+        }
+
+        return in_array($featureId, $allowed, true);
     }
 }

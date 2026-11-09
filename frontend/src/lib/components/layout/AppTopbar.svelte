@@ -33,15 +33,19 @@
     if (path === '/') return 'Beranda';
     if (path === '/dashboard') return authState.hasRole('admin') ? 'Enterprise Dashboard' : 'Dashboard Akun';
     if (path === '/admin/dashboard') return 'Enterprise Dashboard';
+    if (path === '/admin/clients') return 'Manajemen Klien & Proyek';
+    if (path === '/admin/tagihan') return 'Tagihan & Invoice Proyek';
+    if (path.startsWith('/admin/tagihan/invoice')) return 'Detail Invoice Tagihan';
+    if (path.startsWith('/admin/tagihan/kuitansi')) return 'Kuitansi Resmi Pembayaran';
     if (path === '/admin/users') return 'Kelola Pengguna';
     if (path === '/admin/sessions') return 'Manajemen Sesi Aktif';
-    if (path === '/admin/system') return 'Sistem & Log';
+    if (path === '/admin/system') return 'Sistem & Profil Agensi';
     if (path === '/admin/studio') return 'Blueprint Studio';
     return path.replace('/', '').replace('/', ' / ');
   });
 </script>
 
-<header class="sticky top-0 z-30 h-11.5 sm:h-12 bg-white/80 dark:bg-[#090d16]/80 backdrop-blur-xl backdrop-saturate-150 border-b border-stone-200/80 dark:border-white/10 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 dark:before:via-white/15 before:to-transparent px-2.5 sm:px-4 flex items-center justify-between transition-colors duration-200">
+<header id="app-topbar" class="app-topbar print-hide sticky top-0 z-40 h-11.5 sm:h-12 bg-white/95 dark:bg-[#090d16]/95 backdrop-blur-xl backdrop-saturate-150 border-b border-stone-200/80 dark:border-white/10 shadow-2xs before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 dark:before:via-white/15 before:to-transparent px-2.5 sm:px-4 flex items-center justify-between transition-colors duration-200">
   <!-- Left: Mobile toggle & Breadcrumb -->
   <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
     <!-- Mobile Hamburger Button (Compact 34px) -->

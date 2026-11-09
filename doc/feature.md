@@ -14,6 +14,10 @@
 | **3** | **Gateway Performa, Telemetri SLO & Installer** | [`doc/features/03_system_telemetry.md`](features/03_system_telemetry.md) | System Cache, Sessions FS, `.installed` | `AdminSessionController`, `index.php`, `install.php` |
 | **4** | **Mode Maintenance & Observabilitas Log Sistem** | [`doc/features/04_maintenance_observability.md`](features/04_maintenance_observability.md) | Storage Logs, Down Config | `AdminSystemController`, `TelemetryController`, `hooks.client.js` |
 | **5** | **Feature Blueprint Studio & Spec-to-Code Factory** | [`doc/features/05_blueprint_studio.md`](features/05_blueprint_studio.md) | File System / Markdown SDD | `AdminStudioController`, `AdminStudioTest` |
+| **6** | **Valora Agency OS: Manajemen Klien & Intake Proyek** | [`doc/features/06_client_project_intake.md`](features/06_client_project_intake.md) | `clients`, `client_projects`, `project_roles` | `ClientProjectController`, `ClientPolicy`, `ClientProjectPolicy` |
+| **7** | **Monitoring Progres Project & Interactive Checklist Menu** | [`doc/features/07_progress_monitoring.md`](features/07_progress_monitoring.md) | `client_projects`, `project_roles`, `project_menus` | `ClientProjectController`, `ProjectScopeController`, `ProgressChecklistModal` |
+| **8** | **Tagihan Klien, Master Tarif Standar & Integrasi Valuasi Biaya Proyek** | [`doc/features/08_billing_and_rates.md`](features/08_billing_and_rates.md) | `master_billing_rates`, `billing_rate_histories`, `client_project_payments` | `MasterBillingRateController`, `ClientProjectBillingController`, `InvoiceModal` |
+| **9** | **Profil Legal Agency, Identitas Terpadu & Dashboard Mini Proyek Aktif** | [`doc/features/09_agency_identity_and_active_project_dashboard.md`](features/09_agency_identity_and_active_project_dashboard.md) | `agency_profiles`, `client_projects` | `AgencyProfileController`, `AppSidebar.svelte`, `AppTopbar.svelte` |
 
 ---
 

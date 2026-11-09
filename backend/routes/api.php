@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Admin\AdminUserController;
+use App\Http\Controllers\Api\V1\Admin\ClientProjectController;
 
 Route::prefix('auth')->middleware('throttle:auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
@@ -65,7 +66,46 @@ Route::middleware(['auth:sanctum', 'user.active', 'throttle:api'])->group(functi
         // Feature Blueprint Studio & Case Study Generator (Spec-to-Code Pipeline)
         Route::get('/studio/modules', [\App\Http\Controllers\Api\V1\Admin\AdminStudioController::class, 'index']);
         Route::post('/studio/generate-spec', [\App\Http\Controllers\Api\V1\Admin\AdminStudioController::class, 'saveSpec']);
+
+        // Manajemen Client & Proyek (Valora Agency OS)
+        Route::get('/clients', [ClientProjectController::class, 'index']);
+        Route::get('/clients/export', [ClientProjectController::class, 'export']);
+        Route::get('/clients/{id}', [ClientProjectController::class, 'show']);
+        Route::post('/clients', [ClientProjectController::class, 'store']);
+        Route::put('/clients/{id}', [ClientProjectController::class, 'update']);
+        Route::delete('/clients/{id}', [ClientProjectController::class, 'destroy']);
+
+        // Scope Proyek: Roles, Menus (10 Kapabilitas & PIC Fleksibel), & Skema Database
+        Route::post('/projects/{id}/roles', [\App\Http\Controllers\Api\V1\Admin\ProjectScopeController::class, 'addRole']);
+        Route::delete('/roles/{id}', [\App\Http\Controllers\Api\V1\Admin\ProjectScopeController::class, 'deleteRole']);
+        Route::post('/roles/{id}/menus', [\App\Http\Controllers\Api\V1\Admin\ProjectScopeController::class, 'addMenu']);
+        Route::put('/menus/{id}', [\App\Http\Controllers\Api\V1\Admin\ProjectScopeController::class, 'updateMenu']);
+        Route::post('/menus/{id}/toggle-done', [\App\Http\Controllers\Api\V1\Admin\ProjectScopeController::class, 'toggleMenuDone']);
+        Route::delete('/menus/{id}', [\App\Http\Controllers\Api\V1\Admin\ProjectScopeController::class, 'deleteMenu']);
+        Route::post('/projects/{id}/database-tables', [\App\Http\Controllers\Api\V1\Admin\ProjectScopeController::class, 'addDatabaseTable']);
+        Route::post('/database-tables/{id}/toggle-done', [\App\Http\Controllers\Api\V1\Admin\ProjectScopeController::class, 'toggleTableDone']);
+        Route::delete('/database-tables/{id}', [\App\Http\Controllers\Api\V1\Admin\ProjectScopeController::class, 'deleteDatabaseTable']);
+
+        // Master Settingan Tarif Standar Tagihan & Integrasi Valuasi Biaya Proyek
+        Route::get('/billing-rates', [\App\Http\Controllers\Api\V1\Admin\MasterBillingRateController::class, 'index']);
+        Route::post('/billing-rates', [\App\Http\Controllers\Api\V1\Admin\MasterBillingRateController::class, 'store']);
+        Route::put('/billing-rates/{rateKey}', [\App\Http\Controllers\Api\V1\Admin\MasterBillingRateController::class, 'update']);
+        Route::delete('/billing-rates/{rateKey}', [\App\Http\Controllers\Api\V1\Admin\MasterBillingRateController::class, 'destroy']);
+
+        // Tagihan Client, Pelacakan Invoice & Pencatatan Transaksi Pembayaran
+        Route::get('/billing/projects', [\App\Http\Controllers\Api\V1\Admin\ClientProjectBillingController::class, 'index']);
+        Route::get('/billing/projects/{projectId}/invoice', [\App\Http\Controllers\Api\V1\Admin\ClientProjectBillingController::class, 'showInvoice']);
+        Route::post('/billing/projects/{projectId}/payments', [\App\Http\Controllers\Api\V1\Admin\ClientProjectBillingController::class, 'recordPayment']);
+        Route::get('/billing/payments/{paymentId}/receipt', [\App\Http\Controllers\Api\V1\Admin\ClientProjectBillingController::class, 'showReceipt']);
+        Route::delete('/billing/payments/{paymentId}', [\App\Http\Controllers\Api\V1\Admin\ClientProjectBillingController::class, 'deletePayment']);
+
+        // Profil Legal Agency & Identitas Valora
+        Route::get('/agency-profile', [\App\Http\Controllers\Api\V1\Admin\AgencyProfileController::class, 'show']);
+        Route::put('/agency-profile', [\App\Http\Controllers\Api\V1\Admin\AgencyProfileController::class, 'update']);
     });
+
+    // Profil Legal Agency (Akses Umum Terotentikasi)
+    Route::get('/agency-profile', [\App\Http\Controllers\Api\V1\Admin\AgencyProfileController::class, 'show']);
 
     // User & Admin routes
     Route::middleware('role:user,admin')->prefix('user')->group(function () {

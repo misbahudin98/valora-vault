@@ -49,8 +49,76 @@
   let showFormPassword = $state(false);
   let formRoles = $state(['admin']);
   let formIsActive = $state(true);
+  let formJabatan = $state('');
+  let formPhone = $state('');
+  let formAddress = $state('');
+  let formGithubUrl = $state('');
+  let formLinkedinUrl = $state('');
+  let formSkills = $state([]);
+  let skillInput = $state('');
+  let formAllowedFeatures = $state(['*']);
   let formErrors = $state({});
   let formSubmitting = $state(false);
+
+  const AVAILABLE_FEATURES = [
+    { id: 'dashboard', label: 'Dashboard Utama', desc: 'Metrik, ringkasan dan portal adaptif' },
+    { id: 'admin-studio', label: 'Blueprint Studio', desc: 'Spec-to-Code factory & generator SDD' },
+    { id: 'admin-clients', label: 'Client & Proyek', desc: 'Intake klien, intake proyek, konfigurasi peran' },
+    { id: 'admin-progres', label: 'Progres Project', desc: 'Monitoring checklist pengerjaan menu & modul' },
+    { id: 'admin-tagihan', label: 'Tagihan & Master Tarif', desc: 'Master tarif acuan, invoice faktur dan kuitansi pembayaran' },
+    { id: 'admin-users', label: 'Kelola Pengguna', desc: 'RBAC pengguna, profil staf dan keahlian' },
+    { id: 'admin-sessions', label: 'Manajemen Sesi', desc: 'Audit perangkat dan terminasi sesi aktif' },
+    { id: 'admin-system', label: 'Sistem & Log', desc: 'Observabilitas log dan maintenance mode' },
+  ];
+
+  const PRESET_SKILLS = [
+    'Laravel', 'Svelte 5', 'Tailwind CSS', 'REST API', 'PostgreSQL',
+    'SQLite', 'UI/UX Design', 'Database Modeling', 'Security Hardening', 'Docker'
+  ];
+
+  function addSkill(skill) {
+    const clean = skill.trim();
+    if (clean && !formSkills.includes(clean)) {
+      formSkills = [...formSkills, clean];
+    }
+    skillInput = '';
+  }
+
+  function removeSkill(skillToRemove) {
+    formSkills = formSkills.filter(s => s !== skillToRemove);
+  }
+
+  function handleSkillKeydown(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addSkill(skillInput);
+    }
+  }
+
+  function toggleFeaturePermission(featId) {
+    if (formAllowedFeatures.includes('*')) {
+      // Jika sebelumnya wildcard, ubah jadi daftar spesifik tanpa featId
+      formAllowedFeatures = AVAILABLE_FEATURES.map(f => f.id).filter(id => id !== featId);
+      return;
+    }
+
+    if (formAllowedFeatures.includes(featId)) {
+      formAllowedFeatures = formAllowedFeatures.filter(id => id !== featId);
+    } else {
+      formAllowedFeatures = [...formAllowedFeatures, featId];
+      if (formAllowedFeatures.length === AVAILABLE_FEATURES.length) {
+        formAllowedFeatures = ['*'];
+      }
+    }
+  }
+
+  function selectAllFeatures() {
+    formAllowedFeatures = ['*'];
+  }
+
+  function clearAllFeatures() {
+    formAllowedFeatures = [];
+  }
 
   // Client-side hard route protection
   onMount(async () => {
@@ -91,6 +159,14 @@
     showFormPassword = false;
     formRoles = ['admin'];
     formIsActive = true;
+    formJabatan = '';
+    formPhone = '';
+    formAddress = '';
+    formGithubUrl = '';
+    formLinkedinUrl = '';
+    formSkills = ['Laravel', 'Svelte 5'];
+    skillInput = '';
+    formAllowedFeatures = ['*'];
     formErrors = {};
     showModal = true;
   }
@@ -104,6 +180,14 @@
     showFormPassword = false;
     formRoles = Array.isArray(user.role) ? [...user.role] : [user.role || 'admin'];
     formIsActive = Boolean(user.is_active);
+    formJabatan = user.jabatan || '';
+    formPhone = user.phone || '';
+    formAddress = user.address || '';
+    formGithubUrl = user.github_url || '';
+    formLinkedinUrl = user.linkedin_url || '';
+    formSkills = Array.isArray(user.skills) ? [...user.skills] : [];
+    skillInput = '';
+    formAllowedFeatures = Array.isArray(user.allowed_features) && user.allowed_features.length > 0 ? [...user.allowed_features] : ['*'];
     formErrors = {};
     showModal = true;
   }
@@ -124,14 +208,22 @@
     formSubmitting = true;
 
     try {
+      const payload = {
+        name: formName,
+        email: formEmail,
+        role: formRoles,
+        is_active: formIsActive,
+        jabatan: formJabatan.trim() || null,
+        phone: formPhone.trim() || null,
+        address: formAddress.trim() || null,
+        github_url: formGithubUrl.trim() || null,
+        linkedin_url: formLinkedinUrl.trim() || null,
+        skills: formSkills,
+        allowed_features: formAllowedFeatures,
+      };
+
       if (modalMode === 'create') {
-        const payload = {
-          name: formName,
-          email: formEmail,
-          password: formPassword,
-          role: formRoles,
-          is_active: formIsActive,
-        };
+        payload.password = formPassword;
         const res = await api.request('/api/v1/admin/users', {
           method: 'POST',
           body: JSON.stringify(payload)
@@ -147,12 +239,6 @@
           };
         }
       } else {
-        const payload = {
-          name: formName,
-          email: formEmail,
-          role: formRoles,
-          is_active: formIsActive,
-        };
         if (formPassword.trim()) {
           payload.password = formPassword;
         }
@@ -360,37 +446,114 @@
   >
     {#snippet header()}
       <tr>
-        <th class="px-5 py-3.5">No</th>
-        <th class="px-5 py-3.5">Nama & Email</th>
-        <th class="px-5 py-3.5">Role Otorisasi</th>
-        <th class="px-5 py-3.5">Status Akun</th>
-        <th class="px-5 py-3.5">Versi Token</th>
-        <th class="px-5 py-3.5 text-right">Aksi Manajemen & Keamanan</th>
+        <th class="px-4 py-3 text-left">No</th>
+        <th class="px-4 py-3 text-left">Profil Pengguna & Kontak</th>
+        <th class="px-4 py-3 text-left">Jabatan & Keahlian</th>
+        <th class="px-4 py-3 text-left">Hak Akses Fitur</th>
+        <th class="px-4 py-3 text-left">Role & Status</th>
+        <th class="px-4 py-3 text-right">Aksi</th>
       </tr>
     {/snippet}
 
     {#snippet row(u, idx)}
       <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition">
-        <td class="px-5 py-3.5 font-mono text-slate-400 dark:text-slate-500 font-semibold">{idx + 1}</td>
-        <td class="px-5 py-3.5">
+        <td class="px-4 py-3 font-mono text-slate-400 dark:text-slate-500 font-semibold">{idx + 1}</td>
+        
+        <!-- Profil Pengguna & Kontak -->
+        <td class="px-4 py-3">
           <div class="font-semibold text-slate-900 dark:text-white text-sm">{u.name}</div>
           <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">{u.email}</div>
+          {#if u.phone}
+            <div class="text-[11px] text-emerald-600 dark:text-emerald-400 font-mono mt-0.5 flex items-center gap-1">
+              <span>📞</span>
+              <a href="https://wa.me/{u.phone.replace(/[^0-9]/g, '')}" target="_blank" rel="noreferrer" class="hover:underline">
+                {u.phone}
+              </a>
+            </div>
+          {/if}
+          {#if u.address}
+            <div class="text-[10px] text-slate-400 dark:text-slate-500 truncate max-w-[220px] mt-0.5" title={u.address}>
+              📍 {u.address}
+            </div>
+          {/if}
+          <!-- Social Badges -->
+          {#if u.github_url || u.linkedin_url}
+            <div class="flex items-center gap-1.5 mt-1">
+              {#if u.github_url}
+                <a href={u.github_url} target="_blank" rel="noreferrer" class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-mono transition" title="Lihat GitHub">
+                  GitHub ↗
+                </a>
+              {/if}
+              {#if u.linkedin_url}
+                <a href={u.linkedin_url} target="_blank" rel="noreferrer" class="text-[10px] px-1.5 py-0.5 rounded bg-sky-50 hover:bg-sky-100 dark:bg-sky-950/60 dark:hover:bg-sky-900/60 text-sky-700 dark:text-sky-300 font-mono transition" title="Lihat LinkedIn">
+                  LinkedIn ↗
+                </a>
+              {/if}
+            </div>
+          {/if}
         </td>
-        <td class="px-5 py-3.5">
-          <div class="flex flex-wrap gap-1">
-            {#each (Array.isArray(u.role) ? u.role : [u.role]) as r}
-              <Badge type="role" value={r} />
-            {/each}
+
+        <!-- Jabatan & Spesialisasi Keahlian -->
+        <td class="px-4 py-3">
+          {#if u.jabatan}
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-200">{u.jabatan}</div>
+          {:else}
+            <div class="text-xs text-slate-400 dark:text-slate-500 italic">Belum diisi</div>
+          {/if}
+
+          {#if u.skills && u.skills.length > 0}
+            <div class="flex flex-wrap gap-1 mt-1.5 max-w-[260px]">
+              {#each u.skills.slice(0, 3) as skill}
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/40">
+                  {skill}
+                </span>
+              {/each}
+              {#if u.skills.length > 3}
+                <span class="text-[10px] font-mono px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 font-semibold" title={u.skills.slice(3).join(', ')}>
+                  +{u.skills.length - 3} lainnya
+                </span>
+              {/if}
+            </div>
+          {/if}
+        </td>
+
+        <!-- Hak Akses Fitur Aplikasi -->
+        <td class="px-4 py-3">
+          {#if !u.allowed_features || u.allowed_features.includes('*')}
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+              <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+              <span>Semua Fitur (*)</span>
+            </span>
+          {:else}
+            <div class="space-y-1">
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                <span>{u.allowed_features.length} Fitur Diizinkan</span>
+              </span>
+              <div class="text-[10px] text-slate-400 dark:text-slate-500 font-mono truncate max-w-[180px]" title={u.allowed_features.join(', ')}>
+                {u.allowed_features.join(', ')}
+              </div>
+            </div>
+          {/if}
+        </td>
+
+        <!-- Role & Status -->
+        <td class="px-4 py-3">
+          <div class="flex flex-col gap-1 items-start">
+            <div class="flex flex-wrap gap-1">
+              {#each (Array.isArray(u.role) ? u.role : [u.role]) as r}
+                <Badge type="role" value={r} />
+              {/each}
+            </div>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <Badge type="status" value={u.is_active} />
+              <span class="text-[10px] font-mono text-slate-400 dark:text-slate-500">v{u.token_version ?? 1}</span>
+            </div>
           </div>
         </td>
-        <td class="px-5 py-3.5">
-          <Badge type="status" value={u.is_active} />
-        </td>
-        <td class="px-5 py-3.5 font-mono text-[11px] text-slate-500 dark:text-slate-400">
-          v{u.token_version ?? 1}
-        </td>
-        <td class="px-5 py-3.5 text-right space-x-1.5 whitespace-nowrap">
-          <!-- Edit User Button -->
+
+        <!-- Aksi -->
+        <td class="px-4 py-3 text-right space-x-1 whitespace-nowrap">
           <button
             type="button"
             onclick={() => openEditModal(u)}
@@ -400,7 +563,6 @@
             Edit
           </button>
 
-          <!-- Toggle Status Button -->
           <button
             type="button"
             onclick={() => handleToggleStatus(u)}
@@ -411,28 +573,26 @@
             {actionLoading[u.id] ? 'Proses...' : (u.is_active ? 'Tangguhkan' : 'Aktifkan')}
           </button>
 
-          <!-- Instant Session Revoke Button -->
           <button
             type="button"
             onclick={() => handleRevokeSessions(u)}
             disabled={actionLoading[`revoke_${u.id}`]}
             aria-label="Cabut sesi perangkat {u.name}"
-            class="text-xs px-2.5 py-1 rounded-lg font-medium bg-rose-50 text-rose-700 hover:bg-rose-100 dark:bg-rose-950/40 dark:text-rose-300 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-800/40 transition cursor-pointer disabled:opacity-40"
+            class="text-xs px-2 py-1 rounded-lg font-medium bg-rose-50 text-rose-700 hover:bg-rose-100 dark:bg-rose-950/40 dark:text-rose-300 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-800/40 transition cursor-pointer disabled:opacity-40"
             title="Cabut sesi perangkat pengguna secara instan"
           >
-            {actionLoading[`revoke_${u.id}`] ? 'Mencabut...' : 'Cabut Sesi'}
+            {actionLoading[`revoke_${u.id}`] ? '...' : 'Cabut Sesi'}
           </button>
 
-          <!-- Delete User Button -->
           {#if u.id !== authState.user?.id}
             <button
               type="button"
               onclick={() => handleDeleteUser(u)}
               disabled={actionLoading[`del_${u.id}`]}
               aria-label="Hapus akun {u.name}"
-              class="text-xs px-2.5 py-1 rounded-lg font-medium bg-rose-100 text-rose-800 hover:bg-rose-200 dark:bg-rose-950/60 dark:text-rose-400 dark:hover:bg-rose-900/80 border border-rose-300 dark:border-rose-800/60 transition cursor-pointer disabled:opacity-40"
+              class="text-xs px-2 py-1 rounded-lg font-medium bg-rose-100 text-rose-800 hover:bg-rose-200 dark:bg-rose-950/60 dark:text-rose-400 dark:hover:bg-rose-900/80 border border-rose-300 dark:border-rose-800/60 transition cursor-pointer disabled:opacity-40"
             >
-              {actionLoading[`del_${u.id}`] ? 'Hapus...' : 'Hapus'}
+              {actionLoading[`del_${u.id}`] ? '...' : 'Hapus'}
             </button>
           {/if}
         </td>
@@ -444,7 +604,7 @@
         <!-- User Info & Status Header -->
         <div class="flex items-start justify-between gap-2">
           <div class="flex items-center gap-2.5 min-w-0">
-            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-slate-800 to-indigo-900 dark:from-slate-900 dark:to-indigo-950 border border-indigo-400/30 flex items-center justify-center font-bold text-indigo-300 text-xs shadow-inner shrink-0 font-mono">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-slate-800 to-indigo-900 dark:from-slate-900 dark:to-indigo-950 border border-indigo-400/30 flex items-center justify-center font-bold text-indigo-300 text-xs shadow-inner shrink-0 font-mono">
               {u.name.slice(0, 2).toUpperCase()}
             </div>
             <div class="min-w-0">
@@ -453,6 +613,9 @@
                 <span class="text-[10px] text-slate-400 dark:text-slate-500 font-mono shrink-0">#{idx + 1}</span>
               </div>
               <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate">{u.email}</div>
+              {#if u.jabatan}
+                <div class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 mt-0.5">{u.jabatan}</div>
+              {/if}
             </div>
           </div>
           <div class="shrink-0">
@@ -460,17 +623,42 @@
           </div>
         </div>
 
-        <!-- Role Badges & Token Version -->
-        <div class="flex flex-wrap items-center gap-1 pt-1 border-t border-slate-100 dark:border-slate-800/60">
-          {#each (Array.isArray(u.role) ? u.role : [u.role]) as r (r)}
-            <Badge type="role" value={r} />
-          {/each}
-          <span class="px-1.5 py-0.5 text-[10px] rounded font-mono bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700/60">
-            Token v{u.token_version ?? 1}
-          </span>
+        {#if u.phone || u.address}
+          <div class="text-[11px] text-slate-600 dark:text-slate-300 space-y-0.5 pt-1 border-t border-slate-100 dark:border-slate-800/60">
+            {#if u.phone}
+              <div class="flex items-center gap-1 font-mono text-emerald-600 dark:text-emerald-400">
+                <span>📞</span>
+                <span>{u.phone}</span>
+              </div>
+            {/if}
+            {#if u.address}
+              <div class="text-[10px] text-slate-400 truncate">📍 {u.address}</div>
+            {/if}
+          </div>
+        {/if}
+
+        <!-- Skills Tags in Card -->
+        {#if u.skills && u.skills.length > 0}
+          <div class="flex flex-wrap gap-1 pt-1 border-t border-slate-100 dark:border-slate-800/60">
+            {#each u.skills as skill}
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/40">
+                {skill}
+              </span>
+            {/each}
+          </div>
+        {/if}
+
+        <!-- Hak Akses Fitur Summary in Card -->
+        <div class="flex items-center justify-between text-[11px] pt-1 border-t border-slate-100 dark:border-slate-800/60">
+          <span class="text-slate-500 dark:text-slate-400">Akses Fitur:</span>
+          {#if !u.allowed_features || u.allowed_features.includes('*')}
+            <span class="text-purple-600 dark:text-purple-400 font-bold text-[10px]">Semua Fitur (*)</span>
+          {:else}
+            <span class="text-sky-600 dark:text-sky-400 font-mono font-bold text-[10px]">{u.allowed_features.length} Fitur</span>
+          {/if}
         </div>
 
-        <!-- Mobile Actions Grid (Thumb Zone) -->
+        <!-- Mobile Actions Grid -->
         <div class="grid grid-cols-2 gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-800/60">
           <button
             type="button"
@@ -478,9 +666,6 @@
             aria-label="Edit data {u.name}"
             class="min-h-[30px] px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white hover:bg-slate-100 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700/60 flex items-center justify-center gap-1 transition active:scale-95 cursor-pointer shadow-2xs"
           >
-            <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-            </svg>
             <span>Edit</span>
           </button>
 
@@ -500,12 +685,8 @@
             disabled={actionLoading[`revoke_${u.id}`]}
             aria-label="Cabut sesi perangkat {u.name}"
             class="min-h-[30px] px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-rose-50 text-rose-700 hover:bg-rose-100 dark:bg-rose-950/40 dark:text-rose-300 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-800/40 transition active:scale-95 disabled:opacity-40 cursor-pointer flex items-center justify-center gap-1 shadow-2xs"
-            title="Cabut sesi perangkat pengguna secara instan"
           >
-            <svg class="w-3 h-3 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
-            </svg>
-            <span>{actionLoading[`revoke_${u.id}`] ? 'Mencabut...' : 'Cabut Sesi'}</span>
+            <span>{actionLoading[`revoke_${u.id}`] ? '...' : 'Cabut Sesi'}</span>
           </button>
 
           {#if u.id !== authState.user?.id}
@@ -516,10 +697,7 @@
               aria-label="Hapus akun {u.name}"
               class="min-h-[30px] px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-rose-100 text-rose-800 hover:bg-rose-200 dark:bg-rose-950/60 dark:text-rose-400 dark:hover:bg-rose-900/80 border border-rose-300 dark:border-rose-800/60 transition active:scale-95 disabled:opacity-40 cursor-pointer flex items-center justify-center gap-1 shadow-2xs"
             >
-              <svg class="w-3 h-3 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-              <span>{actionLoading[`del_${u.id}`] ? 'Hapus...' : 'Hapus'}</span>
+              <span>{actionLoading[`del_${u.id}`] ? '...' : 'Hapus'}</span>
             </button>
           {:else}
             <div class="flex items-center justify-center text-[10px] text-slate-400 font-mono italic">
@@ -626,6 +804,203 @@
         </button>
       </div>
       {#if formErrors.password}<span class="text-[11px] text-rose-500 dark:text-rose-400 mt-1 block font-medium">{formErrors.password[0]}</span>{/if}
+    </div>
+
+    <!-- Jabatan & Kontak (Phone / WA) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div>
+        <label for="form-jabatan" class="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">
+          Jabatan / Posisi Staf
+        </label>
+        <input
+          id="form-jabatan"
+          type="text"
+          bind:value={formJabatan}
+          placeholder="Contoh: Lead Fullstack Developer"
+          class="w-full px-3.5 py-2.5 min-h-[40px] bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition"
+        />
+        {#if formErrors.jabatan}<span class="text-[11px] text-rose-500 dark:text-rose-400 mt-1 block font-medium">{formErrors.jabatan[0]}</span>{/if}
+      </div>
+
+      <div>
+        <label for="form-phone" class="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">
+          Kontak (No. HP / WhatsApp)
+        </label>
+        <input
+          id="form-phone"
+          type="text"
+          bind:value={formPhone}
+          placeholder="0812-3456-7890"
+          class="w-full px-3.5 py-2.5 min-h-[40px] bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition font-mono"
+        />
+        {#if formErrors.phone}<span class="text-[11px] text-rose-500 dark:text-rose-400 mt-1 block font-medium">{formErrors.phone[0]}</span>{/if}
+      </div>
+    </div>
+
+    <!-- Alamat Domisili -->
+    <div>
+      <label for="form-address" class="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">
+        Alamat Domisili
+      </label>
+      <textarea
+        id="form-address"
+        bind:value={formAddress}
+        rows="2"
+        placeholder="Alamat domisili lengkap atau kota tempat tinggal"
+        class="w-full px-3.5 py-2 min-h-[60px] bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition"
+      ></textarea>
+      {#if formErrors.address}<span class="text-[11px] text-rose-500 dark:text-rose-400 mt-1 block font-medium">{formErrors.address[0]}</span>{/if}
+    </div>
+
+    <!-- Akun GitHub & LinkedIn -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div>
+        <label for="form-github" class="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">
+          Akun / URL GitHub
+        </label>
+        <input
+          id="form-github"
+          type="url"
+          bind:value={formGithubUrl}
+          placeholder="https://github.com/username"
+          class="w-full px-3.5 py-2.5 min-h-[40px] bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition"
+        />
+        {#if formErrors.github_url}<span class="text-[11px] text-rose-500 dark:text-rose-400 mt-1 block font-medium">{formErrors.github_url[0]}</span>{/if}
+      </div>
+
+      <div>
+        <label for="form-linkedin" class="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">
+          Akun / URL LinkedIn
+        </label>
+        <input
+          id="form-linkedin"
+          type="url"
+          bind:value={formLinkedinUrl}
+          placeholder="https://linkedin.com/in/username"
+          class="w-full px-3.5 py-2.5 min-h-[40px] bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl text-base sm:text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition"
+        />
+        {#if formErrors.linkedin_url}<span class="text-[11px] text-rose-500 dark:text-rose-400 mt-1 block font-medium">{formErrors.linkedin_url[0]}</span>{/if}
+      </div>
+    </div>
+
+    <!-- Spesialisasi Keahlian (Bisa Lebih Dari 1) -->
+    <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 space-y-2.5">
+      <div class="flex items-center justify-between">
+        <label for="new-skill-input" class="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+          <span>🛠️ Spesialisasi Keahlian</span>
+          <span class="text-[10px] text-indigo-600 dark:text-indigo-400 font-normal font-mono">(Bisa Lebih Dari 1)</span>
+        </label>
+        <span class="text-[10px] text-slate-400 font-mono">{formSkills.length} keahlian terpilih</span>
+      </div>
+
+      <!-- Skill Tag List -->
+      {#if formSkills.length > 0}
+        <div class="flex flex-wrap gap-1.5 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 min-h-[38px] items-center">
+          {#each formSkills as skill}
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-800/60 font-mono">
+              <span>{skill}</span>
+              <button
+                type="button"
+                onclick={() => removeSkill(skill)}
+                class="hover:text-rose-600 dark:hover:text-rose-400 transition cursor-pointer text-indigo-400"
+                title="Hapus keahlian {skill}"
+              >
+                ✕
+              </button>
+            </span>
+          {/each}
+        </div>
+      {/if}
+
+      <!-- Interactive Skill Tag Input -->
+      <div class="flex items-center gap-2">
+        <input
+          id="new-skill-input"
+          type="text"
+          bind:value={skillInput}
+          onkeydown={handleSkillKeydown}
+          placeholder="Ketik nama keahlian lalu tekan Enter atau tombol Tambah..."
+          class="flex-1 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500"
+        />
+        <button
+          type="button"
+          onclick={() => addSkill(skillInput)}
+          disabled={!skillInput.trim()}
+          class="px-3.5 py-2 text-xs font-bold bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white rounded-lg transition cursor-pointer shrink-0"
+        >
+          + Tambah
+        </button>
+      </div>
+
+      <!-- Quick Preset Suggestions -->
+      <div>
+        <div class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold mb-1">Preset Keahlian Cepat:</div>
+        <div class="flex flex-wrap gap-1">
+          {#each PRESET_SKILLS as preset}
+            <button
+              type="button"
+              onclick={() => addSkill(preset)}
+              disabled={formSkills.includes(preset)}
+              class="text-[10px] px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-indigo-950 text-slate-700 dark:text-slate-300 font-mono transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+            >
+              + {preset}
+            </button>
+          {/each}
+        </div>
+      </div>
+    </div>
+
+    <!-- Hak Akses Fitur Aplikasi Yang Boleh Dilihat -->
+    <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 space-y-2.5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div>
+          <span class="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+            <span>🛡️ Hak Akses Fitur Aplikasi Yang Boleh Dilihat</span>
+          </span>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
+            Pilih fitur atau modul yang dapat diakses dan dilihat oleh pengguna ini.
+          </p>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button
+            type="button"
+            onclick={selectAllFeatures}
+            class="text-[10px] font-semibold px-2 py-1 rounded bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950 dark:hover:bg-indigo-900 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 transition cursor-pointer"
+          >
+            Pilih Semua Fitur (*)
+          </button>
+          <button
+            type="button"
+            onclick={clearAllFeatures}
+            class="text-[10px] font-semibold px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition cursor-pointer"
+          >
+            Kosongkan
+          </button>
+        </div>
+      </div>
+
+      <!-- Feature Permissions Checklist Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+        {#each AVAILABLE_FEATURES as feat}
+          {@const isChecked = formAllowedFeatures.includes('*') || formAllowedFeatures.includes(feat.id)}
+          <label class="flex items-start gap-2.5 p-2 rounded-lg border cursor-pointer transition {isChecked ? 'bg-indigo-50/70 dark:bg-indigo-950/40 border-indigo-300 dark:border-indigo-700' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300'}">
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onchange={() => toggleFeaturePermission(feat.id)}
+              class="w-4 h-4 rounded bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-0 cursor-pointer mt-0.5 shrink-0"
+            />
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1">
+                <span>{feat.label}</span>
+                <span class="text-[10px] font-mono text-slate-400 font-normal">({feat.id})</span>
+              </div>
+              <div class="text-[10px] text-slate-500 dark:text-slate-400 truncate">{feat.desc}</div>
+            </div>
+          </label>
+        {/each}
+      </div>
+      {#if formErrors.allowed_features}<span class="text-[11px] text-rose-500 dark:text-rose-400 mt-1 block font-medium">{formErrors.allowed_features[0]}</span>{/if}
     </div>
 
     <!-- Multiple Roles Selection -->

@@ -138,8 +138,8 @@
     </div>
   </div>
 
-  <!-- Table Container (Mobile First: Dual Table & Compact Card Stack with Apple Spatial Glass) -->
-  <div class="bg-white/80 dark:bg-[#0c1220]/80 bg-gradient-to-br from-indigo-500/[0.02] via-transparent to-cyan-500/[0.02] dark:from-indigo-500/[0.05] dark:to-cyan-500/[0.03] backdrop-blur-xl border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-2xs overflow-hidden relative before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/35 dark:before:via-white/15 before:to-transparent">
+  <!-- Table Container (Mobile First: Dual Table & Compact Card Stack — L1 Macro Surface) -->
+  <div class="bg-white dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-2xs overflow-hidden">
     {#if loading}
       <div class="py-10 flex flex-col items-center justify-center gap-2">
         <ElementLoader size="md" variant="indigo" text="Memuat data tabel..." />
@@ -182,18 +182,18 @@
     {:else}
       {#if card}
         <!-- Mobile Card View (< md) with Pro-Grade Compact Separation -->
-        <div class="md:hidden p-2.5 space-y-2 bg-slate-100/60 dark:bg-slate-950/60">
+        <div class="md:hidden p-2.5 space-y-2 bg-slate-50/60 dark:bg-slate-950/40">
           {#each paginatedItems as item, idx (item.id ?? idx)}
-            <div class="p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 shadow-2xs hover:border-indigo-400 dark:hover:border-indigo-500 transition">
+            <div class="p-3 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs hover:border-indigo-400 dark:hover:border-indigo-500 transition">
               {@render card(item, (safeCurrentPage - 1) * perPage + idx)}
             </div>
           {/each}
         </div>
       {:else}
         <!-- Default Fallback Card View (< md) for Tables without Custom Card Snippet -->
-        <div class="md:hidden p-2.5 space-y-2 bg-slate-100/60 dark:bg-slate-950/60">
+        <div class="md:hidden p-2.5 space-y-2 bg-slate-50/60 dark:bg-slate-950/40">
           {#each paginatedItems as item, idx (item.id ?? idx)}
-            <div class="p-3 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 shadow-2xs space-y-2">
+            <div class="p-3 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs space-y-2">
               <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1.5">
                 <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500">#{(safeCurrentPage - 1) * perPage + idx + 1}</span>
                 {#if item.status || item.is_active !== undefined}
@@ -219,7 +219,7 @@
 
       <!-- Desktop Table View (hidden md:block) -->
       <div class="hidden md:block overflow-x-auto">
-        <table class="w-full text-left text-xs text-slate-700 dark:text-slate-200">
+        <table class="w-full text-left border-collapse text-xs text-slate-700 dark:text-slate-200">
           <thead class="bg-slate-50/90 dark:bg-slate-900/90 text-[10.5px] uppercase font-semibold text-slate-600 dark:text-slate-400 tracking-wider border-b border-slate-200 dark:border-slate-800">
             {#if header}
               {@render header()}

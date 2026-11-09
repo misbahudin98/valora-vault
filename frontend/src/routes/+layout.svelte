@@ -95,7 +95,7 @@
   <link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class="min-h-screen bg-[#f8fafc] text-stone-800 dark:bg-[#090d16] dark:text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white relative overflow-x-hidden transition-colors duration-200">
+<div class="min-h-screen bg-[#f8fafc] text-stone-800 dark:bg-[#090d16] dark:text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white relative overflow-x-clip transition-colors duration-200">
   <!-- Ambient Glow -->
   <div class="fixed top-0 left-1/4 w-96 h-96 bg-indigo-600/10 dark:bg-indigo-600/15 rounded-full blur-[128px] pointer-events-none -z-10"></div>
   <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-cyan-500/10 dark:bg-cyan-500/15 rounded-full blur-[128px] pointer-events-none -z-10"></div>
@@ -130,8 +130,6 @@
       <AppSidebar
         isOpen={sidebarOpen}
         onclose={() => sidebarOpen = false}
-        onlogout={handleLogout}
-        {loggingOut}
       />
 
       <!-- Main App Content Area (Mobile-First Pro-Grade) -->

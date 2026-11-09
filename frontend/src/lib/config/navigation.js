@@ -28,6 +28,33 @@ export const navigationItems = [
     icon: 'studio',
   },
   {
+    id: 'admin-clients',
+    label: 'Client & Proyek',
+    href: '/admin/clients',
+    auth: true,
+    roles: ['admin'],
+    group: 'Operasional',
+    icon: 'folder',
+  },
+  {
+    id: 'admin-progres',
+    label: 'Progres Project',
+    href: '/admin/progres',
+    auth: true,
+    roles: ['admin'],
+    group: 'Operasional',
+    icon: 'activity',
+  },
+  {
+    id: 'admin-tagihan',
+    label: 'Tagihan & Master Tarif',
+    href: '/admin/tagihan',
+    auth: true,
+    roles: ['admin'],
+    group: 'Operasional',
+    icon: 'receipt',
+  },
+  {
     id: 'admin-dashboard',
     label: 'Admin Panel',
     href: '/admin/dashboard',
@@ -57,7 +84,7 @@ export const navigationItems = [
   },
   {
     id: 'admin-system',
-    label: 'Sistem & Log',
+    label: 'Sistem & Profil Agensi',
     href: '/admin/system',
     auth: true,
     roles: ['admin'],
@@ -67,7 +94,7 @@ export const navigationItems = [
 ];
 
 /**
- * Filter menu items according to user auth state and sidebar display rules
+ * Filter menu items according to user auth state, roles, and allowed_features configuration
  */
 export function getVisibleNavItems(state) {
   return navigationItems.filter(item => {
@@ -82,8 +109,17 @@ export function getVisibleNavItems(state) {
     // Jika rute butuh role spesifik
     if (item.roles && item.roles.length > 0) {
       if (!state.isAuthenticated) return false;
-      return state.hasRole(...item.roles);
+      if (!state.hasRole(...item.roles)) return false;
     }
+
+    // Saring berdasarkan Hak Akses Fitur Aplikasi Yang Boleh Dilihat (allowed_features)
+    const allowed = state.user?.allowed_features;
+    if (Array.isArray(allowed) && allowed.length > 0 && !allowed.includes('*')) {
+      if (!allowed.includes(item.id)) {
+        return false;
+      }
+    }
+
     return true;
   });
 }
@@ -100,6 +136,16 @@ export function canAccessPath(pathname, state) {
     if (!state.hasRole('admin')) {
       return { authorized: false, reason: 'forbidden', redirectTo: '/dashboard' };
     }
+
+    // Cek batasan hak akses fitur aplikasi yang boleh dilihat
+    const allowed = state.user?.allowed_features;
+    if (Array.isArray(allowed) && allowed.length > 0 && !allowed.includes('*')) {
+      const matchedItem = navigationItems.find(item => item.href === pathname || (item.href !== '/' && pathname.startsWith(item.href)));
+      if (matchedItem && !allowed.includes(matchedItem.id)) {
+        return { authorized: false, reason: 'forbidden_feature', redirectTo: '/dashboard' };
+      }
+    }
+
     return { authorized: true };
   }
 
