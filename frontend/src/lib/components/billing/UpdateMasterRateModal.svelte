@@ -12,7 +12,7 @@
   } = $props();
 
   let selectedKey = $state('menu_price');
-  let newPrice = $state(750000);
+  let newPrice = $state(250000);
   let editName = $state('');
   let editDescription = $state('');
   let reason = $state('');

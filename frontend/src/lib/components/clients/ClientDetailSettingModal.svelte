@@ -67,7 +67,7 @@
   let formMenuName = $state('');
   let formMenuDesc = $state('');
   let formMenuPic = $state('Muhammad Iqbal Murtadho');
-  let formMenuPrice = $state(750000);
+  let formMenuPrice = $state(250000);
   let formCapabilities = $state({
     has_create: true,
     has_read: true,
@@ -84,7 +84,7 @@
 
   let showAddTableModal = $state(false);
   let newTableName = $state('');
-  let newTablePrice = $state(100000);
+  let newTablePrice = $state(150000);
   let submittingTable = $state(false);
 
   let showEditFeaturePriceModal = $state(false);
@@ -110,11 +110,11 @@
   let masterRates = $state([]);
 
   let ratesMap = $state({
-    landing: 2500000,
-    login: 1000000,
-    register: 1000000,
-    menu_price: 750000,
-    database_table_price: 100000,
+    landing: 500000,
+    login: 350000,
+    register: 350000,
+    menu_price: 250000,
+    database_table_price: 150000,
     maintenance_menu_price: 150000,
   });
   let loadingRates = $state(false);
@@ -265,15 +265,15 @@
 
     if (key === 'landing') {
       targetFeatureLabel = 'Landing Page';
-      formFeaturePrice = Number(project?.landing_price) || ratesMap.landing || 2500000;
+      formFeaturePrice = Number(project?.landing_price) || ratesMap.landing || 500000;
       formFeatureNote = project?.landing_note || '';
     } else if (key === 'login') {
       targetFeatureLabel = 'Halaman Login';
-      formFeaturePrice = Number(project?.login_price) || ratesMap.login || 1000000;
+      formFeaturePrice = Number(project?.login_price) || ratesMap.login || 350000;
       formFeatureNote = project?.login_note || '';
     } else if (key === 'register') {
       targetFeatureLabel = 'Halaman Register';
-      formFeaturePrice = Number(project?.register_price) || ratesMap.register || 1000000;
+      formFeaturePrice = Number(project?.register_price) || ratesMap.register || 350000;
       formFeatureNote = project?.register_note || '';
     }
     showEditFeaturePriceModal = true;
@@ -374,7 +374,7 @@
     };
     formMenuPrice = project?.project_type === 'maintenance'
       ? (ratesMap.maintenance_menu_price || 150000)
-      : (ratesMap.menu_price || 750000);
+      : (ratesMap.menu_price || 250000);
     showAddMenuModal = true;
   }
 
@@ -384,7 +384,7 @@
     formMenuName = menu.menu_name;
     formMenuDesc = menu.menu_desc || '';
     formMenuPic = menu.pic || project?.lead_pic || 'Muhammad Iqbal Murtadho';
-    formMenuPrice = Number(menu.price) || 750000;
+    formMenuPrice = Number(menu.price) || 250000;
     formCapabilities = {
       has_create: !!menu.has_create,
       has_read: !!menu.has_read,
@@ -1251,11 +1251,11 @@
           </label>
           <button
             type="button"
-            onclick={() => (formMenuPrice = ratesMap.menu_price || 750000)}
+            onclick={() => (formMenuPrice = ratesMap.menu_price || 250000)}
             class="text-[10px] text-indigo-600 dark:text-indigo-400 hover:underline font-mono font-bold cursor-pointer"
             title="Terapkan tarif acuan standar"
           >
-            Acuan Standar: {formatIDR(ratesMap.menu_price || 750000)}
+            Acuan Standar: {formatIDR(ratesMap.menu_price || 250000)}
           </button>
         </div>
         <input
@@ -1263,7 +1263,7 @@
           type="number"
           step="10000"
           bind:value={formMenuPrice}
-          placeholder="750000"
+          placeholder="250000"
           class="w-full text-xs px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 font-mono font-semibold"
         />
       </div>

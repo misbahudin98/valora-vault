@@ -50,8 +50,8 @@ class BillingAndMasterRateTest extends TestCase
                 'histories',
             ]);
 
-        $this->assertEquals(2500000.00, $response->json('rates_map.landing'));
-        $this->assertEquals(750000.00, $response->json('rates_map.menu_price'));
+        $this->assertEquals(500000.00, $response->json('rates_map.landing'));
+        $this->assertEquals(250000.00, $response->json('rates_map.menu_price'));
     }
 
     public function test_admin_can_update_master_billing_rate_with_reason(): void
@@ -73,7 +73,7 @@ class BillingAndMasterRateTest extends TestCase
 
         $this->assertDatabaseHas('billing_rate_histories', [
             'rate_key' => 'menu_price',
-            'old_price' => 750000.00,
+            'old_price' => 250000.00,
             'new_price' => 850000.00,
             'reason' => 'Penyesuaian kompleksitas modul Svelte 5 runes dan integrasi API RFC 7807',
         ]);

@@ -165,14 +165,14 @@ class ClientProjectBillingController extends Controller
         }
 
         // Master setting prices as baseline reference
-        $rates = MasterBillingRate::all()->keyBy('item_code');
-        $baseLandingSetting = (float) ($rates['landing']?->standard_price ?? 2500000.0);
-        $baseLoginSetting = (float) ($rates['login']?->standard_price ?? 1000000.0);
-        $baseRegisterSetting = (float) ($rates['register']?->standard_price ?? 1000000.0);
+        $rates = MasterBillingRate::all()->keyBy('rate_key');
+        $baseLandingSetting = (float) ($rates['landing']?->price ?? MasterBillingRate::getRatePrice('landing', 500000.0));
+        $baseLoginSetting = (float) ($rates['login']?->price ?? MasterBillingRate::getRatePrice('login', 350000.0));
+        $baseRegisterSetting = (float) ($rates['register']?->price ?? MasterBillingRate::getRatePrice('register', 350000.0));
         $baseMenuSetting = $project->project_type === 'maintenance'
-            ? (float) ($rates['maintenance_menu_price']?->standard_price ?? 150000.0)
-            : (float) ($rates['menu_price']?->standard_price ?? 750000.0);
-        $baseTableSetting = (float) ($rates['database_table_price']?->standard_price ?? 100000.0);
+            ? (float) ($rates['maintenance_menu_price']?->price ?? MasterBillingRate::getRatePrice('maintenance_menu_price', 150000.0))
+            : (float) ($rates['menu_price']?->price ?? MasterBillingRate::getRatePrice('menu_price', 250000.0));
+        $baseTableSetting = (float) ($rates['database_table_price']?->price ?? MasterBillingRate::getRatePrice('database_table_price', 150000.0));
 
         $items = [];
 

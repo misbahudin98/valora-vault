@@ -101,7 +101,7 @@ class ProjectScopeController extends Controller
         $maxSort = (int) $role->menus()->max('sort_order');
         $defaultMenuPrice = $project->project_type === 'maintenance'
             ? MasterBillingRate::getRatePrice('maintenance_menu_price', 150000.0)
-            : MasterBillingRate::getRatePrice('menu_price', 750000.0);
+            : MasterBillingRate::getRatePrice('menu_price', 250000.0);
 
         $picUserId = isset($validated['pic_user_id']) && $validated['pic_user_id'] ? (int) $validated['pic_user_id'] : null;
         $picName = $validated['pic'] ?? null;
@@ -296,7 +296,7 @@ class ProjectScopeController extends Controller
             'price' => ['nullable', 'numeric', 'min:0'],
         ]);
 
-        $defaultTablePrice = MasterBillingRate::getRatePrice('database_table_price', 100000.0);
+        $defaultTablePrice = MasterBillingRate::getRatePrice('database_table_price', 150000.0);
 
         $table = DB::transaction(function () use ($project, $validated, $defaultTablePrice) {
             $t = ProjectDatabaseTable::create([

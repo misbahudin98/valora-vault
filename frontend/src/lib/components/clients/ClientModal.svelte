@@ -92,7 +92,7 @@
   let targetRoleId = $state('');
   let newMenuName = $state('');
   let newMenuDesc = $state('');
-  let newMenuPrice = $state(750000);
+  let newMenuPrice = $state(250000);
   let newMenuDone = $state(false);
 
   // Sub-form 3: Maintenance
@@ -100,15 +100,15 @@
   let maintDesc = $state('');
   let maintPic = $state('Misbahudin');
   let maintDate = $state(new Date().toISOString().split('T')[0]);
-  let maintCost = $state(750000);
+  let maintCost = $state(150000);
 
   // Fields saat Edit Mode
   let projectName = $state('');
   let projectType = $state('development');
   let status = $state('Aktif');
-  let landingPrice = $state(2500000);
-  let loginPrice = $state(1000000);
-  let registerPrice = $state(1000000);
+  let landingPrice = $state(500000);
+  let loginPrice = $state(350000);
+  let registerPrice = $state(350000);
   let paidAmount = $state(0);
   let roleTags = $state(['Super Admin', 'Staff Operasional']);
   let newRoleInput = $state('');
@@ -119,11 +119,11 @@
 
   // Master Billing Rates State (terhubung dengan modul Tagihan & Master Tarif Standar)
   let ratesMap = $state({
-    landing: 2500000,
-    login: 1000000,
-    register: 1000000,
-    menu_price: 750000,
-    database_table_price: 100000,
+    landing: 500000,
+    login: 350000,
+    register: 350000,
+    menu_price: 250000,
+    database_table_price: 150000,
     maintenance_menu_price: 150000
   });
   let loadingRates = $state(false);
@@ -139,11 +139,11 @@
         };
         // Sinkronisasi nilai default awal jika belum diset kustom
         if (mode === 'create') {
-          newMenuPrice = ratesMap.menu_price || 750000;
+          newMenuPrice = ratesMap.menu_price || 250000;
           if (appTypeChoice === 'new_app') {
-            landingPrice = ratesMap.landing || 2500000;
-            loginPrice = ratesMap.login || 1000000;
-            registerPrice = ratesMap.register || 1000000;
+            landingPrice = ratesMap.landing || 500000;
+            loginPrice = ratesMap.login || 350000;
+            registerPrice = ratesMap.register || 350000;
           }
         }
       }
@@ -198,11 +198,11 @@
         status = project.status || 'Aktif';
 
         useLanding = !!project.use_landing;
-        landingPrice = project.landing_price !== undefined ? Number(project.landing_price) : 2500000;
+        landingPrice = project.landing_price !== undefined ? Number(project.landing_price) : 500000;
         useLogin = !!project.use_login;
-        loginPrice = project.login_price !== undefined ? Number(project.login_price) : 1000000;
+        loginPrice = project.login_price !== undefined ? Number(project.login_price) : 350000;
         useRegister = !!project.use_register;
-        registerPrice = project.register_price !== undefined ? Number(project.register_price) : 1000000;
+        registerPrice = project.register_price !== undefined ? Number(project.register_price) : 350000;
         useAppCore = !!project.use_app_core;
         paidAmount = project.paid_amount !== undefined ? Number(project.paid_amount) : 0;
 
@@ -244,12 +244,12 @@
         newRoleMenu = '';
         newMenuName = '';
         newMenuDesc = '';
-        newMenuPrice = 750000;
+        newMenuPrice = 250000;
         newMenuDone = false;
         maintDesc = '';
         maintPic = 'Misbahudin';
         maintDate = new Date().toISOString().split('T')[0];
-        maintCost = 750000;
+        maintCost = 150000;
         selectedMaintMenus = [];
       }
     }
@@ -358,12 +358,12 @@
   // Real-time estimated valuation untuk Aplikasi Baru
   let estimatedValuation = $derived.by(() => {
     let sum = 0;
-    if (useLanding) sum += (ratesMap.landing || 2500000);
-    if (useLogin) sum += (ratesMap.login || 1000000);
-    if (useRegister) sum += (ratesMap.register || 1000000);
+    if (useLanding) sum += (ratesMap.landing || 500000);
+    if (useLogin) sum += (ratesMap.login || 350000);
+    if (useRegister) sum += (ratesMap.register || 350000);
     const roleCountVal = roleType === 'admin_only' ? 1 : dynamicRoleNames.length;
-    sum += roleCountVal * 2 * (ratesMap.menu_price || 750000);
-    sum += 3 * (ratesMap.database_table_price || 100000); // 3 tabel database standar
+    sum += roleCountVal * 2 * (ratesMap.menu_price || 250000);
+    sum += 3 * (ratesMap.database_table_price || 150000); // 3 tabel database standar
     return sum;
   });
 
@@ -453,9 +453,9 @@
         use_login: useLogin,
         use_register: useRegister,
         use_app_core: useAppCore,
-        landing_price: useLanding ? (ratesMap.landing || 2500000) : 0,
-        login_price: useLogin ? (ratesMap.login || 1000000) : 0,
-        register_price: useRegister ? (ratesMap.register || 1000000) : 0,
+        landing_price: useLanding ? (ratesMap.landing || 500000) : 0,
+        login_price: useLogin ? (ratesMap.login || 350000) : 0,
+        register_price: useRegister ? (ratesMap.register || 350000) : 0,
         landing_capabilities: { has_create: false, has_read: true, has_update: false, has_delete: false, has_grafik: false, has_box_dashboard: false, has_import: false, has_export: false, has_filter: false, has_print: false },
         login_capabilities: { has_create: true, has_read: true, has_update: true, has_delete: false, has_grafik: false, has_box_dashboard: false, has_import: false, has_export: false, has_filter: false, has_print: false },
         register_capabilities: { has_create: true, has_read: true, has_update: false, has_delete: false, has_grafik: false, has_box_dashboard: false, has_import: false, has_export: false, has_filter: false, has_print: false },
@@ -499,7 +499,7 @@
               body: {
                 menu_name: cleanMenuName,
                 menu_desc: `Modul operasional aplikasi untuk ${cleanRoleName}.`,
-                price: ratesMap.menu_price || 750000,
+                price: ratesMap.menu_price || 250000,
                 is_done: false,
                 pic: selectedProjectDetail?.lead_pic || 'Muhammad Iqbal Murtadho',
                 pic_user_id: selectedProjectDetail?.lead_pic_id || (usersList.find(u => u.name === selectedProjectDetail?.lead_pic)?.id || null)
@@ -534,7 +534,7 @@
             body: {
               menu_name: cleanMenuName,
               menu_desc: cleanMenuDesc,
-              price: Number(newMenuPrice) || ratesMap.menu_price || 750000,
+              price: Number(newMenuPrice) || ratesMap.menu_price || 250000,
               is_done: newMenuDone,
               completed_date: newMenuDone ? new Date().toISOString().split('T')[0] : null,
               pic: selectedProjectDetail?.lead_pic || 'Muhammad Iqbal Murtadho',
@@ -1274,7 +1274,7 @@
                   </label>
                   <button
                     type="button"
-                    onclick={() => (newMenuPrice = ratesMap.menu_price || 750000)}
+                    onclick={() => (newMenuPrice = ratesMap.menu_price || 250000)}
                     class="text-[10px] text-indigo-600 dark:text-indigo-400 hover:underline font-mono cursor-pointer"
                     title="Gunakan tarif acuan master standar"
                   >
@@ -1697,7 +1697,7 @@
                   <p class="text-xs font-bold text-slate-900 dark:text-white">Landing Page</p>
                   <button
                     type="button"
-                    onclick={(e) => { e.stopPropagation(); landingPrice = ratesMap.landing || 2500000; }}
+                    onclick={(e) => { e.stopPropagation(); landingPrice = ratesMap.landing || 500000; }}
                     class="text-[9px] text-indigo-600 dark:text-indigo-400 hover:underline font-mono"
                     title="Gunakan tarif acuan master"
                   >
@@ -1720,7 +1720,7 @@
                   <p class="text-xs font-bold text-slate-900 dark:text-white">Autentikasi Login</p>
                   <button
                     type="button"
-                    onclick={(e) => { e.stopPropagation(); loginPrice = ratesMap.login || 1000000; }}
+                    onclick={(e) => { e.stopPropagation(); loginPrice = ratesMap.login || 350000; }}
                     class="text-[9px] text-indigo-600 dark:text-indigo-400 hover:underline font-mono"
                     title="Gunakan tarif acuan master"
                   >
@@ -1743,7 +1743,7 @@
                   <p class="text-xs font-bold text-slate-900 dark:text-white">Pendaftaran User</p>
                   <button
                     type="button"
-                    onclick={(e) => { e.stopPropagation(); registerPrice = ratesMap.register || 1000000; }}
+                    onclick={(e) => { e.stopPropagation(); registerPrice = ratesMap.register || 350000; }}
                     class="text-[9px] text-indigo-600 dark:text-indigo-400 hover:underline font-mono"
                     title="Gunakan tarif acuan master"
                   >

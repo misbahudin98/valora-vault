@@ -23,7 +23,7 @@ class MasterBillingRateSeeder extends Seeder
             'modul_reporting_export',
         ])->orWhere('rate_key', 'like', 'cap_%')->delete();
 
-        // 2. Daftar 6 Tarif Standar Sistem & Komponen Inti
+        // 2. Daftar 6 Tarif Standar Sistem & Komponen Inti (Terjangkau, Profesional & Bernilai Tinggi)
         $rates = [
             [
                 'rate_key' => 'landing',
@@ -31,7 +31,7 @@ class MasterBillingRateSeeder extends Seeder
                 'description' => 'Desain web company profile beranimasi, kuartet SEO/AEO/GEO & mobile-first',
                 'unit' => 'Per Proyek',
                 'category' => 'system_core',
-                'price' => 2500000.00,
+                'price' => 500000.00,
                 'is_active' => true,
             ],
             [
@@ -40,7 +40,7 @@ class MasterBillingRateSeeder extends Seeder
                 'description' => 'Form keamanan login, proteksi brute-force, CSRF & session token Sanctum',
                 'unit' => 'Per Halaman',
                 'category' => 'system_core',
-                'price' => 1000000.00,
+                'price' => 350000.00,
                 'is_active' => true,
             ],
             [
@@ -49,7 +49,7 @@ class MasterBillingRateSeeder extends Seeder
                 'description' => 'Pendaftaran akun, verifikasi email, password hashing Argon2id & aktivasi user',
                 'unit' => 'Per Halaman',
                 'category' => 'system_core',
-                'price' => 1000000.00,
+                'price' => 350000.00,
                 'is_active' => true,
             ],
             [
@@ -58,7 +58,7 @@ class MasterBillingRateSeeder extends Seeder
                 'description' => 'Tarif acuan pengerjaan menu modul operasional mencakup routing, permission & kerangka kerja',
                 'unit' => 'Per Menu Modul',
                 'category' => 'system_core',
-                'price' => 750000.00,
+                'price' => 250000.00,
                 'is_active' => true,
             ],
             [
@@ -67,7 +67,7 @@ class MasterBillingRateSeeder extends Seeder
                 'description' => 'Skema tabel 3NF, relasi foreign key, indeks performa & migrasi transaksional',
                 'unit' => 'Per Tabel DB',
                 'category' => 'system_core',
-                'price' => 100000.00,
+                'price' => 150000.00,
                 'is_active' => true,
             ],
             [
@@ -88,45 +88,7 @@ class MasterBillingRateSeeder extends Seeder
             );
         }
 
-        $histories = [
-            [
-                'rate_key' => 'database_table_price',
-                'item_name' => 'Tabel Database Relasional',
-                'old_price' => 75000.00,
-                'new_price' => 100000.00,
-                'reason' => 'Standarisasi arsitektur database relasional PostgreSQL & SQLite',
-                'updated_by' => 'Admin Valora',
-                'created_at' => '2026-01-01 10:00:00',
-            ],
-            [
-                'rate_key' => 'menu_price',
-                'item_name' => 'Menu Aplikasi / Modul Kerja',
-                'old_price' => 600000.00,
-                'new_price' => 750000.00,
-                'reason' => 'Penyesuaian kompleksitas modul API dan logic business',
-                'updated_by' => 'Admin Valora',
-                'created_at' => '2026-01-15 14:30:00',
-            ],
-            [
-                'rate_key' => 'landing',
-                'item_name' => 'Landing Page Responsive',
-                'old_price' => 2000000.00,
-                'new_price' => 2500000.00,
-                'reason' => 'Peningkatan UI/UX interaktif dan optimasi SEO Tailwind',
-                'updated_by' => 'Admin Valora',
-                'created_at' => '2026-01-20 09:15:00',
-            ],
-        ];
-
-        foreach ($histories as $hist) {
-            BillingRateHistory::firstOrCreate(
-                [
-                    'rate_key' => $hist['rate_key'],
-                    'new_price' => $hist['new_price'],
-                    'reason' => $hist['reason'],
-                ],
-                $hist
-            );
-        }
+        // 3. Bersihkan riwayat tarif (ditetapkan sebagai harga awal bersih tanpa riwayat)
+        BillingRateHistory::query()->delete();
     }
 }

@@ -36,9 +36,9 @@ class ClientProjectService
                 ]);
             }
 
-            $landingPrice = isset($data['landing_price']) ? (float) $data['landing_price'] : MasterBillingRate::getRatePrice('landing', 2500000.0);
-            $loginPrice = isset($data['login_price']) ? (float) $data['login_price'] : MasterBillingRate::getRatePrice('login', 1000000.0);
-            $registerPrice = isset($data['register_price']) ? (float) $data['register_price'] : MasterBillingRate::getRatePrice('register', 1000000.0);
+            $landingPrice = isset($data['landing_price']) ? (float) $data['landing_price'] : MasterBillingRate::getRatePrice('landing', 500000.0);
+            $loginPrice = isset($data['login_price']) ? (float) $data['login_price'] : MasterBillingRate::getRatePrice('login', 350000.0);
+            $registerPrice = isset($data['register_price']) ? (float) $data['register_price'] : MasterBillingRate::getRatePrice('register', 350000.0);
 
             $useLanding = (bool) ($data['use_landing'] ?? false);
             $useLogin = (bool) ($data['use_login'] ?? true);
